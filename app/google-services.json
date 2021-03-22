@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "134207987675",
+    "project_id": "sports-mates",
+    "storage_bucket": "sports-mates.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134207987675:android:6e67eb85bfa9f49e3251fe",
+        "android_client_info": {
+          "package_name": "com.example.sportsmates"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "134207987675-2nmc21o3bscq1pmel757pci22mtcnph8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sportsmates",
+            "certificate_hash": "febb9a9fdc67192b2801a79a5a9c1e265583821b"
+          }
+        },
+        {
+          "client_id": "134207987675-lu24j50qckg6abuega7bk7cl251diaag.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYIHiO09v7Y8rfvYGFJk4jFpq5r8wrFQ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "134207987675-lu24j50qckg6abuega7bk7cl251diaag.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
