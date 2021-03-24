@@ -1,4 +1,4 @@
-package com.example.sportsmates.SignUp.data.model
+package com.example.sportsmates.signUp.data.model
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,4 +1,4 @@
-package com.example.sportsmates.Utils
+package com.example.sportsmates.utils
 
 import android.util.Log
 import androidx.annotation.MainThread

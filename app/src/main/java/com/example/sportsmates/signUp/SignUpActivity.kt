@@ -1,4 +1,4 @@
-package com.example.sportsmates.SignUp
+package com.example.sportsmates.signUp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,8 +6,8 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.example.sportsmates.R
-import com.example.sportsmates.SignUp.data.model.User
-import com.example.sportsmates.SignUp.viewmodel.SignUpViewModel
+import com.example.sportsmates.signUp.data.model.User
+import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 

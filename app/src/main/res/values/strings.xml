@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Sports Mates</string>
+    <string name="tab_bar_home_tab_title">Home</string>
+    <string name="tab_bar_places_tab_title">Places</string>
+    <string name="tab_bar_discover_tab_title">Discover</string>
+    <string name="tab_bar_coach_tab_title">Coach</string>
+    <string name="tab_bar_profile_tab_title">Profile</string>
 </resources>

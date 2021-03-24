@@ -1,9 +1,9 @@
-package com.example.sportsmates.SignUp.data.Repo
+package com.example.sportsmates.signUp.data.Repo
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.sportsmates.SignUp.data.model.User
-import com.example.sportsmates.Utils.SingleLiveEvent
+import com.example.sportsmates.signUp.data.model.User
+import com.example.sportsmates.utils.SingleLiveEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -13,7 +13,6 @@ class UserRepository(
 
     var signUpSuccess = SingleLiveEvent<Any>()
     var signUpFailed = MutableLiveData<String>()
-    var user = MutableLiveData<User>()
     var loginFailed = MutableLiveData<String>()
     var loginSuccess = SingleLiveEvent<Any>()
 
@@ -26,6 +25,7 @@ class UserRepository(
                     loginSuccess.call()
 
                 } else {
+                    loginFailed.postValue(task.exception?.message)
                     Log.w(TAG, "loginFailed:failure", task.exception)
                 }
 
@@ -64,21 +64,21 @@ class UserRepository(
             }
     }
 
-    fun fetchUserData(userId: String) {
+    fun fetchUserData(): User? {
+        var user: User? = User()
         FirebaseDatabase.getInstance().getReference("Users")
-            .child(userId)
+            .child(userAuth.currentUser.uid)
             .get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "getUser:Success")
-                    user.postValue(task.result?.getValue(User::class.java))
+                    user = task.result?.getValue(User::class.java)
 
                 } else {
-                    loginFailed.postValue(task.exception?.message)
                     Log.d(TAG, "getUser:Failed", task.exception)
 
                 }
             }
-
+        return user
     }
 
     companion object {
