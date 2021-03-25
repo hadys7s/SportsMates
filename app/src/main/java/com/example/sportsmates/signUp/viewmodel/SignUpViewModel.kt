@@ -1,11 +1,10 @@
-package com.example.sportsmates.SignUp.viewmodel
+package com.example.sportsmates.signUp.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.sportsmates.SignUp.data.Repo.UserRepository
-import com.example.sportsmates.SignUp.data.model.User
-import com.example.sportsmates.Utils.SingleLiveEvent
-import com.google.firebase.auth.FirebaseUser
+import com.example.sportsmates.signUp.data.Repo.UserRepository
+import com.example.sportsmates.signUp.data.model.User
+import com.example.sportsmates.utils.SingleLiveEvent
 
 class SignUpViewModel(private val userRepository: UserRepository) :
     ViewModel() {
