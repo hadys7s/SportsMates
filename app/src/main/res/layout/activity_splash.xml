@@ -4,15 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/map"
     tools:context=".splash.SplashActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Splash"
-        android:gravity="center"
-        android:textSize="50sp"
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:background="@drawable/map"
-        />
+        android:gravity="center"
+        android:scaleType="fitCenter"
+        android:src="@drawable/smart_phone"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

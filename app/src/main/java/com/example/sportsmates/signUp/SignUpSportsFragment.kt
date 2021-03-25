@@ -14,6 +14,7 @@ import com.example.sportsmates.R
 import com.example.sportsmates.databinding.SignUpSportFargmentBinding
 import com.example.sportsmates.ext.openTopActivity
 import com.example.sportsmates.ext.replaceFragment
+import com.example.sportsmates.home.MainActivity
 import com.example.sportsmates.signUp.SignUpActivity
 import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
@@ -57,7 +58,7 @@ class SignUpSportsFragment : Fragment() {
     fun attachEventObservers() {
         viewModel.signUpSuccess.observe(this, Observer {
             // redirect login
-            openTopActivity(activity, SignUpActivity())
+            openTopActivity(activity, MainActivity())
 
         })
 

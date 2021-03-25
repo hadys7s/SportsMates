@@ -52,7 +52,7 @@ class ProfileFragment : Fragment() {
 
     private fun attachEventObservers() {
         viewModel.userData.observe(this, Observer { userData ->
-            Toast.makeText(activity, userData?.name, Toast.LENGTH_LONG).show()
+          //  Toast.makeText(activity, userData?.name, Toast.LENGTH_LONG).show()
             bindUserData(userData)
 
         })
@@ -72,20 +72,20 @@ class ProfileFragment : Fragment() {
     private fun bindUserData(userInfo: User?) {
         binding.profileName.text = userInfo?.name
         // binding.profileImage = userInfo.name
-     //   binding.profilePhoneNumber.text = userInfo?.phoneNumber
+        //   binding.profilePhoneNumber.text = userInfo?.phoneNumber
         binding.profileEmail.text = userInfo?.email
         binding.profileAddress.text = userInfo?.city
-        binding.ProfileAboutMeDescription.text = userInfo?.phoneNumber
+        //     binding.ProfileAboutMeDescription.text = userInfo?.phoneNumber
         binding.sports1.text = userInfo?.sportsList?.get(0)
-        if (userInfo?.sportsList?.get(1).isNullOrBlank()) {
-            binding.sports2.isVisible = false
-        } else {
+        if (userInfo?.sportsList?.size!! > 1) {
             binding.sports2.text = userInfo?.sportsList?.get(1)
-        }
-        if (userInfo?.sportsList?.get(2).isNullOrBlank()) {
-            binding.sports3.isVisible = false
-        } else {
-            binding.sports3.text = userInfo?.sportsList?.get(2)
+            binding.sports2.isVisible = true
+
+            if (userInfo?.sportsList?.size!! > 2) {
+                binding.sports3.text = userInfo?.sportsList?.get(2)
+                binding.sports3.isVisible = true
+
+            }
         }
     }
 
@@ -105,5 +105,6 @@ class ProfileFragment : Fragment() {
                 }
             }
     }
+
 
 }

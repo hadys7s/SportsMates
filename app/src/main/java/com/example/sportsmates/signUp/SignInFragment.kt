@@ -42,7 +42,7 @@ class SignInFragment : Fragment() {
             openTopActivity(activity, MainActivity())
         })
         viewModel.loginFailed.observe(this, Observer { errorMessage ->
-            Toast.makeText(activity, errorMessage, Toast.LENGTH_SHORT)
+            Toast.makeText(activity, errorMessage, Toast.LENGTH_SHORT).show()
         })
     }
 

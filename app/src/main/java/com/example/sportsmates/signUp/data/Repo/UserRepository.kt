@@ -17,7 +17,7 @@ class UserRepository(
     var signUpSuccess = SingleLiveEvent<Any>()
     var signUpFailed = MutableLiveData<String>()
     var loginFailed = MutableLiveData<String>()
-    var loginSuccess = MutableLiveData<String>()
+    var loginSuccess = SingleLiveEvent<Any>()
     var userData = MutableLiveData<User?>()
 
 
