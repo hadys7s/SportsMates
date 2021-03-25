@@ -1,8 +1,7 @@
-package com.example.sportsmates.home
+package com.example.sportsmates
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.sportsmates.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
