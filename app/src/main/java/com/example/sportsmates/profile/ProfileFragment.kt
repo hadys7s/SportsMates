@@ -1,7 +1,5 @@
 package com.example.sportsmates.profile
 
-import android.content.Intent
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +8,14 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.example.sportsmates.SignUp.SignInFragment
 import com.example.sportsmates.databinding.ProfileFragmentBinding
 import com.example.sportsmates.ext.openTopActivity
-import com.example.sportsmates.login.SignInActivity
+import com.example.sportsmates.signUp.SignUpActivity
 import com.example.sportsmates.signUp.data.model.User
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -22,6 +24,7 @@ class ProfileFragment : Fragment() {
     val viewModel: ProfileViewModel by viewModel()
 
     private var _binding: ProfileFragmentBinding? = null
+
 
     private val binding get() = _binding!!
 
@@ -44,9 +47,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun fetchArguments() {
-        requireArguments()
-        val userID = arguments?.getString(USER_ID, "")
-        viewModel.fetchUserData(userID)
+        viewModel.fetchUserData()
     }
 
     private fun attachEventObservers() {
@@ -59,19 +60,19 @@ class ProfileFragment : Fragment() {
 
     private fun attachCLickListeners() {
         binding.editProfileButton.setOnClickListener {
-            //viewModel.login("hady815@gmail.com", "Hadys7s@")
+
         }
 
         binding.logoutButton.setOnClickListener {
             viewModel.logout()
-            openTopActivity(activity, SignInActivity())
+            openTopActivity(activity, SignUpActivity())
         }
     }
 
     private fun bindUserData(userInfo: User?) {
         binding.profileName.text = userInfo?.name
         // binding.profileImage = userInfo.name
-        binding.profilePhoneNumber.text = userInfo?.phoneNumber
+     //   binding.profilePhoneNumber.text = userInfo?.phoneNumber
         binding.profileEmail.text = userInfo?.email
         binding.profileAddress.text = userInfo?.city
         binding.ProfileAboutMeDescription.text = userInfo?.phoneNumber
@@ -97,7 +98,7 @@ class ProfileFragment : Fragment() {
         private const val USER_ID = "userId"
 
 
-        fun newInstance(userID: String) =
+        fun newInstance(userID: String?) =
             ProfileFragment().apply {
                 arguments = Bundle().apply {
                     putString(USER_ID, userID)

@@ -9,8 +9,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.baoyachi.stepview.bean.StepBean
 import com.example.sportsmates.R
-import com.example.sportsmates.SignUp.data.model.User
 import com.example.sportsmates.databinding.SignUpEmailPasswordFragmentBinding
+import com.example.sportsmates.ext.replaceFragment
+import com.example.sportsmates.signUp.data.model.User
 import com.google.android.material.textfield.TextInputLayout
 
 class SignUpEmailFragment : Fragment() {
@@ -68,7 +69,10 @@ class SignUpEmailFragment : Fragment() {
                 ) && validateUserInfoFiledisEmpty(binding.edConfirmPassword) && validateConfirmPasswordAndPasswordAreTheSame()
             ) {
 
-                replaceFragment(SignUpUserInfoFragment.newInstance(forwardUserInfo()))
+                replaceFragment(
+                    SignUpUserInfoFragment.newInstance(forwardUserInfo()),
+                    containerViewId = R.id.container
+                )
 
             } else {
                 return@setOnClickListener
@@ -76,13 +80,6 @@ class SignUpEmailFragment : Fragment() {
         }
     }
 
-    fun replaceFragment(fragment: Fragment) {
-        val fragmentTransiction = activity!!.supportFragmentManager.beginTransaction()
-        fragmentTransiction.replace(R.id.container, fragment)
-            .addToBackStack(SignUpEmailFragment::class.java.simpleName).commit()
-
-
-    }
 
     private fun forwardUserInfo(): User {
         var user = User()

@@ -1,8 +1,11 @@
 package com.example.sportsmates.home
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.ActivityMainBinding
@@ -14,9 +17,9 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    val viewModel: SignInViewModel by viewModel()
-    var userUid : String = ""
 
+    //  val viewModel: SignInViewModel by viewModel()
+    var userUid: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,21 +28,22 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         bottomNavigationController()
+
         binding.chatBot.setOnClickListener {
 
         }
-        viewModel.login("hadyhessen.hh@gmail.com","Hady123456")
+        //viewModel.login("hadyhessen.hh@gmail.com","Hady123456")
 
-            viewModel.loginSuccess.observe(this, Observer { userId ->
-                //  redirect home
-                userUid = userId
+        /*  viewModel.loginSuccess.observe(this, Observer { userId ->
+              //  redirect home
+              userUid = userId
 
-                Toast.makeText(this, "Success", Toast.LENGTH_LONG).show()
+              Toast.makeText(this, "Success", Toast.LENGTH_LONG).show()
 
-            })
-            viewModel.loginFailed.observe(this, Observer { errorMessage ->
-                Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
-            })
+          })
+          viewModel.loginFailed.observe(this, Observer { errorMessage ->
+              Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+          })*/
 
 
     }
@@ -80,6 +84,10 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    companion object {
+        private const val USER_ID = "userId"
     }
 
 

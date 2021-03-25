@@ -1,19 +1,16 @@
 package com.example.sportsmates.splash
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.example.sportsmates.R
 import com.example.sportsmates.ext.openTopActivity
 import com.example.sportsmates.home.MainActivity
-import com.example.sportsmates.login.SignInActivity
-import com.example.sportsmates.login.SignInViewModel
+import com.example.sportsmates.signUp.SignUpActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SplashActivity : AppCompatActivity() {
-    val viewModel: SplashViewModel by viewModel()
+    private val viewModel: SplashViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +22,7 @@ class SplashActivity : AppCompatActivity() {
     private fun attachEventObservers() {
         viewModel.authenticationNavigationEvent.observe(this, Observer {
             //  redirect signIn
-            openTopActivity(this, SignInActivity())
+            openTopActivity(this, SignUpActivity())
 
 
         })

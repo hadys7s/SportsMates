@@ -21,6 +21,17 @@ fun AppCompatActivity.replaceFragment(
         .commit()
 }
 
+fun Fragment.replaceFragment(
+    fragment: Fragment,
+    tag: String? = null,
+    @IdRes containerViewId: Int
+) {
+    val ft = activity?.supportFragmentManager
+        ?.beginTransaction()
+        ?.replace(containerViewId, fragment, tag)
+        ?.commit()
+}
+
 fun AppCompatActivity.openTopActivity(context: Context, targetActivity: Activity) {
     val targetActivity = Intent(
         context,

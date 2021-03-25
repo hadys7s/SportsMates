@@ -10,10 +10,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.baoyachi.stepview.bean.StepBean
 import com.example.sportsmates.R
-import com.example.sportsmates.SignUp.data.model.User
 import com.example.sportsmates.databinding.SignUpUserInfoFragmentBinding
+import com.example.sportsmates.signUp.data.model.User
 import com.google.android.material.textfield.TextInputLayout
-import org.koin.android.ext.android.bind
 
 class SignUpUserInfoFragment : Fragment() {
     private var _binding: SignUpUserInfoFragmentBinding? = null

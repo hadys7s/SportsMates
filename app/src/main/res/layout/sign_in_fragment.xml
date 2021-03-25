@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/map"
-    tools:context=".login.SignInActivity">
+    android:background="@drawable/map">
 
     <TextView
         android:id="@+id/tv_login"
@@ -46,6 +45,7 @@
         app:layout_constraintBottom_toTopOf="@+id/ed_password"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="32dp"
+        android:inputType="textEmailAddress"
         android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_logo"

@@ -13,10 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SportsMates">
         <activity android:name=".home.MainActivity"></activity>
-        <activity android:name=".login.SignInActivity" />
+        <activity android:name=".signUp.SignUpActivity" />
         <activity android:name=".splash.SplashActivity">
-        <activity android:name=".SignUp.SignUpActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

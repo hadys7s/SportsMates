@@ -13,8 +13,8 @@ class ProfileViewModel(val userRepository: UserRepository) : ViewModel() {
         userData = userRepository.userData
     }
 
-    fun fetchUserData(userId: String?) {
-        userRepository.fetchUserData(userId)
+    fun fetchUserData() {
+        userRepository.fetchUserData()
     }
 
     fun logout() {

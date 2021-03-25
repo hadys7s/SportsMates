@@ -8,15 +8,22 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.baoyachi.stepview.bean.StepBean
 import com.example.sportsmates.R
-import com.example.sportsmates.SignUp.data.model.User
 import com.example.sportsmates.databinding.SignUpSportFargmentBinding
+import com.example.sportsmates.ext.openTopActivity
+import com.example.sportsmates.ext.replaceFragment
+import com.example.sportsmates.signUp.SignUpActivity
+import com.example.sportsmates.signUp.data.model.User
+import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 import com.google.android.material.chip.Chip
 
 class SignUpSportsFragment : Fragment() {
     private var _binding: SignUpSportFargmentBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: SignUpViewModel by viewModel()
 
 
     override fun onCreateView(
@@ -32,7 +39,7 @@ class SignUpSportsFragment : Fragment() {
         binding.doneButton.setOnClickListener {
             if (validateSelectOnlyThreeSports()) {
                 // view model signUp
-                signUpUserInfo()
+                viewModel.onRegisterButtonCLicked(signUpUserInfo())
 
             }
         }
@@ -43,6 +50,21 @@ class SignUpSportsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setStepper()
         doneButton()
+        attachEventObservers()
+
+    }
+
+    fun attachEventObservers() {
+        viewModel.signUpSuccess.observe(this, Observer {
+            // redirect login
+            openTopActivity(activity, SignUpActivity())
+
+        })
+
+        viewModel.signUpFailed.observe(this, Observer { errorMessage ->
+            Toast.makeText(activity, errorMessage, Toast.LENGTH_LONG).show()
+
+        })
 
     }
 
@@ -134,3 +156,4 @@ class SignUpSportsFragment : Fragment() {
             }
     }
 }
+

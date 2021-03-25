@@ -21,7 +21,6 @@ class UserRepository(
     var userData = MutableLiveData<User?>()
 
 
-
     fun login(email: String, password: String) {
         userAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
@@ -41,9 +40,9 @@ class UserRepository(
         userAuth.signOut()
     }
 
-    fun signUp(user: User, password: String) {
+    fun signUp(user: User?) {
         // [START create_user_with_email]
-        userAuth.createUserWithEmailAndPassword(user.email, password)
+        userAuth.createUserWithEmailAndPassword(user?.email, user?.password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // Sign in success
@@ -57,7 +56,7 @@ class UserRepository(
         // [END create_user_with_email]
     }
 
-    private fun addUserToDataBase(user: User) {
+    private fun addUserToDataBase(user: User?) {
         FirebaseDatabase.getInstance().getReference("Users")
             .child(userAuth.currentUser.uid)
             .setValue(user).addOnCompleteListener { task ->
@@ -72,9 +71,9 @@ class UserRepository(
             }
     }
 
-    fun fetchUserData(userId: String?){
+    fun fetchUserData() {
         FirebaseDatabase.getInstance().getReference("Users")
-            .child(userId!!)
+            .child(Firebase.auth.currentUser.uid)
             .get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "getUser:Success")
@@ -87,12 +86,13 @@ class UserRepository(
             }
     }
 
-     fun checkCurrentUserAuthorization() :Boolean {
+    fun checkCurrentUserAuthorization(): Boolean {
         // [START check_current_user]
         val user = userAuth.currentUser
         return user != null
         // [END check_current_user]
     }
+
     companion object {
         private const val TAG = "EmailPassword"
     }

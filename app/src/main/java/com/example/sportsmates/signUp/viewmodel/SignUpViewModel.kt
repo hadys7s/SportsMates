@@ -16,8 +16,8 @@ class SignUpViewModel(private val userRepository: UserRepository) :
         signUpFailed = userRepository.signUpFailed
     }
 
-    fun onRegisterButtonCLicked(user: User, password: String) {
-        userRepository.signUp(user, password)
+    fun onRegisterButtonCLicked(user: User?) {
+        userRepository.signUp(user)
     }
 
 

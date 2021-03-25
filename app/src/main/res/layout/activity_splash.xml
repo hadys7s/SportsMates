@@ -12,6 +12,7 @@
         android:text="Splash"
         android:gravity="center"
         android:textSize="50sp"
+        android:background="@drawable/map"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.SignInFragmentBinding
+import com.example.sportsmates.ext.openTopActivity
+import com.example.sportsmates.ext.replaceFragment
+import com.example.sportsmates.home.MainActivity
 import com.example.sportsmates.login.SignInViewModel
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -19,6 +23,7 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         attachCLickListeners()
+        attachEventObservers()
     }
 
     override fun onCreateView(
@@ -34,31 +39,31 @@ class SignInFragment : Fragment() {
     private fun attachEventObservers() {
         viewModel.loginSuccess.observe(this, Observer { user ->
             //  redirect home
-
+            openTopActivity(activity, MainActivity())
         })
         viewModel.loginFailed.observe(this, Observer { errorMessage ->
+            Toast.makeText(activity, errorMessage, Toast.LENGTH_SHORT)
         })
     }
 
     private fun attachCLickListeners() {
         binding.tvSelectableSignup.setOnClickListener {
-            replaceFragment(SignUpEmailFragment.newInstance())
+            replaceFragment(SignUpEmailFragment.newInstance(), containerViewId = R.id.container)
         }
 
         binding.loginButton.setOnClickListener {
             if (validation()) {
-
+                login()
             }
 
         }
     }
 
-    fun replaceFragment(fragment: Fragment) {
-        val fragmentTransiction = activity!!.supportFragmentManager.beginTransaction()
-        fragmentTransiction.replace(R.id.container, fragment)
-            .addToBackStack(SignUpUserInfoFragment::class.java.simpleName).commit()
-
-
+    private fun login() {
+        viewModel.login(
+            binding.edEmail.editText?.text.toString(),
+            binding.edPassword.editText?.text.toString().trim()
+        )
     }
 
     private fun validation(): Boolean {
