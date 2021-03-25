@@ -10,4 +10,6 @@
     <color name="main">#195958</color>
     <color name="orange">#F04011</color>
     <color name="beg">#ffe4b1</color>
+    <color name="red_header">#D63308</color>
+    <color name="colorSeparator">#fff2f2f3</color>
 </resources>

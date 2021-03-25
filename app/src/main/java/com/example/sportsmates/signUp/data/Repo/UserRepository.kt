@@ -5,7 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.utils.SingleLiveEvent
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class UserRepository(
     private val userAuth: FirebaseAuth
@@ -14,15 +17,16 @@ class UserRepository(
     var signUpSuccess = SingleLiveEvent<Any>()
     var signUpFailed = MutableLiveData<String>()
     var loginFailed = MutableLiveData<String>()
-    var loginSuccess = SingleLiveEvent<Any>()
+    var loginSuccess = MutableLiveData<String>()
+    var userData = MutableLiveData<User?>()
+
 
 
     fun login(email: String, password: String) {
         userAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    // fetchUserData(userAuth.currentUser.uid)
-                    loginSuccess.call()
+                    loginSuccess.postValue(userAuth.currentUser.uid)
 
                 } else {
                     loginFailed.postValue(task.exception?.message)
@@ -31,6 +35,10 @@ class UserRepository(
 
             }
 
+    }
+
+    fun logout() {
+        userAuth.signOut()
     }
 
     fun signUp(user: User, password: String) {
@@ -64,23 +72,27 @@ class UserRepository(
             }
     }
 
-    fun fetchUserData(): User? {
-        var user: User? = User()
+    fun fetchUserData(userId: String?){
         FirebaseDatabase.getInstance().getReference("Users")
-            .child(userAuth.currentUser.uid)
+            .child(userId!!)
             .get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "getUser:Success")
-                    user = task.result?.getValue(User::class.java)
+                    userData.postValue(task.result?.getValue(User::class.java))
 
                 } else {
                     Log.d(TAG, "getUser:Failed", task.exception)
 
                 }
             }
-        return user
     }
 
+     fun checkCurrentUserAuthorization() :Boolean {
+        // [START check_current_user]
+        val user = userAuth.currentUser
+        return user != null
+        // [END check_current_user]
+    }
     companion object {
         private const val TAG = "EmailPassword"
     }

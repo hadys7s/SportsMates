@@ -9,7 +9,7 @@ class SignInViewModel(private val userRepository: UserRepository) :
     ViewModel() {
 
     var loginFailed = MutableLiveData<String>()
-    var loginSuccess = SingleLiveEvent<Any>()
+    var loginSuccess = MutableLiveData<String>()
 
     init {
         loginFailed = userRepository.loginFailed

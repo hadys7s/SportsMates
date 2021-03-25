@@ -7,14 +7,20 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.example.sportsmates.R
+import com.example.sportsmates.databinding.ActivityMainBinding
+import com.example.sportsmates.databinding.ActivitySignInBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SignInActivity : AppCompatActivity() {
     val viewModel: SignInViewModel by viewModel()
+    private lateinit var binding: ActivitySignInBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_in)
+        binding = ActivitySignInBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
         attachEventObservers()
         attachCLickListeners()
 
@@ -31,10 +37,10 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun attachCLickListeners() {
-        val button: Button = findViewById(R.id.signIn)
-        button.setOnClickListener {
+
+       /* binding.button.setOnClickListener {
             viewModel.login("hady815@gmail.com", "Hadys7s@")
-        }
+        }*/
 
     }
 }

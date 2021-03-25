@@ -1,15 +1,23 @@
 package com.example.sportsmates.home
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.ActivityMainBinding
 import com.example.sportsmates.ext.replaceFragment
+import com.example.sportsmates.login.SignInViewModel
 import com.example.sportsmates.profile.ProfileFragment
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    val viewModel: SignInViewModel by viewModel()
+    var userUid : String = ""
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +28,19 @@ class MainActivity : AppCompatActivity() {
         binding.chatBot.setOnClickListener {
 
         }
+        viewModel.login("hadyhessen.hh@gmail.com","Hady123456")
+
+            viewModel.loginSuccess.observe(this, Observer { userId ->
+                //  redirect home
+                userUid = userId
+
+                Toast.makeText(this, "Success", Toast.LENGTH_LONG).show()
+
+            })
+            viewModel.loginFailed.observe(this, Observer { errorMessage ->
+                Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+            })
+
 
     }
 
@@ -44,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.profile -> {
                     replaceFragment(
-                        fragment = ProfileFragment.newInstance(),
+                        fragment = ProfileFragment.newInstance(userUid),
                         containerViewId = R.id.main_container_view
                     )
                     true
@@ -53,6 +74,11 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        binding.bottomNavigation.setOnNavigationItemReselectedListener() {
+
+        }
+
 
     }
 

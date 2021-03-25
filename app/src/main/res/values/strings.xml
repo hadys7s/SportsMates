@@ -5,4 +5,8 @@
     <string name="tab_bar_discover_tab_title">Discover</string>
     <string name="tab_bar_coach_tab_title">Coach</string>
     <string name="tab_bar_profile_tab_title">Profile</string>
+    <string name="profile_about_me_title">About Me</string>
+    <string name="profile_sports_title">My Sports</string>
+    <string name="edit_profile_button">Edit Profile</string>
+    <string name="sign_out_button">Sign out</string>
 </resources>
