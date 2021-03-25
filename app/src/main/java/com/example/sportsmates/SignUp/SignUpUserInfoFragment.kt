@@ -1,21 +1,35 @@
 package com.example.sportsmates.SignUp
 
-import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.baoyachi.stepview.bean.StepBean
 import com.example.sportsmates.R
+import com.example.sportsmates.SignUp.data.model.User
 import com.example.sportsmates.databinding.SignUpUserInfoFragmentBinding
+import com.google.android.material.textfield.TextInputLayout
+import org.koin.android.ext.android.bind
 
-class SignUpUserInfoFragment : Fragment(R.layout.sign_up_user_info_fragment) {
-    private lateinit var binding: SignUpUserInfoFragmentBinding
+class SignUpUserInfoFragment : Fragment() {
+    private var _binding: SignUpUserInfoFragmentBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = SignUpUserInfoFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding= SignUpUserInfoFragmentBinding.bind(view)
         setStepper()
         setUpCityMenu()
         setUpGenderMenu()
@@ -23,28 +37,54 @@ class SignUpUserInfoFragment : Fragment(R.layout.sign_up_user_info_fragment) {
 
     }
 
-    private fun setUpCityMenu(){
-        val items = listOf("Damietta","Mansoura")
+    private fun setUpCityMenu() {
+        val items = listOf("Damietta", "Mansoura")
         val adapter = ArrayAdapter(requireContext(), R.layout.sign_up_spinner_list_item, items)
         (binding.chooseCity.editText as? AutoCompleteTextView)?.setAdapter(adapter)
     }
-    private fun setUpGenderMenu(){
-        val items = listOf("Male","Female")
+
+    private fun setUpGenderMenu() {
+        val items = listOf("Male", "Female")
         val adapter = ArrayAdapter(requireContext(), R.layout.sign_up_spinner_list_item, items)
         (binding.chooseGender.editText as? AutoCompleteTextView)?.setAdapter(adapter)
     }
-    private fun nextButton(){
+
+    private fun nextButton() {
         binding.nextButton2.setOnClickListener {
-            replaceFragment(SignUpSportsFragment.newInstance())
+            if (validation())
+                replaceFragment(SignUpSportsFragment.newInstance(forwardUserInfo()))
         }
     }
-    fun replaceFragment(fragment: Fragment) {
+
+    private fun validation(): Boolean {
+        return (validateUserInfoFieldIsEmpty(binding.chooseCity) && validateUserInfoFieldIsEmpty(
+            binding.edAge
+        ) && validateUserInfoFieldIsEmpty(
+            binding.chooseGender
+        )
+
+                )
+
+    }
+
+
+    private fun replaceFragment(fragment: Fragment) {
         val fragmentTransiction = activity!!.supportFragmentManager.beginTransaction()
         fragmentTransiction.replace(R.id.container, fragment)
             .addToBackStack(SignUpUserInfoFragment::class.java.simpleName).commit()
 
 
     }
+
+    private fun forwardUserInfo(): User? {
+        var user: User? = arguments?.getParcelable(USER_DATA)
+
+        user?.city = binding.chooseCity.editText?.text.toString()
+        user?.age = binding.edAge.editText?.text.toString()
+        user?.gender = binding.chooseGender.editText?.text.toString()
+        return user
+    }
+
 
     private fun setStepper() {
 
@@ -82,12 +122,27 @@ class SignUpUserInfoFragment : Fragment(R.layout.sign_up_user_info_fragment) {
             )
 
     }
-    companion object {
 
-        @JvmStatic
-        fun newInstance() =
+    private fun validateUserInfoFieldIsEmpty(textInputLayout: TextInputLayout): Boolean {
+        val text = textInputLayout.editText?.text.toString()
+        return if (text.isEmpty()) {
+            textInputLayout.error = "Field Cannot be empty"
+            false
+        } else {
+            textInputLayout.error = null
+            textInputLayout.isErrorEnabled = false
+            true
+        }
+    }
+
+
+    companion object {
+        private const val USER_DATA = "userData"
+
+        fun newInstance(user: User) =
             SignUpUserInfoFragment().apply {
                 arguments = Bundle().apply {
+                    putParcelable(USER_DATA, user)
 
                 }
             }

@@ -1,22 +1,34 @@
 package com.example.sportsmates.SignUp
+
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.sportsmates.R
-import com.example.sportsmates.databinding.UserSignInFragmentBinding
+import com.example.sportsmates.databinding.SignInFragmentBinding
 import com.example.sportsmates.login.SignInViewModel
+import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class SignInFragment : Fragment(R.layout.user_sign_in_fragment) {
+class SignInFragment : Fragment() {
     private val viewModel: SignInViewModel by viewModel()
-    private lateinit var binding: UserSignInFragmentBinding
+    private var _binding: SignInFragmentBinding? = null
+    private val binding get() = _binding!!
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding= UserSignInFragmentBinding.bind(view)
-        signUp()
+        attachCLickListeners()
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = SignInFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
 
     private fun attachEventObservers() {
@@ -27,11 +39,20 @@ class SignInFragment : Fragment(R.layout.user_sign_in_fragment) {
         viewModel.loginFailed.observe(this, Observer { errorMessage ->
         })
     }
-    private fun signUp (){
+
+    private fun attachCLickListeners() {
         binding.tvSelectableSignup.setOnClickListener {
-              replaceFragment(SignUpEmailFragment.newInstance())
+            replaceFragment(SignUpEmailFragment.newInstance())
+        }
+
+        binding.loginButton.setOnClickListener {
+            if (validation()) {
+
+            }
+
         }
     }
+
     fun replaceFragment(fragment: Fragment) {
         val fragmentTransiction = activity!!.supportFragmentManager.beginTransaction()
         fragmentTransiction.replace(R.id.container, fragment)
@@ -39,11 +60,36 @@ class SignInFragment : Fragment(R.layout.user_sign_in_fragment) {
 
 
     }
+
+    private fun validation(): Boolean {
+        return (validateUserInfoFieldIsEmpty(binding.edEmail) && validateUserInfoFieldIsEmpty(
+            binding.edPassword
+        ))
+
+    }
+
+    private fun validateUserInfoFieldIsEmpty(textInputLayout: TextInputLayout): Boolean {
+        val text = textInputLayout.editText?.text.toString()
+        return if (text.isEmpty()) {
+            textInputLayout.error = "Field Cannot be empty"
+            false
+        } else {
+            textInputLayout.error = null
+            textInputLayout.isErrorEnabled = false
+            true
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     companion object {
 
         @JvmStatic
         fun newInstance() =
-            SignUpUserInfoFragment().apply {
+            SignInFragment().apply {
                 arguments = Bundle().apply {
 
                 }

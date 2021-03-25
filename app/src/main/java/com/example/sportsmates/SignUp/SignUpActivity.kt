@@ -18,10 +18,10 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
-        addfragment(SignUpEmailFragment.newInstance())
+        addfragment(SignInFragment.newInstance())
         //auth = Firebase.auth
-        val sportsList = listOf("chess", "Hockey", "BasketBall")
-        val user = User(
+        var sportsList = listOf("chess", "Hockey", "BasketBall")
+    /*    val user = User(
             "Zain",
             "hadyhessen.hh@gmail.com",
             "01061525442",
@@ -30,6 +30,7 @@ class SignUpActivity : AppCompatActivity() {
             "Mansoura",
             sportsList
         )
+        viewModel.onRegisterButtonCLicked()*/
 
         attachEventObservers()
 

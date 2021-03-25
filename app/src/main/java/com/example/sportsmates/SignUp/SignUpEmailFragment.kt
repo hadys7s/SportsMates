@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.baoyachi.stepview.bean.StepBean
 import com.example.sportsmates.R
+import com.example.sportsmates.SignUp.data.model.User
 import com.example.sportsmates.databinding.SignUpEmailPasswordFragmentBinding
 import com.google.android.material.textfield.TextInputLayout
 
@@ -47,7 +48,7 @@ class SignUpEmailFragment : Fragment() {
         val confirmPassword = binding.edConfirmPassword.editText?.text.toString()
         val password = binding.edPassword.editText?.text.toString()
         return if (!confirmPassword.contentEquals(password)) {
-            Toast.makeText(activity,"Passwords don't match",Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Passwords don't match", Toast.LENGTH_SHORT).show()
             false
 
         } else {
@@ -66,7 +67,8 @@ class SignUpEmailFragment : Fragment() {
                     binding.edPassword
                 ) && validateUserInfoFiledisEmpty(binding.edConfirmPassword) && validateConfirmPasswordAndPasswordAreTheSame()
             ) {
-                replaceFragment(SignUpUserInfoFragment.newInstance())
+
+                replaceFragment(SignUpUserInfoFragment.newInstance(forwardUserInfo()))
 
             } else {
                 return@setOnClickListener
@@ -81,6 +83,15 @@ class SignUpEmailFragment : Fragment() {
 
 
     }
+
+    private fun forwardUserInfo(): User {
+        var user = User()
+        user.name = binding.edName.editText?.text.toString()
+        user.email = binding.edEmail.editText?.text.toString()
+        user.password = binding.edConfirmPassword.editText?.text.toString()
+        return user
+    }
+
 
     private fun setStepper() {
 
