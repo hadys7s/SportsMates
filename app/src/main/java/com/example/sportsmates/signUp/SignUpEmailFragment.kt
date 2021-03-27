@@ -1,5 +1,12 @@
 package com.example.sportsmates.SignUp
 
+import android.app.Activity.*
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +20,13 @@ import com.example.sportsmates.databinding.SignUpEmailPasswordFragmentBinding
 import com.example.sportsmates.ext.replaceFragment
 import com.example.sportsmates.signUp.data.model.User
 import com.google.android.material.textfield.TextInputLayout
+import java.lang.Exception
+import kotlin.collections.ArrayList
 
 class SignUpEmailFragment : Fragment() {
+    private final val PICK_IMAGE_REQUEST = 22
+    private val PERMISSION_CODE = 1001
+   private lateinit var filePath: Uri
     private var _binding: SignUpEmailPasswordFragmentBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -30,6 +42,7 @@ class SignUpEmailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setStepper()
         nextButton()
+        onUplodedButtomSelected()
     }
 
 
@@ -73,6 +86,7 @@ class SignUpEmailFragment : Fragment() {
                     SignUpUserInfoFragment.newInstance(forwardUserInfo()),
                     containerViewId = R.id.container
                 )
+
 
             } else {
                 return@setOnClickListener
@@ -127,6 +141,48 @@ class SignUpEmailFragment : Fragment() {
 
     }
 
+    private fun onUplodedButtomSelected() {
+        binding.uploadPhotoButton.setOnClickListener {
+            handlePermission()
+        }
+    }
+
+    private fun selectImage() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_PICK
+        startActivityForResult(
+            Intent.createChooser(intent, "Select Image from here...."),
+            PICK_IMAGE_REQUEST
+        )
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        //checking request code and result code
+        //if request code and result code is PICK_IMAGE_REQUEST and
+        //resultCode is RESULT_OK
+        //then set image in the image view
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK &&
+            data != null && data.data != null
+        ) {
+           filePath= data.data!!
+            try {
+                val inputStream=context?.contentResolver?.openInputStream(filePath)
+                val selectedImage=BitmapFactory.decodeStream(inputStream)
+                binding.uploadedPic.setImageBitmap(selectedImage)
+                val shre=activity!!.getSharedPreferences("myPrref", Context.MODE_PRIVATE).edit()
+                shre.putString("Userphoto", filePath.toString())
+                shre.commit()
+
+
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -140,6 +196,40 @@ class SignUpEmailFragment : Fragment() {
 
                 }
             }
+    }
+    private fun handlePermission() {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_DENIED
+            ) {
+                val permission = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                requestPermissions(
+                    permission
+                    , PERMISSION_CODE
+                )
+            } else {
+                selectImage()
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            PERMISSION_CODE -> {
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    selectImage()
+                } else {
+                    Toast.makeText(requireContext(), "Permission Denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
     }
 
 }

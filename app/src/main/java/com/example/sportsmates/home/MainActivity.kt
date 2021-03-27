@@ -1,18 +1,16 @@
 package com.example.sportsmates.home
 
-import android.app.Activity
-import android.content.Intent
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Observer
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.ActivityMainBinding
 import com.example.sportsmates.ext.replaceFragment
-import com.example.sportsmates.login.SignInViewModel
 import com.example.sportsmates.profile.ProfileFragment
-import org.koin.android.viewmodel.ext.android.viewModel
+import com.google.firebase.storage.FirebaseStorage
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -28,7 +26,11 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         bottomNavigationController()
-
+        val preferences=getSharedPreferences("myPrref", Context.MODE_PRIVATE)
+        val imagePath=preferences.getString("Userphoto","a7a")
+        Toast.makeText(this, imagePath, Toast.LENGTH_LONG).show()
+        val imageUri= imagePath?.let { convertStringTouUri(it) }
+        imageUri?.let { uploadPhoto(it) }
         binding.chatBot.setOnClickListener {
 
         }
@@ -45,6 +47,20 @@ class MainActivity : AppCompatActivity() {
               Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
           })*/
 
+
+    }
+    private fun convertStringTouUri(filepath: String):Uri{
+        val imagepathUri=Uri.parse(filepath)
+        return imagepathUri
+    }
+    private fun uploadPhoto(filepath:Uri){
+        if (filepath!=null){
+            val storageReference=FirebaseStorage.getInstance().reference.child("images/"+UUID.randomUUID().toString())
+            storageReference.putFile(filepath)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "image uploaded", Toast.LENGTH_SHORT).show()
+                }
+        }
 
     }
 

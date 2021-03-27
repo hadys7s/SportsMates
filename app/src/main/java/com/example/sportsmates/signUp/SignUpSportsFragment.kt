@@ -1,6 +1,7 @@
 package com.example.sportsmates.SignUp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,7 @@ class SignUpSportsFragment : Fragment() {
             if (validateSelectOnlyThreeSports()) {
                 // view model signUp
                 viewModel.onRegisterButtonCLicked(signUpUserInfo())
+
 
             }
         }
