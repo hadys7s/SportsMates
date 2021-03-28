@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.example.sportsmates.signUp.data.Repo.UserRepository
 import com.example.sportsmates.signUp.data.model.User
 
-class ProfileViewModel(val userRepository: UserRepository) : ViewModel() {
+class ProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     var userData = MutableLiveData<User?>()
 

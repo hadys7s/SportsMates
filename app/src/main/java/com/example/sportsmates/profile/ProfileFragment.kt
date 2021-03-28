@@ -4,24 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.example.sportsmates.SignUp.SignInFragment
 import com.example.sportsmates.databinding.ProfileFragmentBinding
 import com.example.sportsmates.ext.openTopActivity
 import com.example.sportsmates.signUp.SignUpActivity
 import com.example.sportsmates.signUp.data.model.User
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class ProfileFragment : Fragment() {
 
-    val viewModel: ProfileViewModel by viewModel()
+    private val viewModel: ProfileViewModel by viewModel()
 
     private var _binding: ProfileFragmentBinding? = null
 

@@ -1,5 +1,7 @@
 package com.example.sportsmates.signUp.data.Repo
 
+import android.content.ContentValues.TAG
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.sportsmates.signUp.data.model.User
@@ -7,13 +9,17 @@ import com.example.sportsmates.utils.SingleLiveEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import java.util.*
 
 class UserRepository(
     private val userAuth: FirebaseAuth
 ) {
 
+    var signUpAuthSuccess = SingleLiveEvent<Any>()
+    var signUpAuthFailed = MutableLiveData<String>()
+    var uploadImageFailed = MutableLiveData<String>()
     var signUpSuccess = SingleLiveEvent<Any>()
     var signUpFailed = MutableLiveData<String>()
     var loginFailed = MutableLiveData<String>()
@@ -40,29 +46,26 @@ class UserRepository(
         userAuth.signOut()
     }
 
-    fun signUp(user: User?) {
+    fun signUp(user: User?, filepath: Uri) {
         // [START create_user_with_email]
         userAuth.createUserWithEmailAndPassword(user?.email, user?.password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // Sign in success
-                    addUserToDataBase(user)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                }
+            .addOnSuccessListener {
+                uploadPhoto(filepath)
+            }.addOnFailureListener {
+                Log.w(TAG, "createUserWithEmail:failure", it)
+                signUpAuthFailed.postValue(it.message.toString())
             }
-
-        // [END create_user_with_email]
     }
 
-    private fun addUserToDataBase(user: User?) {
+
+    fun addUserToDataBase(user: User?) {
         FirebaseDatabase.getInstance().getReference("Users")
             .child(userAuth.currentUser.uid)
             .setValue(user).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "userAddedToDataBase:Success")
                     signUpSuccess.call()
+
 
                 } else {
                     Log.d(TAG, "userAddedToDataBase:Failed")
@@ -85,6 +88,23 @@ class UserRepository(
                 }
             }
     }
+
+   private fun uploadPhoto(filepath: Uri) {
+
+        val storageReference =
+            FirebaseStorage.getInstance().reference.child("images/" + userAuth.currentUser.uid)
+        storageReference.putFile(filepath)
+
+            .addOnSuccessListener {
+                Log.d(TAG, "ImageUpload:Success")
+                signUpAuthSuccess.call()
+            }
+            .addOnFailureListener {
+                uploadImageFailed.postValue(it.message.toString())
+            }
+
+    }
+
 
     fun checkCurrentUserAuthorization(): Boolean {
         // [START check_current_user]

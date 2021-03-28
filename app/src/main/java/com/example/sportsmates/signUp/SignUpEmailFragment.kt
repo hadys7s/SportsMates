@@ -1,34 +1,36 @@
 package com.example.sportsmates.SignUp
 
 import android.app.Activity.*
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.baoyachi.stepview.bean.StepBean
+import androidx.lifecycle.Observer
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.SignUpEmailPasswordFragmentBinding
+import com.example.sportsmates.ext.handleStoragePermission
 import com.example.sportsmates.ext.replaceFragment
+import com.example.sportsmates.ext.selectImage
+import com.example.sportsmates.ext.setStepper
 import com.example.sportsmates.signUp.data.model.User
+import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
 import com.google.android.material.textfield.TextInputLayout
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.lang.Exception
-import kotlin.collections.ArrayList
 
 class SignUpEmailFragment : Fragment() {
-    private final val PICK_IMAGE_REQUEST = 22
-    private val PERMISSION_CODE = 1001
-   private lateinit var filePath: Uri
+
+    private lateinit var filePath: Uri
     private var _binding: SignUpEmailPasswordFragmentBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: SignUpViewModel by viewModel()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,21 +42,42 @@ class SignUpEmailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setStepper()
-        nextButton()
-        onUplodedButtomSelected()
+        setStepper(-1, -1, -1, binding.stepView)
+        onUploadedButtonSelected()
+        attachEventObservers()
+        attachEventObservers()
+        attachOnclickListeners()
+    }
+
+    private fun attachOnclickListeners() {
+        binding.nextButton.setOnClickListener {
+            validateAllFields()
+        }
+    }
+
+    private fun attachEventObservers() {
+        viewModel.signUpAuthSuccess.observe(this, Observer {
+            navigateToNextScreen()
+        })
+        viewModel.signUpAuthFailed.observe(this, Observer { errMsg ->
+            Toast.makeText(activity, errMsg, Toast.LENGTH_SHORT).show()
+        })
+        viewModel.uploadImageFailed.observe(this, Observer { errMsg ->
+            Toast.makeText(activity, errMsg, Toast.LENGTH_SHORT).show()
+        })
+
     }
 
 
     private fun validateUserInfoFiledisEmpty(textInputLayout: TextInputLayout): Boolean {
         val name = textInputLayout.editText?.text.toString()
-        if (name.isEmpty()) {
+        return if (name.isEmpty()) {
             textInputLayout.error = "Field Cannot be empty"
-            return false
+            false
         } else {
             textInputLayout.error = null
             textInputLayout.isErrorEnabled = false
-            return true
+            true
         }
     }
 
@@ -74,146 +97,67 @@ class SignUpEmailFragment : Fragment() {
     }
 
 
-    private fun nextButton() {
-
-        binding.nextButton.setOnClickListener {
-            if (validateUserInfoFiledisEmpty(binding.edName) && validateUserInfoFiledisEmpty(binding.edEmail) && validateUserInfoFiledisEmpty(
-                    binding.edPassword
-                ) && validateUserInfoFiledisEmpty(binding.edConfirmPassword) && validateConfirmPasswordAndPasswordAreTheSame()
-            ) {
-
-                replaceFragment(
-                    SignUpUserInfoFragment.newInstance(forwardUserInfo()),
-                    containerViewId = R.id.container
-                )
+    private fun validateAllFields() {
+        if (validateUserInfoFiledisEmpty(binding.edName) && validateUserInfoFiledisEmpty(binding.edEmail) && validateUserInfoFiledisEmpty(
+                binding.edPassword
+            ) && validateUserInfoFiledisEmpty(binding.edConfirmPassword) && validateConfirmPasswordAndPasswordAreTheSame()
+        ) {
+            viewModel.onNextEmailButtonCLicked(forwardUserInfo(), filePath)
 
 
-            } else {
-                return@setOnClickListener
-            }
         }
+
+    }
+
+    fun navigateToNextScreen() {
+        replaceFragment(
+            SignUpUserInfoFragment.newInstance(forwardUserInfo()),
+            containerViewId = R.id.container
+        )
     }
 
 
     private fun forwardUserInfo(): User {
-        var user = User()
+        val user = User()
         user.name = binding.edName.editText?.text.toString()
         user.email = binding.edEmail.editText?.text.toString()
         user.password = binding.edConfirmPassword.editText?.text.toString()
         return user
     }
 
-
-    private fun setStepper() {
-
-        val stepsList = ArrayList<StepBean>()
-        val stepBean0 = StepBean("1", -1)
-        val stepBean1 = StepBean("2", -1)
-        val stepBean2 = StepBean("3", -1)
-        stepsList.add(stepBean0)
-        stepsList.add(stepBean1)
-        stepsList.add(stepBean2)
-        binding.stepView.setStepViewTexts(stepsList)
-            .setStepsViewIndicatorCompletedLineColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.orange
-                )
-            )
-            .setStepsViewIndicatorUnCompletedLineColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.grey
-                )
-            )
-            .setStepsViewIndicatorCompleteIcon(
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.step_view_complete
-                )
-            )
-            .setStepsViewIndicatorDefaultIcon(
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.step_view_uncomplete
-                )
-            )
-
-    }
-
-    private fun onUplodedButtomSelected() {
+    private fun onUploadedButtonSelected() {
         binding.uploadPhotoButton.setOnClickListener {
-            handlePermission()
+            handleStoragePermission({ selectImage(PICK_IMAGE_REQUEST) }, PERMISSION_CODE)
         }
     }
 
-    private fun selectImage() {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_PICK
-        startActivityForResult(
-            Intent.createChooser(intent, "Select Image from here...."),
-            PICK_IMAGE_REQUEST
-        )
 
+    private fun bindProfilePicture() {
+        val inputStream = context?.contentResolver?.openInputStream(filePath)
+        val selectedImage = BitmapFactory.decodeStream(inputStream)
+        binding.uploadedPic.setImageBitmap(selectedImage)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        //checking request code and result code
-        //if request code and result code is PICK_IMAGE_REQUEST and
-        //resultCode is RESULT_OK
-        //then set image in the image view
-
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK &&
             data != null && data.data != null
         ) {
-           filePath= data.data!!
+            filePath = data.data!!
+
             try {
-                val inputStream=context?.contentResolver?.openInputStream(filePath)
-                val selectedImage=BitmapFactory.decodeStream(inputStream)
-                binding.uploadedPic.setImageBitmap(selectedImage)
-                val shre=activity!!.getSharedPreferences("myPrref", Context.MODE_PRIVATE).edit()
-                shre.putString("Userphoto", filePath.toString())
-                shre.commit()
+                bindProfilePicture()
+                //viewModel.cacheProfilePicture(filePath)
+                // viewModel.onNextEmailButtonCLicked(forwardUserInfo(), filePath)
+                binding.nextButton.isEnabled = true
 
 
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-
-    companion object {
-        fun newInstance() =
-            SignUpEmailFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
-    }
-    private fun handlePermission() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE
-                ) == PackageManager.PERMISSION_DENIED
-            ) {
-                val permission = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                requestPermissions(
-                    permission
-                    , PERMISSION_CODE
-                )
-            } else {
-                selectImage()
-            }
-        }
-    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -222,8 +166,8 @@ class SignUpEmailFragment : Fragment() {
     ) {
         when (requestCode) {
             PERMISSION_CODE -> {
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    selectImage()
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    selectImage(PICK_IMAGE_REQUEST)
                 } else {
                     Toast.makeText(requireContext(), "Permission Denied", Toast.LENGTH_SHORT).show()
                 }
@@ -231,5 +175,23 @@ class SignUpEmailFragment : Fragment() {
         }
 
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+    companion object {
+
+        private const val PICK_IMAGE_REQUEST = 22
+        private const val PERMISSION_CODE = 1001
+        fun newInstance() =
+            SignUpEmailFragment().apply {
+                arguments = Bundle().apply {
+
+                }
+            }
+    }
+
 
 }

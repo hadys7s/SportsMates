@@ -15,6 +15,7 @@ import com.example.sportsmates.R
 import com.example.sportsmates.databinding.SignUpSportFargmentBinding
 import com.example.sportsmates.ext.openTopActivity
 import com.example.sportsmates.ext.replaceFragment
+import com.example.sportsmates.ext.setStepper
 import com.example.sportsmates.home.MainActivity
 import com.example.sportsmates.signUp.SignUpActivity
 import com.example.sportsmates.signUp.data.model.User
@@ -41,7 +42,7 @@ class SignUpSportsFragment : Fragment() {
         binding.doneButton.setOnClickListener {
             if (validateSelectOnlyThreeSports()) {
                 // view model signUp
-                viewModel.onRegisterButtonCLicked(signUpUserInfo())
+                viewModel.onDoneButtonClicked(signUpUserInfo())
 
 
             }
@@ -51,7 +52,7 @@ class SignUpSportsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setStepper()
+        setStepper(1, 1, -1, binding.stepper)
         doneButton()
         attachEventObservers()
 
@@ -105,42 +106,6 @@ class SignUpSportsFragment : Fragment() {
         return user
     }
 
-
-    private fun setStepper() {
-        val stepsList = ArrayList<StepBean>()
-        val stepBean0 = StepBean("1", 1)
-        val stepBean1 = StepBean("2", 1)
-        val stepBean2 = StepBean("3", -1)
-        stepsList.add(stepBean0)
-        stepsList.add(stepBean1)
-        stepsList.add(stepBean2)
-        binding.stepper.setStepViewTexts(stepsList)
-            .setStepsViewIndicatorCompletedLineColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.orange
-                )
-            )
-            .setStepsViewIndicatorUnCompletedLineColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.grey
-                )
-            )
-            .setStepsViewIndicatorCompleteIcon(
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.step_view_complete
-                )
-            )
-            .setStepsViewIndicatorDefaultIcon(
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.step_view_uncomplete
-                )
-            )
-
-    }
 
     override fun onDestroy() {
         super.onDestroy()
