@@ -14,6 +14,7 @@ class CoachFragment : Fragment() {
 
     private var _binding: CoachFragmentBinding? = null
     private val binding get() = _binding!!
+    private lateinit var coachAdapter: CoachAdapter
 
 
     override fun onCreateView(
@@ -27,6 +28,11 @@ class CoachFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+    }
+
+    fun setCoaches(newsList: List<Coach>) {
+        coachAdapter = CoachAdapter(newsList, activity)
+        binding.coachList.adapter = coachAdapter
     }
 
     override fun onDestroy() {

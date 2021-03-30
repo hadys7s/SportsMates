@@ -27,6 +27,9 @@ ext {
     def glideCompilerVersion = '4.7.1'
     def glideTransformationVersion = '4.3.0'
 
+    def imageSliderVersion = '1.0.3'
+
+
 
 
 
@@ -54,6 +57,7 @@ ext {
             glideTransformation   : "jp.wasabeef:glide-transformations:${glideTransformationVersion}",
             analytics             : "com.google.firebase:firebase-analytics-ktx",
             fireBaseAuth          : "com.google.firebase:firebase-auth-ktx",
+            imageSlider          :  "io.github.ivanespitiac:imageslider:${imageSliderVersion}",
             firebaseDatabase      : "com.google.firebase:firebase-database-ktx"
     ]
 }
