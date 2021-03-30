@@ -1,5 +1,7 @@
 package com.example.sportsmates.profile
 
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +9,8 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import com.bumptech.glide.Glide
 import com.example.sportsmates.databinding.ProfileFragmentBinding
 import com.example.sportsmates.ext.openTopActivity
 import com.example.sportsmates.signUp.SignUpActivity
@@ -39,18 +43,20 @@ class ProfileFragment : Fragment() {
         fetchArguments()
         attachEventObservers()
         attachCLickListeners()
-
     }
 
     private fun fetchArguments() {
         viewModel.fetchUserData()
+        viewModel.getUserImage()
     }
-
     private fun attachEventObservers() {
         viewModel.userData.observe(this, Observer { userData ->
           //  Toast.makeText(activity, userData?.name, Toast.LENGTH_LONG).show()
             bindUserData(userData)
 
+        })
+        viewModel.userImage.observe(this, Observer { imageUri->
+            setUserImage(imageUri)
         })
     }
 
@@ -63,6 +69,12 @@ class ProfileFragment : Fragment() {
             viewModel.logout()
             openTopActivity(activity, SignUpActivity())
         }
+    }
+
+    private fun setUserImage(uri: Uri){
+       Glide.with(activity!!)
+           .load(uri)
+           .into(binding.profileImage)
     }
 
     private fun bindUserData(userInfo: User?) {
