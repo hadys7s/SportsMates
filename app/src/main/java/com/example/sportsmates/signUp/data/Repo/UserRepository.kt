@@ -1,6 +1,5 @@
 package com.example.sportsmates.signUp.data.Repo
 
-import android.content.ContentValues.TAG
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -8,10 +7,13 @@ import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.utils.SingleLiveEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import java.util.*
+
 
 class UserRepository(
     private val userAuth: FirebaseAuth
@@ -20,7 +22,7 @@ class UserRepository(
     var signUpAuthSuccess = SingleLiveEvent<Any>()
     var signUpAuthFailed = MutableLiveData<String>()
     var uploadImageFailed = MutableLiveData<String>()
-    var retriveImage=MutableLiveData<Uri>()
+    var retriveImage = MutableLiveData<Uri>()
     var signUpSuccess = SingleLiveEvent<Any>()
     var signUpFailed = MutableLiveData<String>()
     var loginFailed = MutableLiveData<String>()
@@ -45,6 +47,16 @@ class UserRepository(
 
     fun logout() {
         userAuth.signOut()
+    }
+
+    private fun deleteUser() {
+        Firebase.auth.currentUser.delete()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "User account deleted.")
+                }
+
+            }
     }
 
     fun signUp(user: User?, filepath: Uri) {
@@ -90,7 +102,7 @@ class UserRepository(
             }
     }
 
-   private fun uploadPhoto(filepath: Uri) {
+    private fun uploadPhoto(filepath: Uri) {
 
         val storageReference =
             FirebaseStorage.getInstance().reference.child("images/" + userAuth.currentUser.uid)
@@ -105,25 +117,62 @@ class UserRepository(
             }
 
     }
-      fun retrivePhoto(){
+
+    fun retrievePhoto() {
         val storageReference =
             FirebaseStorage.getInstance().reference.child("images/" + userAuth.currentUser.uid)
-               storageReference .downloadUrl.addOnSuccessListener {imageUri->
-                    Log.d(TAG, "ImageUpload:Success")
-                   retriveImage.postValue(imageUri)
-                }
-                .addOnFailureListener {
-                    Log.d(TAG, it.toString())
-                }
+        storageReference.downloadUrl.addOnSuccessListener { imageUri ->
+            Log.d(TAG, "ImageUpload:Success")
+            retriveImage.postValue(imageUri)
+        }
+            .addOnFailureListener {
+                Log.d(TAG, it.toString())
+            }
 
     }
 
 
     fun checkCurrentUserAuthorization(): Boolean {
         // [START check_current_user]
-        val user = userAuth.currentUser
-        return user != null
-        // [END check_current_user]
+        if (Firebase.auth.currentUser != null) {
+            var authorized = false
+            FirebaseDatabase.getInstance().getReference("Users")
+                .child(Firebase.auth.currentUser.uid).addListenerForSingleValueEvent(object :
+                    ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        // This callback will fire even if the node doesn't exist, so now check for existence
+                        if (dataSnapshot.exists()) {
+                            authorized = dataSnapshot.exists()
+
+                        } else {
+                            deleteUser()
+                            deleteProfileImage()
+
+                        }
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+
+                    }
+                })
+            return authorized
+            // [END check_current_user]
+        } else {
+            return false
+        }
+    }
+
+    private fun deleteProfileImage() {
+        val storageReference =
+            FirebaseStorage.getInstance().reference.child("images/" + userAuth.currentUser.uid)
+        storageReference.delete().addOnSuccessListener {
+            Log.d(TAG, "ImageUpload:Success")
+        }
+            .addOnFailureListener {
+                Log.d(TAG, it.toString())
+            }
+
+
     }
 
     companion object {

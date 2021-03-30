@@ -49,13 +49,14 @@ class ProfileFragment : Fragment() {
         viewModel.fetchUserData()
         viewModel.getUserImage()
     }
+
     private fun attachEventObservers() {
         viewModel.userData.observe(this, Observer { userData ->
-          //  Toast.makeText(activity, userData?.name, Toast.LENGTH_LONG).show()
+            //  Toast.makeText(activity, userData?.name, Toast.LENGTH_LONG).show()
             bindUserData(userData)
 
         })
-        viewModel.userImage.observe(this, Observer { imageUri->
+        viewModel.userImage.observe(this, Observer { imageUri ->
             setUserImage(imageUri)
         })
     }
@@ -71,10 +72,11 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun setUserImage(uri: Uri){
-       Glide.with(activity!!)
-           .load(uri)
-           .into(binding.profileImage)
+    private fun setUserImage(uri: Uri) {
+        Glide.with(activity!!)
+            .load(uri)
+            .circleCrop()
+            .into(binding.profileImage)
     }
 
     private fun bindUserData(userInfo: User?) {

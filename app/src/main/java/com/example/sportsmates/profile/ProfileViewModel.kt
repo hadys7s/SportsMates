@@ -24,6 +24,6 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
         userRepository.logout()
     }
     fun getUserImage(){
-        userRepository.retrivePhoto()
+        userRepository.retrievePhoto()
     }
 }

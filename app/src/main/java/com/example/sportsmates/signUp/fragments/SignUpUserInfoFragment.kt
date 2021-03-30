@@ -10,7 +10,7 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.SignUpUserInfoFragmentBinding
-import com.example.sportsmates.ext.replaceFragment
+import com.example.sportsmates.ext.pushFragment
 import com.example.sportsmates.ext.setStepper
 import com.example.sportsmates.signUp.data.model.User
 import com.google.android.material.textfield.TextInputLayout
@@ -47,7 +47,7 @@ class SignUpUserInfoFragment : Fragment() {
     private fun nextButton() {
         binding.nextButton2.setOnClickListener {
             if (validation())
-                replaceFragment(
+                pushFragment(
                     SignUpSportsFragment.newInstance(forwardUserInfo()),
                     containerViewId = R.id.container
                 )

@@ -12,12 +12,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.SignUpEmailPasswordFragmentBinding
-import com.example.sportsmates.ext.handleStoragePermission
-import com.example.sportsmates.ext.replaceFragment
-import com.example.sportsmates.ext.selectImage
-import com.example.sportsmates.ext.setStepper
+import com.example.sportsmates.ext.*
 import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
 import com.google.android.material.textfield.TextInputLayout
@@ -109,8 +107,8 @@ class SignUpEmailFragment : Fragment() {
 
     }
 
-    fun navigateToNextScreen() {
-        replaceFragment(
+    private fun navigateToNextScreen() {
+        pushFragment(
             SignUpUserInfoFragment.newInstance(forwardUserInfo()),
             containerViewId = R.id.container
         )
@@ -135,7 +133,10 @@ class SignUpEmailFragment : Fragment() {
     private fun bindProfilePicture() {
         val inputStream = context?.contentResolver?.openInputStream(filePath)
         val selectedImage = BitmapFactory.decodeStream(inputStream)
-        binding.uploadedPic.setImageBitmap(selectedImage)
+        Glide.with(activity!!)
+            .load(selectedImage)
+            .circleCrop()
+            .into(binding.uploadedPic)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

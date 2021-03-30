@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.SignInFragmentBinding
 import com.example.sportsmates.ext.openTopActivity
+import com.example.sportsmates.ext.pushFragment
 import com.example.sportsmates.ext.replaceFragment
 import com.example.sportsmates.home.MainActivity
 import com.example.sportsmates.login.SignInViewModel
@@ -48,7 +49,7 @@ class SignInFragment : Fragment() {
 
     private fun attachCLickListeners() {
         binding.tvSelectableSignup.setOnClickListener {
-            replaceFragment(SignUpEmailFragment.newInstance(), containerViewId = R.id.container)
+            pushFragment(SignUpEmailFragment.newInstance(), containerViewId = R.id.container)
         }
 
         binding.loginButton.setOnClickListener {

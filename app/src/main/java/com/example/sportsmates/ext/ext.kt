@@ -46,6 +46,20 @@ fun Fragment.replaceFragment(
         ?.commit()
 }
 
+fun Fragment.pushFragment(
+    fragment: Fragment,
+    tag: String? = null,
+    @IdRes containerViewId: Int
+) {
+    val ft = activity?.supportFragmentManager
+        ?.beginTransaction()
+        ?.replace(containerViewId, fragment, tag)
+        ?.addToBackStack(fragment.javaClass.name)
+        ?.commit()
+
+}
+
+
 fun Fragment.handleStoragePermission(
     onSelectImageCallback: (() -> Unit), PERMISSION_CODE: Int
 ) {
