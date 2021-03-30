@@ -15,7 +15,7 @@ val SignUpModule = module {
     factory { UserRepository(get()) }
     viewModel { SignUpViewModel(get()) }
     viewModel { SignInViewModel(get()) }
-    viewModel { ProfileViewModel(get(), androidApplication()) }
+    viewModel { ProfileViewModel(get()) }
     viewModel { SplashViewModel(get()) }
 
 

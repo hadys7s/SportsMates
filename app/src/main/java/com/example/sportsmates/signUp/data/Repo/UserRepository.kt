@@ -20,6 +20,7 @@ class UserRepository(
     var signUpAuthSuccess = SingleLiveEvent<Any>()
     var signUpAuthFailed = MutableLiveData<String>()
     var uploadImageFailed = MutableLiveData<String>()
+    var retriveImage=MutableLiveData<Uri>()
     var signUpSuccess = SingleLiveEvent<Any>()
     var signUpFailed = MutableLiveData<String>()
     var loginFailed = MutableLiveData<String>()
@@ -102,6 +103,18 @@ class UserRepository(
             .addOnFailureListener {
                 uploadImageFailed.postValue(it.message.toString())
             }
+
+    }
+      fun retrivePhoto(){
+        val storageReference =
+            FirebaseStorage.getInstance().reference.child("images/" + userAuth.currentUser.uid)
+               storageReference .downloadUrl.addOnSuccessListener {imageUri->
+                    Log.d(TAG, "ImageUpload:Success")
+                   retriveImage.postValue(imageUri)
+                }
+                .addOnFailureListener {
+                    Log.d(TAG, it.toString())
+                }
 
     }
 
