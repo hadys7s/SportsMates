@@ -38,7 +38,6 @@ class SignUpUserInfoFragment : Fragment() {
     }
 
     private fun setupMenu(option1: String, option2: String, editText: EditText?) {
-
         val items = listOf(option1, option2)
         val adapter = ArrayAdapter(requireContext(), R.layout.sign_up_spinner_list_item, items)
         (editText as? AutoCompleteTextView)?.setAdapter(adapter)

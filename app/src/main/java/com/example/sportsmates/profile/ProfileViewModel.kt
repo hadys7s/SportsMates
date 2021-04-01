@@ -9,11 +9,11 @@ import com.example.sportsmates.signUp.data.model.User
 class ProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     var userData = MutableLiveData<User?>()
-    var userImage=MutableLiveData<Uri>()
+    var userImage = MutableLiveData<Uri>()
 
     init {
         userData = userRepository.userData
-        userImage=userRepository.retriveImage
+        userImage = userRepository.retriveImage
     }
 
     fun fetchUserData() {
@@ -23,7 +23,8 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
     fun logout() {
         userRepository.logout()
     }
-    fun getUserImage(){
+
+    fun getUserImage() {
         userRepository.retrievePhoto()
     }
 }

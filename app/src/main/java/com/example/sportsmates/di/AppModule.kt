@@ -1,6 +1,7 @@
 package com.example.sportsmates.di
 
 import android.app.Application
+import com.example.sportsmates.coach.CoachViewModel
 import com.example.sportsmates.signUp.data.Repo.UserRepository
 import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
 import com.example.sportsmates.login.SignInViewModel
@@ -17,6 +18,7 @@ val SignUpModule = module {
     viewModel { SignInViewModel(get()) }
     viewModel { ProfileViewModel(get()) }
     viewModel { SplashViewModel(get()) }
+    viewModel { CoachViewModel() }
 
 
     single { FirebaseAuth.getInstance() }

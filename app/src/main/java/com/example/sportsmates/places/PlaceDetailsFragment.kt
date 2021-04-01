@@ -1,4 +1,4 @@
-package com.example.sportsmates.coach
+package com.example.sportsmates.places
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.sportsmates.databinding.FragmentCoachDetailsBinding
 
-class CoachDetailsFragment : Fragment() {
+class PlaceDetailsFragment : Fragment() {
 
     private var _binding: FragmentCoachDetailsBinding? = null
     private val binding get() = _binding!!
@@ -53,7 +53,7 @@ class CoachDetailsFragment : Fragment() {
 
     companion object {
         fun newInstance() =
-            CoachDetailsFragment().apply {
+            PlaceDetailsFragment().apply {
                 arguments = Bundle().apply {
 
                 }

@@ -11,7 +11,7 @@ data class User(
     var name: String? = "",
     @SerializedName("password")
     var password: String? = "",
-    @SerializedName("phoneNumber")
+    @SerializedName("email")
     var email: String? = "",
     @SerializedName("phoneNumber")
     val phoneNumber: String? = "",
@@ -22,7 +22,7 @@ data class User(
     @SerializedName("city")
     var city: String? = "",
     @SerializedName("sports")
-    var sportsList: List<String>? = listOf()
+    var sportsList: MutableList<String>? = mutableListOf()
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
