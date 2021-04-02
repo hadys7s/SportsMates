@@ -1,19 +1,15 @@
 package com.example.sportsmates.coach
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sportsmates.databinding.CoachFragmentBinding
-import com.example.sportsmates.places.Place
-import com.example.sportsmates.places.PlaceAdapter
-import com.example.sportsmates.places.PlaceFragment
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
+
 
 class CoachFragment : Fragment() {
 
@@ -44,14 +40,17 @@ class CoachFragment : Fragment() {
 
     private fun setupList() {
         binding.coachList.run {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
     }
 
 
-    fun setCoaches(newsList: List<Coach>?) {
+    private fun setCoaches(newsList: List<Coach>?) {
         coachAdapter = CoachAdapter(newsList, activity)
         binding.coachList.adapter = coachAdapter
+        coachAdapter.onItemClick = {
+            CoachDetailsActivity.start(activity, it.toUiModel())
+        }
     }
 
     override fun onDestroy() {

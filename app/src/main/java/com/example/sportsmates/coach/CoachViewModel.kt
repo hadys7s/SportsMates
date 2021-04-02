@@ -13,23 +13,24 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 import okhttp3.internal.wait
 
-class CoachViewModel() : ViewModel()  {
+class CoachViewModel() : ViewModel() {
 
     private var listOfSCoaches: MutableList<Coach>? = mutableListOf()
     val _listOfSCoachesEvent = MutableLiveData<List<Coach>?>()
+    var _listOfSCoachesimagesEvent = MutableLiveData<MutableList<StorageReference>?>()
 
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            _listOfSCoachesEvent.postValue(getRelatedCoaches(getUserSportsList()))
-
+            val coaches = getRelatedCoaches(getUserSportsList())
+            coaches?.forEach { coach ->
+                coach.imageList = retrievePhoto(coach.coachId)
+            }
+            _listOfSCoachesEvent.postValue(coaches)
 
         }
 
@@ -45,9 +46,7 @@ class CoachViewModel() : ViewModel()  {
                 var coach: Coach? = it.getValue(Coach::class.java)
                 //  listOfSCoaches = listOfSports?.filter { it in coach?.sportName!! }
                 if (listOfSports!!.contains(coach?.sportName)) {
-                    coach?.imageList = retrievePhoto(coach?.coachId)
                     listOfSCoaches?.add(coach!!)
-
                 }
             }
 
@@ -56,8 +55,8 @@ class CoachViewModel() : ViewModel()  {
         return listOfSCoaches
     }
 
-    suspend fun retrievePhoto(coachId: String?): List<StorageReference>? {
-        var _listOfSCoachesimages: List<StorageReference>? = listOf()
+    suspend fun retrievePhoto(coachId: String?): MutableList<StorageReference>? {
+        var _listOfSCoachesimages: MutableList<StorageReference>? = mutableListOf()
 
         val listReference =
             FirebaseStorage.getInstance().reference.child("/coach/$coachId")
@@ -67,11 +66,25 @@ class CoachViewModel() : ViewModel()  {
             _listOfSCoachesimages = listResult.items
         }.await()
 
-
-
         return _listOfSCoachesimages
 
+
     }
+
+
+    suspend fun retrievePhotoDetails(coachId: String?) {
+        val listReference =
+            FirebaseStorage.getInstance().reference.child("/coach/$coachId")
+
+        listReference.listAll().addOnSuccessListener { listResult ->
+            Log.d(TAG, listResult.items.toString())
+            _listOfSCoachesimagesEvent.postValue( listResult.items)
+        }.await()
+
+
+    }
+
+
 
     private suspend fun getUserSportsList(): MutableList<String>? {
         var listOfSports: MutableList<String>? = mutableListOf()
