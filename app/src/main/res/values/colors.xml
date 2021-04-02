@@ -17,4 +17,5 @@
     <color name="beg">#ffe4b1</color>
     <color name="red_header">#D63308</color>
     <color name="colorSeparator">#fff2f2f3</color>
+    <color name="status_bar_color">#C8FFFFFF</color>
 </resources>

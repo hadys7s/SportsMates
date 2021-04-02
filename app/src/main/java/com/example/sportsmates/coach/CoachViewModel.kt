@@ -72,14 +72,14 @@ class CoachViewModel() : ViewModel() {
     }
 
 
-    suspend fun retrievePhotoDetails(coachId: String?) {
+     fun retrievePhotoDetails(coachId: String?) {
         val listReference =
             FirebaseStorage.getInstance().reference.child("/coach/$coachId")
 
         listReference.listAll().addOnSuccessListener { listResult ->
             Log.d(TAG, listResult.items.toString())
             _listOfSCoachesimagesEvent.postValue( listResult.items)
-        }.await()
+        }
 
 
     }

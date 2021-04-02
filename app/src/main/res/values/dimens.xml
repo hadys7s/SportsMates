@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="toolbar_margin_top_in_full_screen_mode">50dp</dimen>
+</resources>

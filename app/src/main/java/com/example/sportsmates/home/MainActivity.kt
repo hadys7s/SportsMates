@@ -7,6 +7,7 @@ import com.example.sportsmates.SignUp.SignInFragment
 import com.example.sportsmates.coach.CoachFragment
 import com.example.sportsmates.databinding.ActivityMainBinding
 import com.example.sportsmates.ext.replaceFragment
+import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
 import com.example.sportsmates.profile.ProfileFragment
 
 
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+     //   setFullScreenWithTransparentStatusBar()
         bottomNavigationController()
 
 
