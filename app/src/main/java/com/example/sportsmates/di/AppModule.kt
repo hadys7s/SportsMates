@@ -5,6 +5,7 @@ import com.example.sportsmates.coach.CoachViewModel
 import com.example.sportsmates.signUp.data.Repo.UserRepository
 import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
 import com.example.sportsmates.login.SignInViewModel
+import com.example.sportsmates.place.PLaceViewModel
 import com.example.sportsmates.profile.ProfileViewModel
 import com.example.sportsmates.splash.SplashViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -19,6 +20,7 @@ val SignUpModule = module {
     viewModel { ProfileViewModel(get()) }
     viewModel { SplashViewModel(get()) }
     viewModel { CoachViewModel() }
+    viewModel { PLaceViewModel() }
 
 
     single { FirebaseAuth.getInstance() }

@@ -59,7 +59,7 @@
                 android:layout_marginTop="34dp">
 
                 <TextView
-                    android:id="@+id/coachName"
+                    android:id="@+id/partnerName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -81,10 +81,10 @@
                     android:fontFamily="sans-serif-light"
                     android:text="265 Mansoura, Egypt"
                     android:textSize="13sp"
-                    app:layout_constraintEnd_toEndOf="@+id/coachName"
+                    app:layout_constraintEnd_toEndOf="@+id/partnerName"
                     app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="@+id/coachName"
-                    app:layout_constraintTop_toBottomOf="@+id/coachName" />
+                    app:layout_constraintStart_toStartOf="@+id/partnerName"
+                    app:layout_constraintTop_toBottomOf="@+id/partnerName" />
 
                 <TextView
                     android:id="@+id/detailsHeader"
@@ -135,9 +135,9 @@
                     android:text="Football"
                     android:textColor="@color/green"
                     android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/coachName"
+                    app:layout_constraintBottom_toBottomOf="@+id/partnerName"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/coachName" />
+                    app:layout_constraintTop_toTopOf="@+id/partnerName" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </FrameLayout>

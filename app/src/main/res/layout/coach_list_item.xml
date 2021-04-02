@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/coachImage"
+            android:id="@+id/partnerImage"
             android:layout_width="match_parent"
             android:layout_height="117dp"
             android:scaleType="fitXY"
@@ -25,7 +25,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/coachName"
+            android:id="@+id/partnerName"
             android:layout_marginStart="@dimen/dimen_12"
             android:layout_marginTop="@dimen/dimen_8"
             android:fontFamily="@font/roboto_regular"
@@ -33,27 +33,28 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/coachImage"
+            app:layout_constraintTop_toBottomOf="@id/partnerImage"
             tools:text="Hady Zain"
 
             />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/coachSport"
+            android:id="@+id/partnerSport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_4"
             android:fontFamily="@font/roboto_regular"
             android:textColor="@color/black"
+
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@id/coachName"
+            app:layout_constraintEnd_toEndOf="@id/partnerName"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/coachName"
-            app:layout_constraintTop_toBottomOf="@id/coachName"
+            app:layout_constraintStart_toStartOf="@id/partnerName"
+            app:layout_constraintTop_toBottomOf="@id/partnerName"
             tools:text="Weight Loss" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/coachAddress"
+            android:id="@+id/partnerAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_4"
@@ -62,10 +63,10 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/coachSport"
+            app:layout_constraintEnd_toEndOf="@id/partnerSport"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/coachSport"
-            app:layout_constraintTop_toBottomOf="@id/coachSport"
+            app:layout_constraintStart_toStartOf="@id/partnerSport"
+            app:layout_constraintTop_toBottomOf="@id/partnerSport"
             tools:text="265 Mansoura, Egypt" />
 
         <com.google.android.material.chip.Chip
@@ -78,7 +79,7 @@
             android:layout_marginEnd="@dimen/dimen_16"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/coachImage" />
+            app:layout_constraintTop_toBottomOf="@+id/partnerImage" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

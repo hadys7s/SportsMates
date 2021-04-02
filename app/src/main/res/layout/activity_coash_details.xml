@@ -9,8 +9,7 @@
         android:id="@+id/sliderContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black"
-        >
+        android:background="@color/black">
 
         <com.smarteist.autoimageslider.SliderView
             android:id="@+id/coachImagesSlider"
@@ -156,14 +155,40 @@
                     android:text="Football"
                     android:textColor="@color/green"
                     android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/coachName"
+                    app:layout_constraintBottom_toBottomOf="@+id/partnerName"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/coachName" />
+                    app:layout_constraintTop_toTopOf="@+id/partnerName" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </FrameLayout>
 
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/change_language_save_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/dimen_32"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:layout_marginEnd="@dimen/dimen_32"
+            android:layout_marginBottom="@dimen/dimen_16"
+            android:text="Book Now"
+            android:textAllCaps="false"
+            app:cornerRadius="@dimen/dimen_16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>
