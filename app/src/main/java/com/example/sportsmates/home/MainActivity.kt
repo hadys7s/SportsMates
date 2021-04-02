@@ -8,6 +8,7 @@ import com.example.sportsmates.coach.CoachFragment
 import com.example.sportsmates.databinding.ActivityMainBinding
 import com.example.sportsmates.ext.replaceFragment
 import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
+import com.example.sportsmates.place.PlaceFragment
 import com.example.sportsmates.profile.ProfileFragment
 
 
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-     //   setFullScreenWithTransparentStatusBar()
+        //   setFullScreenWithTransparentStatusBar()
         bottomNavigationController()
 
 
@@ -42,6 +43,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.places -> {
                     // Respond to navigation item 2 reselection
+                    replaceFragment(
+                        PlaceFragment.newInstance(),
+                        containerViewId = R.id.main_container_view
+                    )
                     true
                 }
                 R.id.discover -> {
@@ -50,7 +55,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.coach -> {
                     // Respond to navigation item 2 reselection
-                    replaceFragment(CoachFragment.newInstance(), containerViewId = R.id.main_container_view)
+                    replaceFragment(
+                        CoachFragment.newInstance(),
+                        containerViewId = R.id.main_container_view
+                    )
 
                     true
                 }

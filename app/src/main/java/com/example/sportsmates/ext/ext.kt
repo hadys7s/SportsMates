@@ -8,6 +8,7 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import androidx.annotation.ColorRes
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -43,16 +44,23 @@ fun Activity.isNotchDevice(): Boolean {
             window.decorView.rootWindowInsets.displayCutout != null
 }
 
+fun Activity.setFullScreenWithTransparentStatusBar(
+    @ColorRes color: Int = android.R.color.transparent,
+    lightStatusBar: Boolean = true
+) {
 
-fun Activity.setFullScreenWithTransparentStatusBar() {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && lightStatusBar) {
+        this.window?.decorView?.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+    } else {
+        this.window?.decorView?.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
     }
+    this.window?.statusBarColor = ContextCompat.getColor(this, color)
 }
-
 
 
 fun Fragment.replaceFragment(

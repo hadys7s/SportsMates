@@ -23,13 +23,13 @@ class CoachAdapter(private val CoachList: List<Coach>?, private val context: Fra
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(coachItem: Coach) {
-            binding.coachName.text = coachItem.name
-            binding.coachSport.text = coachItem.sportName
-            binding.coachAddress.text = coachItem.address
+            binding.partnerName.text = coachItem.name
+            binding.partnerSport.text = coachItem.sportName
+            binding.partnerAddress.text = coachItem.address
             binding.pricePerHour.text = coachItem.pricePerHour + "/hour"
             GlideApp.with(context!!)
                 .load(coachItem.imageList?.get(0))
-                .into(binding.coachImage)
+                .into(binding.partnerImage)
             itemView.setOnClickListener { onItemClick?.invoke(coachItem) }
         }
     }
