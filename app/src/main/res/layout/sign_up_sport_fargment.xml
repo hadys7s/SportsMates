@@ -81,7 +81,7 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Vollyball"
+                android:text="Volleyball"
           android:textStyle="bold" />
 
             <com.google.android.material.chip.Chip
@@ -141,7 +141,7 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Taekwondo"
+                android:text="Crossfit"
                 android:textStyle="bold"
 
                 />

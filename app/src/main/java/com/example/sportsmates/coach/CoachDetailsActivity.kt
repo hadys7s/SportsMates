@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
-import com.example.sportsmates.R
 import com.example.sportsmates.databinding.ActivityCoashDetailsBinding
+import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
+import com.smarteist.autoimageslider.SliderAnimations
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -25,6 +27,7 @@ class CoachDetailsActivity : AppCompatActivity() {
         binding = ActivityCoashDetailsBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        setFullScreenWithTransparentStatusBar()
         setupSlider()
         attachCLickListeners()
         fetchArguments()
@@ -34,14 +37,15 @@ class CoachDetailsActivity : AppCompatActivity() {
     }
 
     private fun observeCoachImages(coachId: String?) {
-        GlobalScope.launch {
-            viewModel.retrievePhotoDetails(coachId)
-        }
+        viewModel.retrievePhotoDetails(coachId)
     }
 
     private fun setupSlider() {
         sliderAdapter = SliderAdapterExample(this)
         binding.coachImagesSlider.setSliderAdapter(sliderAdapter)
+        binding.coachImagesSlider.setIndicatorAnimation(IndicatorAnimationType.DROP);
+        binding.coachImagesSlider.setSliderTransformAnimation(SliderAnimations.CUBEOUTROTATIONTRANSFORMATION);
+        binding.coachImagesSlider.startAutoCycle();
     }
 
     private fun fetchArguments() {

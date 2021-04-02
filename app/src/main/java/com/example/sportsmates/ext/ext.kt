@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.view.LayoutInflater
+import android.view.View
+import android.view.WindowManager
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -35,6 +37,23 @@ fun AppCompatActivity.openTopActivity(context: Context, targetActivity: Activity
     targetActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
     startActivity(targetActivity)
 }
+
+fun Activity.isNotchDevice(): Boolean {
+    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.P &&
+            window.decorView.rootWindowInsets.displayCutout != null
+}
+
+
+fun Activity.setFullScreenWithTransparentStatusBar() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
+    }
+}
+
+
 
 fun Fragment.replaceFragment(
     fragment: Fragment,
@@ -72,8 +91,7 @@ fun Fragment.handleStoragePermission(
         ) {
             val permission = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
             requestPermissions(
-                permission
-                , PERMISSION_CODE
+                permission, PERMISSION_CODE
             )
         } else {
             onSelectImageCallback()

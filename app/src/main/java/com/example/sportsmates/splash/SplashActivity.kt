@@ -6,6 +6,7 @@ import android.os.Handler
 import androidx.lifecycle.Observer
 import com.example.sportsmates.R
 import com.example.sportsmates.ext.openTopActivity
+import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
 import com.example.sportsmates.home.MainActivity
 import com.example.sportsmates.signUp.SignUpActivity
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -20,6 +21,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         attachEventObservers()
+        setFullScreenWithTransparentStatusBar()
         Timer().schedule(DELAY_FINISH) {
             // do something after 1 second
             viewModel.userAuthorized()
