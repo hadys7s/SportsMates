@@ -2,12 +2,17 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".coach.CoachFragment">
+    android:layout_height="match_parent">
 
-    <TextView
+
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
-
+        android:id="@+id/coachList"
+        android:layout_marginTop="@dimen/dimen_12"
+        android:layout_marginBottom="@dimen/dimen_12"
+        android:layout_marginStart="@dimen/dimen_16"
+        android:layout_marginEnd="@dimen/dimen_16"
+        tools:listitem="@layout/coach_list_item"
+        tools:itemCount="20"
+        android:layout_height="match_parent" />
 </FrameLayout>

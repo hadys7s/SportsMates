@@ -1,12 +1,15 @@
 package com.example.sportsmates.coach
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sportsmates.databinding.CoachFragmentBinding
 import org.koin.android.viewmodel.ext.android.viewModel
+
 
 class CoachFragment : Fragment() {
 
@@ -14,6 +17,7 @@ class CoachFragment : Fragment() {
 
     private var _binding: CoachFragmentBinding? = null
     private val binding get() = _binding!!
+    private lateinit var coachAdapter: CoachAdapter
 
 
     override fun onCreateView(
@@ -26,7 +30,27 @@ class CoachFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setupList()
+        viewModel._listOfSCoachesEvent.observe(this, Observer {
+            setCoaches(it)
+        })
 
+    }
+
+
+    private fun setupList() {
+        binding.coachList.run {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        }
+    }
+
+
+    private fun setCoaches(newsList: List<Coach>?) {
+        coachAdapter = CoachAdapter(newsList, activity)
+        binding.coachList.adapter = coachAdapter
+        coachAdapter.onItemClick = {
+            CoachDetailsActivity.start(activity, it.toUiModel())
+        }
     }
 
     override fun onDestroy() {

@@ -13,6 +13,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.tasks.await
 
 
 class UserRepository(
@@ -102,6 +103,27 @@ class UserRepository(
             }
     }
 
+    /*suspend fun getUserSportsList(): MutableList<String>? {
+        var listOfSports: MutableList<String>? = mutableListOf()
+        GlobalScope.launch(Dispatchers.IO) {
+            FirebaseDatabase.getInstance().getReference("Users")
+                .child(Firebase.auth.currentUser.uid)
+                .get().addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "getUser:Success")
+                        val user: User? = task.result?.getValue(User::class.java)
+                        listOfSports = user?.sportsList
+
+                    } else {
+                        Log.d(TAG, "getUser:Failed", task.exception)
+                    }
+                }.await()
+        }
+
+        return listOfSports
+    }
+*/
+
     private fun uploadPhoto(filepath: Uri) {
 
         val storageReference =
@@ -133,9 +155,8 @@ class UserRepository(
 
 
     fun checkCurrentUserAuthorization(): Boolean {
-        // [START check_current_user]
         if (Firebase.auth.currentUser != null) {
-            var authorized = false
+            var authorized = true
             FirebaseDatabase.getInstance().getReference("Users")
                 .child(Firebase.auth.currentUser.uid).addListenerForSingleValueEvent(object :
                     ValueEventListener {
@@ -154,7 +175,8 @@ class UserRepository(
                     override fun onCancelled(databaseError: DatabaseError) {
 
                     }
-                })
+                }
+                )
             return authorized
             // [END check_current_user]
         } else {

@@ -3,8 +3,7 @@
     package="com.example.sportsmates">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".SportsMatesApp"
@@ -14,16 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SportsMates">
-        <activity android:name=".home.MainActivity"></activity>
+        <activity
+            android:name=".coach.CoachDetailsActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
+
+        <activity android:name=".home.MainActivity" />
         <activity
             android:name=".signUp.SignUpActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
-
         <activity
             android:name=".splash.SplashActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
             <intent-filter>
-
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -74,12 +74,12 @@ class SignUpSportsFragment : Fragment() {
 
     private fun validateSelectOnlyThreeSports(): Boolean {
         return when {
-            getSelectedSports().size > 3 -> {
+            getSelectedSports()?.size!! > 3 -> {
                 Toast.makeText(activity, "Please Select Only 3 Sports ", Toast.LENGTH_SHORT).show()
                 false
 
             }
-            getSelectedSports().isEmpty() -> {
+            getSelectedSports()!!.isEmpty() -> {
                 Toast.makeText(
                     activity,
                     "Please Select Your favourites Sports ",
@@ -93,11 +93,11 @@ class SignUpSportsFragment : Fragment() {
 
     }
 
-    private fun getSelectedSports(): List<String> {
+    private fun getSelectedSports(): MutableList<String>? {
         return binding.sportsGroup.children
             .filter { ((it as Chip).isChecked) }
             .map { (it as Chip).text.toString() }
-            .toList()
+            .toMutableList()
     }
 
     private fun signUpUserInfo(): User? {

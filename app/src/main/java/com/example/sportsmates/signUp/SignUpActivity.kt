@@ -5,6 +5,7 @@ import android.os.Bundle
 
 import com.example.sportsmates.R
 import com.example.sportsmates.SignUp.SignInFragment
+import com.example.sportsmates.coach.CoachFragment
 import com.example.sportsmates.ext.replaceFragment
 
 class SignUpActivity : AppCompatActivity() {

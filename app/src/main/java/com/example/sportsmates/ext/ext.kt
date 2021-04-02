@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.view.LayoutInflater
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -137,3 +138,6 @@ fun Fragment.openTopActivity(activity: FragmentActivity?, targetActivity: Activi
     targetActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
     startActivity(targetActivity)
 }
+
+val Context.inflater: LayoutInflater
+    get() = LayoutInflater.from(this)
