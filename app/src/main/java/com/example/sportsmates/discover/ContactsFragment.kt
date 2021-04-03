@@ -1,54 +1,41 @@
-package com.example.sportsmates.place
+package com.example.sportsmates.discover
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.sportsmates.databinding.FragmentPlaceBinding
+import com.example.sportsmates.databinding.DiscoverFragmentBinding
+import com.example.sportsmates.place.PlaceFragment
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class PlaceFragment : Fragment() {
-    private val viewModel: PLaceViewModel by viewModel()
-    private var _binding: FragmentPlaceBinding? = null
+class ContactsFragment : Fragment() {
+    private var _binding: DiscoverFragmentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var placeAdapter: PlaceAdapter
-
-
+    private val viewModel: ContactsViewModel by viewModel()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentPlaceBinding.inflate(inflater, container, false)
+        _binding = DiscoverFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupList()
-        viewModel._listOfSPlacesEvent.observe(this, Observer {
-            setPlaces(it)
-        })
-
     }
 
-
     private fun setupList() {
-        binding.placesList.run {
+        binding.contactsList.run {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
     }
 
 
-    private fun setPlaces(placesList: List<Place>?) {
-        placeAdapter = PlaceAdapter(placesList, activity)
-        binding.placesList.adapter = placeAdapter
-        placeAdapter.onItemClick = {
-            PlaceDetailsActivity.start(activity, it.toUiModel())
-        }
-    }
+
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -59,5 +46,6 @@ class PlaceFragment : Fragment() {
     companion object {
         fun newInstance() = PlaceFragment()
     }
+
 
 }

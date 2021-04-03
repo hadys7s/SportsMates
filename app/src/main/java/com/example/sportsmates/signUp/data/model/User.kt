@@ -2,6 +2,7 @@ package com.example.sportsmates.signUp.data.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.firebase.storage.StorageReference
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -22,7 +23,8 @@ data class User(
     @SerializedName("city")
     var city: String? = "",
     @SerializedName("sports")
-    var sportsList: MutableList<String>? = mutableListOf()
+    var sportsList: MutableList<String>? = mutableListOf(),
+    var userImage:StorageReference?=null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
