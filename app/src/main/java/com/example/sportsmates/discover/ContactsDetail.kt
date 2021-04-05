@@ -37,7 +37,7 @@ class ContactsDetail : AppCompatActivity() {
     private fun bindData(user: User?) {
         binding.userName.text = user?.name
         binding.useraAddress.text = user?.city
-        binding.userAge.text = user?.age
+        binding.userAge.text = user?.age+" "+"years"
         binding.sports1.text = user?.sportsList?.get(0)
         if (user?.sportsList?.size!! > 1) {
             binding.sports2.text = user.sportsList?.get(1)

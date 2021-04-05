@@ -59,7 +59,7 @@ class ContactsViewModel() : ViewModel() {
                 val children = data.children
                 children.forEach {
                     val user: User? = it.getValue(User::class.java)
-                    if (user!!.city!!.equals(currentUserCity))
+                    if (user!!.city!!.equals(currentUserCity)&&user!!.id!=Firebase.auth.currentUser.uid)
                         _listOfUsersInTheSameCity?.add(user)
                 }
             }.await()
