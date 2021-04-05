@@ -11,17 +11,25 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_grey">
+        android:background="@color/light_grey"
+        >
+        <androidx.cardview.widget.CardView
+            android:id="@+id/user_img_container"
+            android:layout_width="128dp"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
         <ImageView
             android:id="@+id/userImage"
             android:layout_width="128dp"
             android:scaleType="fitXY"
             android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             tools:src="@drawable/coach_bg"
             />
+        </androidx.cardview.widget.CardView>
+
         <TextView
             android:id="@+id/userName"
             android:layout_width="wrap_content"
@@ -33,7 +41,7 @@
             android:textColor="@color/black"
             android:textSize="24dp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/userImage"
+            app:layout_constraintStart_toEndOf="@id/user_img_container"
             app:layout_constraintTop_toTopOf="parent"/>
         <TextView
             android:id="@+id/useraAddress"
@@ -41,11 +49,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_8"
             android:layout_marginTop="@dimen/dimen_8"
-            android:fontFamily="sans-serif-light"
+            android:fontFamily="@font/montserrat_regular"
             android:text="265 Mansoura, Egypt"
-            android:textSize="13sp"
+            android:textSize="14sp"
             app:layout_constraintTop_toBottomOf="@id/userName"
-            app:layout_constraintStart_toEndOf="@id/userImage"/>
+            app:layout_constraintStart_toEndOf="@id/user_img_container"/>
 
         <TextView
             android:id="@+id/userAge"
@@ -53,10 +61,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_8"
             android:layout_marginTop="4dp"
-            android:fontFamily="sans-serif-light"
+            android:fontFamily="@font/montserrat_regular"
             android:text="22 years"
-            android:textSize="13sp"
-            app:layout_constraintStart_toEndOf="@id/userImage"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@id/user_img_container"
             app:layout_constraintTop_toBottomOf="@id/useraAddress"/>
        <ImageButton
            android:layout_width="wrap_content"

@@ -1,19 +1,23 @@
 package com.example.sportsmates.discover
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sportsmates.databinding.DiscoverFragmentBinding
-import com.example.sportsmates.place.PlaceFragment
+import com.example.sportsmates.signUp.data.model.User
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class ContactsFragment : Fragment() {
+
+    private val viewModel: ContactsViewModel by viewModel()
     private var _binding: DiscoverFragmentBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: ContactsViewModel by viewModel()
+    private lateinit var contactsAdapter: ContactsAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -25,6 +29,9 @@ class ContactsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupList()
+        viewModel._listOfUsersEvent.observe(this, Observer {
+            setUsers(it)
+        })
     }
 
     private fun setupList() {
@@ -33,8 +40,13 @@ class ContactsFragment : Fragment() {
         }
     }
 
-
-
+    private fun setUsers(usersList: List<User>?) {
+        contactsAdapter = ContactsAdapter(usersList, activity)
+        binding.contactsList.adapter = contactsAdapter
+        contactsAdapter.onItemClick = { user ->
+            ContactsDetail.start(activity, user)
+        }
+    }
 
 
     override fun onDestroy() {
@@ -44,7 +56,7 @@ class ContactsFragment : Fragment() {
 
 
     companion object {
-        fun newInstance() = PlaceFragment()
+        fun newInstance() = ContactsFragment()
     }
 
 

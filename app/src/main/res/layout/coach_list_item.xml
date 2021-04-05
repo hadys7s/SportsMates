@@ -17,15 +17,15 @@
             android:layout_width="match_parent"
             android:layout_height="117dp"
             android:scaleType="fitXY"
-            tools:src="@drawable/coach_bg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/coach_bg" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/partnerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/partnerName"
             android:layout_marginStart="@dimen/dimen_12"
             android:layout_marginTop="@dimen/dimen_8"
             android:fontFamily="@font/roboto_regular"
@@ -55,15 +55,16 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/partnerAddress"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_4"
+            android:layout_marginEnd="@dimen/dimen_32"
             android:layout_marginBottom="@dimen/dimen_12"
             android:fontFamily="@font/roboto_regular"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/partnerSport"
+            app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/partnerSport"
             app:layout_constraintTop_toBottomOf="@id/partnerSport"
@@ -72,14 +73,21 @@
         <com.google.android.material.chip.Chip
             android:id="@+id/pricePerHour"
             android:layout_width="wrap_content"
-            tools:text="$15/ Hour"
-            app:chipBackgroundColor="@color/green"
             android:layout_height="wrap_content"
-            android:textColor="@color/beg"
             android:layout_marginEnd="@dimen/dimen_16"
+            android:textColor="@color/beg"
+            app:chipBackgroundColor="@color/green"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/partnerImage" />
+            app:layout_constraintTop_toBottomOf="@+id/partnerImage"
+            tools:text="$15/ Hour" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.73" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

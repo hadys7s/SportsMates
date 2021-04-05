@@ -16,7 +16,7 @@ class ContactsAdapter(private val userList: List<User>?, private val context: Fr
         fun bind(userItem: User) {
             binding.userName.text = userItem.name
             binding.useraAddress.text = userItem.city
-            binding.userAge.text=userItem.age
+            binding.userAge.text=userItem.age+" "+"years"
             GlideApp.with(context!!)
                 .load(userItem.userImage)
                 .into(binding.userImage)
