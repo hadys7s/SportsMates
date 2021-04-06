@@ -1,28 +1,24 @@
 package com.example.sportsmates.signUp.data.model
 
+import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.firebase.storage.StorageReference
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 
 data class User(
-    @SerializedName("name")
+    var id: String? = "",
     var name: String? = "",
-    @SerializedName("password")
     var password: String? = "",
-    @SerializedName("email")
     var email: String? = "",
-    @SerializedName("phoneNumber")
     val phoneNumber: String? = "",
-    @SerializedName("age")
     var age: String? = "",
-    @SerializedName("gender")
     var gender: String? = "",
-    @SerializedName("city")
     var city: String? = "",
-    @SerializedName("sports")
-    var sportsList: MutableList<String>? = mutableListOf()
+    var sportsList: List<String>? = listOf(),
+    var userImage: Uri? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -32,11 +28,14 @@ data class User(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.createStringArrayList()
+        parcel.readString(),
+        parcel.createStringArrayList(),
+        parcel.readParcelable(Uri::class.java.classLoader)
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(id)
         parcel.writeString(name)
         parcel.writeString(password)
         parcel.writeString(email)
@@ -45,6 +44,7 @@ data class User(
         parcel.writeString(gender)
         parcel.writeString(city)
         parcel.writeStringList(sportsList)
+        parcel.writeParcelable(userImage, flags)
     }
 
     override fun describeContents(): Int {

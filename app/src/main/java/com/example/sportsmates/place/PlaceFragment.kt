@@ -12,7 +12,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class PlaceFragment : Fragment() {
     private val viewModel: PLaceViewModel by viewModel()
-
     private var _binding: FragmentPlaceBinding? = null
     private val binding get() = _binding!!
     private lateinit var placeAdapter: PlaceAdapter

@@ -3,11 +3,11 @@ package com.example.sportsmates.home
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sportsmates.R
-import com.example.sportsmates.SignUp.SignInFragment
+
 import com.example.sportsmates.coach.CoachFragment
 import com.example.sportsmates.databinding.ActivityMainBinding
+import com.example.sportsmates.discover.ContactsFragment
 import com.example.sportsmates.ext.replaceFragment
-import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
 import com.example.sportsmates.place.PlaceFragment
 import com.example.sportsmates.profile.ProfileFragment
 
@@ -50,7 +50,10 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.discover -> {
-                    // Respond to navigation item 2 reselection
+                    replaceFragment(
+                        ContactsFragment.newInstance(),
+                        containerViewId = R.id.main_container_view
+                    )
                     true
                 }
                 R.id.coach -> {

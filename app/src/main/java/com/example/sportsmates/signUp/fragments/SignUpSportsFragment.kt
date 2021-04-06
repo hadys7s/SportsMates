@@ -22,6 +22,8 @@ import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import com.google.android.material.chip.Chip
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class SignUpSportsFragment : Fragment() {
     private var _binding: SignUpSportFargmentBinding? = null
@@ -103,6 +105,7 @@ class SignUpSportsFragment : Fragment() {
     private fun signUpUserInfo(): User? {
         var user: User? = arguments?.getParcelable(USER_DATA)
         user?.sportsList = getSelectedSports()
+        user?.id=Firebase.auth.currentUser.uid
         return user
     }
 

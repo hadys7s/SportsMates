@@ -94,7 +94,7 @@ class CoachViewModel() : ViewModel() {
                 if (task.isSuccessful) {
                     Log.d(TAG, "getUser:Success")
                     val user: User? = task.result?.getValue(User::class.java)
-                    listOfSports = user?.sportsList
+                    listOfSports = user?.sportsList?.toMutableList()
 
                 } else {
                     Log.d(TAG, "getUser:Failed", task.exception)
