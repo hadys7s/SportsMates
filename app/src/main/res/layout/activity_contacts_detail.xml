@@ -48,9 +48,9 @@
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="@dimen/dimen_32"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="Ragaa Abo Elezz"
+                        tools:text="Ragaa Abo Elezz"
                         android:textColor="@color/black"
-                        android:textSize="24dp"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -60,7 +60,7 @@
                         android:layout_marginStart="@dimen/dimen_32"
                         android:layout_marginTop="@dimen/dimen_64"
                         android:fontFamily="sans-serif-light"
-                        android:text="265 Mansoura, Egypt"
+                        tools:text="265 Mansoura, Egypt"
                         android:textSize="13sp" />
 
                     <TextView
@@ -70,7 +70,7 @@
                         android:layout_marginStart="@dimen/dimen_32"
                         android:layout_marginTop="82dp"
                         android:fontFamily="sans-serif-light"
-                        android:text="22 years"
+                        tools:text="22 years"
                         android:textSize="13sp" />
 
                 </FrameLayout>

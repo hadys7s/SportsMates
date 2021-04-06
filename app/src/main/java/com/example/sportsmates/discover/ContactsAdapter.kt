@@ -2,6 +2,7 @@ package com.example.sportsmates.discover
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.sportsmates.coach.GlideApp
 import com.example.sportsmates.databinding.ContactsListItemBinding
 import com.example.sportsmates.ext.inflater
@@ -17,7 +18,7 @@ class ContactsAdapter(private val userList: List<User>?, private val context: Fr
             binding.userName.text = userItem.name
             binding.useraAddress.text = userItem.city
             binding.userAge.text=userItem.age+" "+"years"
-            GlideApp.with(context!!)
+            Glide.with(context!!)
                 .load(userItem.userImage)
                 .into(binding.userImage)
             itemView.setOnClickListener { onItemClick?.invoke(userItem) }

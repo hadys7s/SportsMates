@@ -25,11 +25,11 @@ class ContactsDetail : AppCompatActivity() {
         setContentView(view)
         setFullScreenWithTransparentStatusBar()
         attachCLickListeners()
-        setUserData()
+        fetchUserData()
     }
 
 
-    private fun setUserData() {
+    private fun fetchUserData() {
         val user: User? = intent.getParcelableExtra(USER_ITEM)
         bindData(user)
     }
