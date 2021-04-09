@@ -52,7 +52,7 @@
         <ImageButton
             android:layout_width="@dimen/dimen_24"
             android:layout_height="@dimen/dimen_24"
-            android:background="@drawable/chat_buttom"
+            android:background="@drawable/chat_button_background"
             android:layout_marginEnd="@dimen/dimen_16"
             android:layout_marginBottom="@dimen/dimen_16"
             android:padding="@dimen/dimen_8"
