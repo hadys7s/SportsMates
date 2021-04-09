@@ -18,16 +18,23 @@ import kotlinx.coroutines.tasks.await
 class ContactsViewModel() : ViewModel() {
     private var _listOfUsers: MutableList<User>? = mutableListOf()
     private var _listOfUsersInTheSameCity: MutableList<User>? = mutableListOf()
-    val _listOfUsersEvent = MutableLiveData<List<User>?>()
+    var retriveUsersSuccess = MutableLiveData<List<User>?>()
+    var retriveUsersError = MutableLiveData<String>()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            filterUserByCity()
-            val users = getRelatedUsers(getUserSportsList())!!
-            users.forEach {user->
-              user.userImage=   retriveUserPhoto(user)
+            try {
+                filterUserByCity()
+                val users = getRelatedUsers(getUserSportsList())!!
+                if (!users.isNullOrEmpty()) {
+                    users.forEach { user ->
+                        user.userImage = retriveUserPhoto(user)
+                    }
+                    retriveUsersSuccess.postValue(users)
+                }
+            } catch (e: Exception) {
             }
-            _listOfUsersEvent.postValue(users)
+
         }
 
     }
@@ -42,8 +49,15 @@ class ContactsViewModel() : ViewModel() {
                 }
                 break
             }
+
         }
-        return _listOfUsers
+        if (_listOfUsers.isNullOrEmpty()) {
+
+            retriveUsersError.postValue("Nobody is interested in your sports")
+            return null
+        } else {
+            return _listOfUsers
+        }
     }
 
     private suspend fun filterUserByCity(
@@ -59,9 +73,11 @@ class ContactsViewModel() : ViewModel() {
                 val children = data.children
                 children.forEach {
                     val user: User? = it.getValue(User::class.java)
-                    if (user!!.city!!.equals(currentUserCity)&&user!!.id!=Firebase.auth.currentUser.uid)
+                    if (user!!.city!!.equals(currentUserCity) && user!!.id != Firebase.auth.currentUser.uid)
                         _listOfUsersInTheSameCity?.add(user)
                 }
+            }.addOnFailureListener {
+                retriveUsersError.postValue(it.message.toString())
             }.await()
         return _listOfUsersInTheSameCity
     }
@@ -78,6 +94,7 @@ class ContactsViewModel() : ViewModel() {
 
                 } else {
                     Log.d(ContentValues.TAG, "getUser:Failed", task.exception)
+                    retriveUsersError.postValue("getUser:Failed")
                 }
             }.await()
 
@@ -85,11 +102,14 @@ class ContactsViewModel() : ViewModel() {
     }
 
     private suspend fun retriveUserPhoto(user: User): Uri? {
-        var userImage:Uri?=null
+        var userImage: Uri? = null
         val storageReference = FirebaseStorage.getInstance().reference.child("images/" + user.id)
         storageReference.downloadUrl.addOnSuccessListener { imgUrl ->
-           userImage=imgUrl
+            userImage = imgUrl
+        }.addOnFailureListener {
+            retriveUsersError.postValue(it.message.toString())
         }.await()
         return userImage
     }
+
 }

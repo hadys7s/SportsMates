@@ -27,9 +27,13 @@ class PlaceFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        binding.shimmerViewContainer.startShimmer()
         setupList()
         viewModel._listOfSPlacesEvent.observe(this, Observer {
+            binding.shimmerViewContainer.stopShimmer()
+            binding.shimmerViewContainer.visibility = View.GONE
             setPlaces(it)
+
         })
 
     }
@@ -49,6 +53,7 @@ class PlaceFragment : Fragment() {
             PlaceDetailsActivity.start(activity, it.toUiModel())
         }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

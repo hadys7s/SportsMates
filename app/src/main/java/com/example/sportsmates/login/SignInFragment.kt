@@ -1,5 +1,6 @@
 package com.example.sportsmates.SignUp
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,7 @@ class SignInFragment : Fragment() {
     private val viewModel: SignInViewModel by viewModel()
     private var _binding: SignInFragmentBinding? = null
     private val binding get() = _binding!!
+    private lateinit var progressDialog:ProgressDialog
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         attachCLickListeners()
@@ -40,9 +42,11 @@ class SignInFragment : Fragment() {
     private fun attachEventObservers() {
         viewModel.loginSuccess.observe(this, Observer { user ->
             //  redirect home
+            dismissProgressDialog()
             openTopActivity(activity, MainActivity())
         })
         viewModel.loginFailed.observe(this, Observer { errorMessage ->
+            dismissProgressDialog()
             Toast.makeText(activity, errorMessage, Toast.LENGTH_SHORT).show()
         })
     }
@@ -54,6 +58,7 @@ class SignInFragment : Fragment() {
 
         binding.loginButton.setOnClickListener {
             if (validation()) {
+                initProgressDialog()
                 login()
             }
 
@@ -84,6 +89,17 @@ class SignInFragment : Fragment() {
             textInputLayout.isErrorEnabled = false
             true
         }
+    }
+
+    private fun initProgressDialog(){
+        progressDialog= ProgressDialog(activity)
+        progressDialog.show()
+        progressDialog.setContentView(R.layout.progress_dialog)
+        progressDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        progressDialog.setCanceledOnTouchOutside(false)
+    }
+    private fun dismissProgressDialog(){
+        progressDialog.dismiss()
     }
 
     override fun onDestroy() {

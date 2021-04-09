@@ -12,22 +12,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/light_grey">
+
         <androidx.cardview.widget.CardView
             android:id="@+id/user_img_container"
-            android:layout_width="128dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             app:cardCornerRadius="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
-        <ImageView
-            android:id="@+id/userImage"
-            android:layout_width="128dp"
-            android:scaleType="fitXY"
-            android:layout_height="match_parent"
-            tools:src="@drawable/coach_bg"
-            />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/userImage"
+                android:layout_width="128dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:transitionName="img"
+                tools:src="@drawable/coach_bg" />
         </androidx.cardview.widget.CardView>
+
         <TextView
             android:id="@+id/userName"
             android:layout_width="wrap_content"
@@ -35,12 +38,13 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="@dimen/dimen_8"
             android:fontFamily="@font/montserrat_bold"
-            tools:text="Ragaa Mohamed"
             android:textColor="@color/black"
-            android:textSize="24dp"
+            android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/user_img_container"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Ragaa Mohamed" />
+
         <TextView
             android:id="@+id/useraAddress"
             android:layout_width="wrap_content"
@@ -48,10 +52,10 @@
             android:layout_marginStart="@dimen/dimen_8"
             android:layout_marginTop="@dimen/dimen_8"
             android:fontFamily="@font/montserrat_regular"
-            tools:text="265 Mansoura, Egypt"
             android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@id/user_img_container"
             app:layout_constraintTop_toBottomOf="@id/userName"
-            app:layout_constraintStart_toEndOf="@id/user_img_container"/>
+            tools:text="265 Mansoura, Egypt" />
 
         <TextView
             android:id="@+id/userAge"
@@ -60,21 +64,29 @@
             android:layout_marginStart="@dimen/dimen_8"
             android:layout_marginTop="4dp"
             android:fontFamily="@font/montserrat_regular"
-            tools:text="22 years"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@id/user_img_container"
-            app:layout_constraintTop_toBottomOf="@id/useraAddress"/>
-       <ImageButton
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:src="@drawable/ic_chat"
-           android:background="@drawable/chat_buttom"
-           android:layout_marginEnd="@dimen/dimen_16"
-           android:layout_marginBottom="@dimen/dimen_16"
-           android:padding="@dimen/dimen_8"
-           android:backgroundTint="@color/green"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/useraAddress"
+            tools:text="22 years" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_16"
+            android:layout_marginBottom="@dimen/dimen_16"
+            android:background="@drawable/chat_buttom"
+            android:backgroundTint="@color/green"
+            android:padding="@dimen/dimen_8"
+            android:src="@drawable/ic_chat"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

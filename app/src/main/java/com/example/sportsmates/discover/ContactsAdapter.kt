@@ -1,8 +1,13 @@
 package com.example.sportsmates.discover
+import android.app.Activity
+import android.os.Bundle
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.sportsmates.coach.GlideApp
 import com.example.sportsmates.databinding.ContactsListItemBinding
 import com.example.sportsmates.ext.inflater
@@ -20,8 +25,10 @@ class ContactsAdapter(private val userList: List<User>?, private val context: Fr
             binding.userAge.text=userItem.age+" "+"years"
             Glide.with(context!!)
                 .load(userItem.userImage)
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.userImage)
-            itemView.setOnClickListener { onItemClick?.invoke(userItem) }
+            itemView.setOnClickListener { onItemClick?.invoke(userItem)}
+
         }
     }
 
@@ -35,4 +42,5 @@ class ContactsAdapter(private val userList: List<User>?, private val context: Fr
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         userList?.get(position)?.let { holder.bind(it) }
     }
+
 }

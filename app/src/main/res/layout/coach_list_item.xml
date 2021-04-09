@@ -17,10 +17,11 @@
             android:layout_width="match_parent"
             android:layout_height="117dp"
             android:scaleType="fitXY"
+            android:contentDescription="@null"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/coach_bg" />
+            android:background="@color/grey" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/partnerName"

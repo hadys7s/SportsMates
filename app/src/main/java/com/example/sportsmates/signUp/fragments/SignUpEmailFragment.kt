@@ -1,6 +1,7 @@
 package com.example.sportsmates.SignUp
 
 import android.app.Activity.*
+import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.sportsmates.R
+import com.example.sportsmates.databinding.ProgressDialogBinding
 import com.example.sportsmates.databinding.SignUpEmailPasswordFragmentBinding
 import com.example.sportsmates.ext.*
 import com.example.sportsmates.signUp.data.model.User
@@ -25,6 +27,7 @@ import java.lang.Exception
 class SignUpEmailFragment : Fragment() {
 
     private lateinit var filePath: Uri
+    private lateinit var   progressDialog:ProgressDialog
     private var _binding: SignUpEmailPasswordFragmentBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SignUpViewModel by viewModel()
@@ -49,18 +52,26 @@ class SignUpEmailFragment : Fragment() {
 
     private fun attachOnclickListeners() {
         binding.nextButton.setOnClickListener {
-            validateAllFields()
+            if ( validateAllFields()){
+                viewModel.onNextEmailButtonCLicked(forwardUserInfo(), filePath)
+                initProgressDialog()
+            }
+
         }
     }
 
     private fun attachEventObservers() {
         viewModel.signUpAuthSuccess.observe(this, Observer {
+            dismissProgressDialog()
             navigateToNextScreen()
+
         })
         viewModel.signUpAuthFailed.observe(this, Observer { errMsg ->
+            dismissProgressDialog()
             Toast.makeText(activity, errMsg, Toast.LENGTH_SHORT).show()
         })
         viewModel.uploadImageFailed.observe(this, Observer { errMsg ->
+            dismissProgressDialog()
             Toast.makeText(activity, errMsg, Toast.LENGTH_SHORT).show()
         })
 
@@ -95,15 +106,10 @@ class SignUpEmailFragment : Fragment() {
     }
 
 
-    private fun validateAllFields() {
-        if (validateUserInfoFiledisEmpty(binding.edName) && validateUserInfoFiledisEmpty(binding.edEmail) && validateUserInfoFiledisEmpty(
-                binding.edPassword
-            ) && validateUserInfoFiledisEmpty(binding.edConfirmPassword) && validateConfirmPasswordAndPasswordAreTheSame()
-        ) {
-            viewModel.onNextEmailButtonCLicked(forwardUserInfo(), filePath)
-
-
-        }
+    private fun validateAllFields():Boolean {
+        return validateUserInfoFiledisEmpty(binding.edName) && validateUserInfoFiledisEmpty(binding.edEmail) && validateUserInfoFiledisEmpty(
+            binding.edPassword
+        ) && validateUserInfoFiledisEmpty(binding.edConfirmPassword) && validateConfirmPasswordAndPasswordAreTheSame()
 
     }
 
@@ -175,6 +181,16 @@ class SignUpEmailFragment : Fragment() {
             }
         }
 
+    }
+    private fun initProgressDialog(){
+        progressDialog=ProgressDialog(activity)
+        progressDialog.show()
+        progressDialog.setContentView(R.layout.progress_dialog)
+        progressDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        progressDialog.setCanceledOnTouchOutside(false)
+    }
+    private fun dismissProgressDialog(){
+        progressDialog.dismiss()
     }
 
     override fun onDestroy() {
