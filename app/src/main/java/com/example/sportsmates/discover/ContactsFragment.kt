@@ -1,8 +1,5 @@
 package com.example.sportsmates.discover
 
-import android.app.ProgressDialog
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,10 +10,8 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.sportsmates.R
 import com.example.sportsmates.databinding.DiscoverFragmentBinding
 import com.example.sportsmates.signUp.data.model.User
-import org.koin.android.ext.android.get
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class ContactsFragment : Fragment() {
@@ -35,7 +30,6 @@ class ContactsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding.shimmerViewContainer.startShimmer()
         setupList()
         attachEventObservers()
 
@@ -43,36 +37,40 @@ class ContactsFragment : Fragment() {
 
     private fun attachEventObservers() {
         viewModel.retriveUsersSuccess.observe(this, Observer {
-            binding.shimmerViewContainer.stopShimmer()
-            binding.shimmerViewContainer.visibility = View.GONE
+            stopShimmerLoading()
             setUsers(it)
         })
         viewModel.retriveUsersError.observe(this, Observer {
-            binding.shimmerViewContainer.stopShimmer()
-            binding.shimmerViewContainer.visibility = View.GONE
+            stopShimmerLoading()
             Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
         })
     }
 
     private fun setupList() {
+        binding.shimmerViewContainer.startShimmer()
         binding.contactsList.run {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
     }
 
+    private fun stopShimmerLoading() {
+        binding.shimmerViewContainer.stopShimmer()
+        binding.shimmerViewContainer.visibility = View.GONE
+    }
+
     private fun setUsers(usersList: List<User>?) {
         contactsAdapter = ContactsAdapter(usersList, activity)
         binding.contactsList.adapter = contactsAdapter
-        contactsAdapter.onItemClick = { user ->
-            elementTransition(user)
+        contactsAdapter.onItemClick = { user, targetImage ->
+            openActivityWithTransitionAnimation(user, targetImage)
         }
     }
-    private fun elementTransition(user: User){
-        val img =activity!!.findViewById<View>(R.id.userImage)
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-        val option=ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!,img,"img").toBundle()
-        ContactsDetail.start(activity,user,option!!)
-        }
+
+    private fun openActivityWithTransitionAnimation(user: User, targetImage: ImageView) {
+        val option =
+            ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, targetImage, "img")
+                .toBundle()
+        ContactsDetails.start(activity, user, option!!)
     }
 
 
@@ -80,7 +78,6 @@ class ContactsFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
 
     companion object {
         fun newInstance() = ContactsFragment()

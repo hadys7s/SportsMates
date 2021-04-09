@@ -1,33 +1,18 @@
 package com.example.sportsmates.discover
 
-import android.app.Activity
-import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.transition.Explode
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.Window
-import android.widget.ImageView
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.example.sportsmates.R
-import com.example.sportsmates.databinding.ActivityCoashDetailsBinding
 import com.example.sportsmates.databinding.ActivityContactsDetailBinding
 import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
-import com.example.sportsmates.place.PlaceDetailsActivity
-import com.example.sportsmates.place.PlaceUiModel
 import com.example.sportsmates.signUp.data.model.User
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.text.FieldPosition
 
-class ContactsDetail : AppCompatActivity() {
+class ContactsDetails : AppCompatActivity() {
     private lateinit var binding: ActivityContactsDetailBinding
     private val viewModel: ContactsViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,23 +58,10 @@ class ContactsDetail : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finishAfterTransition()
-
-    }
-
-    override fun onNavigateUp(): Boolean {
-        onBackPressed()
-        return super.onNavigateUp()
-    }
-
-
-
     companion object {
         private const val USER_ITEM = "userItem"
-        fun start(activity: FragmentActivity?, userItem: User,options:Bundle) {
-            val intent = Intent(activity, ContactsDetail::class.java)
+        fun start(activity: FragmentActivity?, userItem: User, options: Bundle) {
+            val intent = Intent(activity, ContactsDetails::class.java)
             intent.putExtra(USER_ITEM, userItem)
             activity?.startActivity(intent, options)
         }
