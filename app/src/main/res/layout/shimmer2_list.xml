@@ -49,16 +49,6 @@
             android:background="@color/grey"
             app:layout_constraintStart_toEndOf="@id/user_img_container"
             app:layout_constraintTop_toBottomOf="@id/shimmer_adress"/>
-        <ImageButton
-            android:layout_width="@dimen/dimen_24"
-            android:layout_height="@dimen/dimen_24"
-            android:background="@drawable/chat_button_background"
-            android:layout_marginEnd="@dimen/dimen_16"
-            android:layout_marginBottom="@dimen/dimen_16"
-            android:padding="@dimen/dimen_8"
-            android:backgroundTint="@color/green"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
