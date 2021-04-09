@@ -17,7 +17,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class ContactsDetail : AppCompatActivity() {
     private lateinit var binding: ActivityContactsDetailBinding
-    private val viewModel: ContactsViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityContactsDetailBinding.inflate(layoutInflater)

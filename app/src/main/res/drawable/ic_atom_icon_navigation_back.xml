@@ -6,7 +6,7 @@
   <path
       android:pathData="M12,0L26,0A12,12 0,0 1,38 12L38,26A12,12 0,0 1,26 38L12,38A12,12 0,0 1,0 26L0,12A12,12 0,0 1,12 0z"
       android:strokeWidth="1"
-      android:fillColor="@color/beg"
+      android:fillColor="@color/white"
       android:fillType="evenOdd"
       android:strokeColor="#00000000"/>
   <path
@@ -21,7 +21,7 @@
     <path
         android:pathData="M7,7h24v24h-24z"
         android:strokeWidth="1"
-        android:fillColor="@color/green"
+        android:fillColor="@color/main_green"
         android:fillType="evenOdd"
         android:strokeColor="#00000000"/>
   </group>
