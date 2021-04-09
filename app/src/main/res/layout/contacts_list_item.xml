@@ -68,11 +68,10 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:src="@drawable/ic_chat"
-           android:background="@drawable/chat_buttom"
+           android:background="@drawable/chat_button_background"
            android:layout_marginEnd="@dimen/dimen_16"
            android:layout_marginBottom="@dimen/dimen_16"
            android:padding="@dimen/dimen_8"
-           android:backgroundTint="@color/green"
            app:layout_constraintEnd_toEndOf="parent"
            app:layout_constraintBottom_toBottomOf="parent"/>
 

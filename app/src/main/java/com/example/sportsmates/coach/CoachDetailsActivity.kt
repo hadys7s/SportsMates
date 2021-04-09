@@ -1,18 +1,21 @@
 package com.example.sportsmates.coach
 
-import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
+import com.example.sportsmates.R
 import com.example.sportsmates.databinding.ActivityCoashDetailsBinding
 import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
+
 
 class CoachDetailsActivity : AppCompatActivity() {
 
@@ -57,9 +60,25 @@ class CoachDetailsActivity : AppCompatActivity() {
     private fun bindData(coach: CoachUiModel?) {
         binding.coachName.text = coach?.name
         binding.details.text = coach?.about
-        binding.pricePerHour.text = coach?.pricePerHour + "/Per Hour"
         binding.address.text = coach?.address
         binding.sportName.text = coach?.sportName
+        /* val wordtoSpan: Spannable =
+             SpannableString(coach?.pricePerHour)
+
+         coach?.pricePerHour+"/Per Hour"?.let {
+             wordtoSpan.setSpan(
+                 ForegroundColorSpan(
+                     ContextCompat.getColor(this, R.color.main_green)
+                 ),
+                 0,
+                 it.length-3,
+                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+             )
+
+         }*/
+        binding.pricePerHour.text = coach?.pricePerHour
+
+
     }
 
     private fun observeCoachImages() {

@@ -23,8 +23,8 @@ class SplashActivity : AppCompatActivity() {
         attachEventObservers()
         setFullScreenWithTransparentStatusBar()
         Timer().schedule(DELAY_FINISH) {
-            // do something after 1 second
-            viewModel.userAuthorized()
+
+            viewModel.checkCurrentUserAuthorization()
         }
 
 

@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowManager
 import androidx.annotation.ColorRes
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
@@ -131,7 +130,7 @@ fun Fragment.setStepper(state1: Int, state2: Int, state3: Int, stepView: Horizon
         .setStepsViewIndicatorCompletedLineColor(
             ContextCompat.getColor(
                 requireContext(),
-                R.color.orange
+                R.color.main_green
             )
         )
         .setStepsViewIndicatorUnCompletedLineColor(
@@ -143,13 +142,13 @@ fun Fragment.setStepper(state1: Int, state2: Int, state3: Int, stepView: Horizon
         .setStepsViewIndicatorCompleteIcon(
             ContextCompat.getDrawable(
                 requireContext(),
-                R.drawable.step_view_complete
+                R.drawable.ic_green_check
             )
         )
         .setStepsViewIndicatorDefaultIcon(
             ContextCompat.getDrawable(
                 requireContext(),
-                R.drawable.step_view_uncomplete
+                R.drawable.ic__unchecked
             )
         )
 
