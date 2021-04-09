@@ -17,7 +17,7 @@
         android:fontFamily="@font/roboto_regular"
         android:text="Sign up "
         android:layout_marginTop="48dp"
-        android:textColor="@color/main_green"
+        android:textColor="@color/dark_blue"
         android:textSize="40sp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
@@ -50,12 +50,14 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_location_city_24px"
+            android:src="@drawable/ic_city"
             android:paddingRight="16dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Choose City"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="20sp"
             android:layout_gravity="center"/>
     </LinearLayout>
     <com.google.android.material.textfield.TextInputLayout
@@ -73,9 +75,8 @@
         <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext_background"
+            android:background="@drawable/edit_text_background"
             android:enabled="false"
-            android:inputType="none"
             />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,12 +96,14 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/calendar_60"
+        android:src="@drawable/ic_calendar"
         android:paddingRight="16dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your age"
+        android:fontFamily="@font/roboto_regular"
+        android:textSize="20sp"
         android:layout_gravity="center"/>
     </LinearLayout>
     <com.google.android.material.textfield.TextInputLayout
@@ -118,7 +121,7 @@
             android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/edittext_background"
+            android:background="@drawable/edit_text_background"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -138,12 +141,14 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/iconfinder_gender_corona_virus_covid19_6510463"
+            android:src="@drawable/ic_gender"
             android:paddingRight="16dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Gender"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="20sp"
             android:layout_gravity="center"/>
     </LinearLayout>
 
@@ -162,9 +167,8 @@
         <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext_background"
             android:enabled="false"
-            android:inputType="none" />
+            android:background="@drawable/edit_text_background" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -176,7 +180,7 @@
         android:backgroundTint="@color/main_green"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="@dimen/dimen_64"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

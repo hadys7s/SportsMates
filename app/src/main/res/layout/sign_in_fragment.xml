@@ -16,7 +16,7 @@
         android:layout_marginTop="48dp"
         android:fontFamily="@font/roboto_regular"
         android:text="Log in"
-        android:textColor="@color/green"
+        android:textColor="@color/dark_blue"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,8 @@
         android:id="@+id/ed_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:startIconDrawable="@drawable/envelope"
+        app:startIconDrawable="@drawable/ic_envelope"
+        app:startIconTint="@color/main_green"
         app:layout_constraintBottom_toTopOf="@+id/ed_password"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="32dp"
@@ -53,7 +54,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext_background"
+            android:background="@drawable/edit_text_background"
             android:textColorHint="@color/main_green"
             android:hint="Email"
             android:inputType="textEmailAddress"/>
@@ -61,7 +62,8 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:passwordToggleEnabled="true"
-        app:startIconDrawable="@drawable/key_solid"
+        app:startIconDrawable="@drawable/ic_password"
+        app:startIconTint="@color/main_green"
         android:id="@+id/ed_password"
         android:layout_width="match_parent"
         style="@style/text_input_layout_outlined"
@@ -79,7 +81,7 @@
             style="@style/text_input_layout_outlined"
             android:textColorHint="@color/main_green"
             android:hint="Password"
-            android:background="@drawable/edittext_background"/>
+            android:background="@drawable/edit_text_background"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -128,7 +130,7 @@
             app:textAllCaps="true"
             android:fontFamily="@font/roboto_regular"
             android:text="Sign up"
-            android:textColor="@color/green"
+            android:textColor="@color/main_green"
             android:textStyle="bold" />
 
     </LinearLayout>
