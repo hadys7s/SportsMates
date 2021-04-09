@@ -13,7 +13,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-
+import kotlinx.coroutines.tasks.await
+import okhttp3.internal.wait
 
 
 class UserRepository(
@@ -50,7 +51,7 @@ class UserRepository(
         userAuth.signOut()
     }
 
-    private fun deleteUser() {
+     fun deleteUser() {
         Firebase.auth.currentUser.delete()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -154,37 +155,7 @@ class UserRepository(
     }
 
 
-    fun checkCurrentUserAuthorization(): Boolean {
-        if (Firebase.auth.currentUser != null) {
-            var authorized = true
-            FirebaseDatabase.getInstance().getReference("Users")
-                .child(Firebase.auth.currentUser.uid).addListenerForSingleValueEvent(object :
-                    ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        // This callback will fire even if the node doesn't exist, so now check for existence
-                        if (dataSnapshot.exists()) {
-                            authorized = dataSnapshot.exists()
-
-                        } else {
-                            deleteUser()
-                            deleteProfileImage()
-
-                        }
-                    }
-
-                    override fun onCancelled(databaseError: DatabaseError) {
-
-                    }
-                }
-                )
-            return authorized
-            // [END check_current_user]
-        } else {
-            return false
-        }
-    }
-
-    private fun deleteProfileImage() {
+     fun deleteProfileImage() {
         val storageReference =
             FirebaseStorage.getInstance().reference.child("images/" + userAuth.currentUser.uid)
         storageReference.delete().addOnSuccessListener {

@@ -84,7 +84,7 @@
                         android:layout_marginStart="16dp"
                         android:fontFamily="@font/roboto_regular"
                         android:text="Hady Zain"
-                        android:textColor="@color/green"
+                        android:textColor="@color/dark_blue"
                         android:textSize="24dp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -98,7 +98,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="32dp"
                         android:text="Details"
-                        android:textColor="@color/orange"
+                        android:textColor="@color/dark_blue"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
@@ -133,7 +133,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_regular"
                             android:text="Opens"
-                            android:textColor="@color/green"
+                            android:textColor="@color/dark_blue"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -144,7 +144,7 @@
                             android:layout_marginStart="@dimen/dimen_32"
                             android:fontFamily="@font/roboto_regular"
                             android:text="9AM"
-                            android:textColor="@color/green"
+                            android:textColor="@color/dark_blue"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -160,7 +160,7 @@
                             android:layout_marginStart="@dimen/dimen_32"
                             android:fontFamily="@font/roboto_regular"
                             android:text="Closes"
-                            android:textColor="@color/green"
+                            android:textColor="@color/dark_blue"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -171,7 +171,7 @@
                             android:layout_marginStart="@dimen/dimen_32"
                             android:fontFamily="@font/roboto_regular"
                             android:text="10PM"
-                            android:textColor="@color/green"
+                            android:textColor="@color/dark_blue"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -185,7 +185,7 @@
                         android:drawableLeft="@drawable/ic_cash"
                         android:drawablePadding="8dp"
                         android:text="$15/Per Hour"
-                        android:textColor="@color/green"
+                        android:textColor="@color/dark_blue"
                         android:textSize="20sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
@@ -200,7 +200,7 @@
                         android:drawableLeft="@drawable/ic_location"
                         android:drawablePadding="8dp"
                         android:text="2565 E Harmon Ave, Las Vegas, NV 89169, États-Uniss"
-                        android:textColor="@color/green"
+                        android:textColor="@color/dark_blue"
                         android:textSize="15sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
@@ -246,6 +246,7 @@
             android:layout_marginBottom="@dimen/dimen_16"
             android:layout_marginTop="@dimen/dimen_16"
             android:textAllCaps="false"
+            android:backgroundTint="@color/main_green"
             app:cornerRadius="@dimen/dimen_16"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
