@@ -1,6 +1,7 @@
 package com.example.sportsmates.SignUp
 
 import android.app.Activity.*
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
@@ -22,12 +24,13 @@ import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.viewmodel.ext.android.viewModel
+import www.sanju.motiontoast.MotionToast
 import java.lang.Exception
 
 class SignUpEmailFragment : Fragment() {
 
     private lateinit var filePath: Uri
-    private lateinit var   progressDialog:ProgressDialog
+    private lateinit var  dialog:AlertDialog
     private var _binding: SignUpEmailPasswordFragmentBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SignUpViewModel by viewModel()
@@ -54,7 +57,7 @@ class SignUpEmailFragment : Fragment() {
         binding.nextButton.setOnClickListener {
             if ( validateAllFields()){
                 viewModel.onNextEmailButtonCLicked(forwardUserInfo(), filePath)
-                initProgressDialog()
+                startAlertDialog()
             }
 
         }
@@ -62,17 +65,25 @@ class SignUpEmailFragment : Fragment() {
 
     private fun attachEventObservers() {
         viewModel.signUpAuthSuccess.observe(this, Observer {
-            dismissProgressDialog()
+            dismissAlertDialog()
             navigateToNextScreen()
 
         })
         viewModel.signUpAuthFailed.observe(this, Observer { errMsg ->
-            dismissProgressDialog()
-            Toast.makeText(activity, errMsg, Toast.LENGTH_SHORT).show()
+            dismissAlertDialog()
+            MotionToast.createToast(activity!!,"Error ",errMsg,
+                MotionToast.TOAST_ERROR,
+                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.LONG_DURATION,
+                ResourcesCompat.getFont(activity!!,R.font.helvetica_regular))
         })
         viewModel.uploadImageFailed.observe(this, Observer { errMsg ->
-            dismissProgressDialog()
-            Toast.makeText(activity, errMsg, Toast.LENGTH_SHORT).show()
+            dismissAlertDialog()
+            MotionToast.createToast(activity!!,"Error ",errMsg,
+                MotionToast.TOAST_ERROR,
+                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.LONG_DURATION,
+                ResourcesCompat.getFont(activity!!,R.font.helvetica_regular))
         })
 
     }
@@ -94,7 +105,11 @@ class SignUpEmailFragment : Fragment() {
         val confirmPassword = binding.edConfirmPassword.editText?.text.toString()
         val password = binding.edPassword.editText?.text.toString()
         return if (!confirmPassword.contentEquals(password)) {
-            Toast.makeText(activity, "Passwords don't match", Toast.LENGTH_SHORT).show()
+            MotionToast.createToast(activity!!,"Warning ","Password don't match",
+                MotionToast.TOAST_WARNING,
+                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.LONG_DURATION,
+                ResourcesCompat.getFont(activity!!,R.font.helvetica_regular))
             false
 
         } else {
@@ -176,22 +191,30 @@ class SignUpEmailFragment : Fragment() {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     selectImage(PICK_IMAGE_REQUEST)
                 } else {
-                    Toast.makeText(requireContext(), "Permission Denied", Toast.LENGTH_SHORT).show()
+                    MotionToast.createToast(activity!!,"info ","Permission Denied",
+                        MotionToast.TOAST_INFO,
+                        MotionToast.GRAVITY_BOTTOM,
+                        MotionToast.LONG_DURATION,
+                        ResourcesCompat.getFont(activity!!,R.font.helvetica_regular))
                 }
             }
         }
 
     }
-    private fun initProgressDialog(){
-        progressDialog=ProgressDialog(activity)
-        progressDialog.show()
-        progressDialog.setContentView(R.layout.progress_dialog)
-        progressDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        progressDialog.setCanceledOnTouchOutside(false)
+    private fun startAlertDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
+        val inflater: LayoutInflater = activity!!.layoutInflater
+        builder.setView(inflater.inflate(R.layout.progress_dialog,null))
+        builder.setCancelable(false)
+        dialog=builder.create()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
     }
-    private fun dismissProgressDialog(){
-        progressDialog.dismiss()
+
+    private fun dismissAlertDialog() {
+        dialog.dismiss()
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

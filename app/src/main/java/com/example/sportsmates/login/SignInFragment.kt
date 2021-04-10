@@ -1,28 +1,29 @@
 package com.example.sportsmates.SignUp
 
-import android.app.ProgressDialog
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.SignInFragmentBinding
 import com.example.sportsmates.ext.openTopActivity
 import com.example.sportsmates.ext.pushFragment
-import com.example.sportsmates.ext.replaceFragment
 import com.example.sportsmates.home.MainActivity
 import com.example.sportsmates.login.SignInViewModel
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.viewmodel.ext.android.viewModel
+import www.sanju.motiontoast.MotionToast
 
 class SignInFragment : Fragment() {
     private val viewModel: SignInViewModel by viewModel()
     private var _binding: SignInFragmentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var progressDialog:ProgressDialog
+    private lateinit var dialog: AlertDialog
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         attachCLickListeners()
@@ -42,12 +43,19 @@ class SignInFragment : Fragment() {
     private fun attachEventObservers() {
         viewModel.loginSuccess.observe(this, Observer { user ->
             //  redirect home
-            dismissProgressDialog()
+            dismissAlertDialog()
             openTopActivity(activity, MainActivity())
         })
         viewModel.loginFailed.observe(this, Observer { errorMessage ->
-            dismissProgressDialog()
-            Toast.makeText(activity, errorMessage, Toast.LENGTH_SHORT).show()
+            dismissAlertDialog()
+            MotionToast.createToast(
+                activity!!, "Faild", errorMessage,
+                MotionToast.TOAST_ERROR,
+                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.LONG_DURATION,
+                ResourcesCompat.getFont(activity!!, R.font.helvetica_regular)
+            )
+
         })
     }
 
@@ -58,7 +66,7 @@ class SignInFragment : Fragment() {
 
         binding.loginButton.setOnClickListener {
             if (validation()) {
-                initProgressDialog()
+                startAlertDialog()
                 login()
             }
 
@@ -91,15 +99,18 @@ class SignInFragment : Fragment() {
         }
     }
 
-    private fun initProgressDialog(){
-        progressDialog= ProgressDialog(activity)
-        progressDialog.show()
-        progressDialog.setContentView(R.layout.progress_dialog)
-        progressDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        progressDialog.setCanceledOnTouchOutside(false)
+    private fun startAlertDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
+        val inflater: LayoutInflater = activity!!.layoutInflater
+        builder.setView(inflater.inflate(R.layout.progress_dialog, null))
+        builder.setCancelable(false)
+        dialog = builder.create()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
     }
-    private fun dismissProgressDialog(){
-        progressDialog.dismiss()
+
+    private fun dismissAlertDialog() {
+        dialog.dismiss()
     }
 
     override fun onDestroy() {

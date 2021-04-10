@@ -1,6 +1,5 @@
 package com.example.sportsmates.profile
 
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import com.bumptech.glide.Glide
 import com.example.sportsmates.databinding.ProfileFragmentBinding
 import com.example.sportsmates.ext.openTopActivity
@@ -25,6 +23,7 @@ class ProfileFragment : Fragment() {
 
     private var _binding: ProfileFragmentBinding? = null
 
+    private lateinit var _userData:User
 
     private val binding get() = _binding!!
 
@@ -40,6 +39,7 @@ class ProfileFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        startShimmer()
         fetchArguments()
         attachEventObservers()
         attachCLickListeners()
@@ -53,11 +53,15 @@ class ProfileFragment : Fragment() {
     private fun attachEventObservers() {
         viewModel.userData.observe(this, Observer { userData ->
             //  Toast.makeText(activity, userData?.name, Toast.LENGTH_LONG).show()
-            bindUserData(userData)
+            _userData= userData!!
 
         })
         viewModel.userImage.observe(this, Observer { imageUri ->
+            stopShimmerLoading()
             setUserImage(imageUri)
+            if (_userData!=null){
+            bindUserData(_userData)
+            }
         })
     }
 
@@ -97,6 +101,18 @@ class ProfileFragment : Fragment() {
 
             }
         }
+    }
+    private fun stopShimmerLoading() {
+        binding.shimmerViewContainer.stopShimmer()
+        binding.shimmerViewContainer.visibility = View.GONE
+        binding.ProfileAboutMeTitle.visibility=View.VISIBLE
+        binding.ProfileSportsTitle.visibility=View.VISIBLE
+
+    }
+    private fun startShimmer(){
+        binding.ProfileAboutMeTitle.visibility=View.INVISIBLE
+        binding.ProfileSportsTitle.visibility=View.INVISIBLE
+        binding.shimmerViewContainer.startShimmer()
     }
 
     override fun onDestroy() {

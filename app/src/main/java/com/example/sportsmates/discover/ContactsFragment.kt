@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.sportsmates.R
 import com.example.sportsmates.databinding.DiscoverFragmentBinding
 import com.example.sportsmates.signUp.data.model.User
 import org.koin.android.viewmodel.ext.android.viewModel
+import www.sanju.motiontoast.MotionToast
 
 class ContactsFragment : Fragment() {
 
@@ -42,7 +45,11 @@ class ContactsFragment : Fragment() {
         })
         viewModel.retriveUsersError.observe(this, Observer {
             stopShimmerLoading()
-            Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
+            MotionToast.createToast(activity!!,"",it,
+                MotionToast.TOAST_WARNING,
+                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.LONG_DURATION,
+                ResourcesCompat.getFont(activity!!, R.font.helvetica_regular))
         })
     }
 

@@ -6,150 +6,106 @@
     android:layout_height="match_parent"
     android:background="@drawable/map"
     tools:context=".profile.ProfileFragment">
+
+
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/shimmer_view_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <include
-                layout="@layout/shimmer_profile"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/dimen_8" />
-
-
-        </LinearLayout>
-    </com.facebook.shimmer.ShimmerFrameLayout>
-    </FrameLayout>
-
-    <ImageView
-        android:id="@+id/profileImage"
+        android:id="@+id/profileImageShimmer"
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:background="@color/grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/profileName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <FrameLayout
+        android:id="@+id/profileNameShimmer"
+        android:layout_width="@dimen/dimen_72"
+        android:layout_height="@dimen/dimen_16"
         android:layout_marginStart="16dp"
-        android:fontFamily="@font/roboto_regular"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/profileImage"
-        app:layout_constraintTop_toTopOf="@+id/profileImage"
-        tools:text="TextView" />
+        android:background="@color/grey"
+        app:layout_constraintStart_toEndOf="@+id/profileImageShimmer"
+        app:layout_constraintTop_toTopOf="@+id/profileImageShimmer"
+        />
 
-    <!-- <TextView
-         android:id="@+id/profilePhoneNumber"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_marginTop="4dp"
-         tools:text="TextView"
-         android:textSize="18sp"
-         android:visibility="invisible"
-         app:layout_constraintStart_toStartOf="@+id/profileName"
-         app:layout_constraintTop_toBottomOf="@+id/profileName" />-->
 
-    <TextView
-        android:id="@+id/profileEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <FrameLayout
+        android:id="@+id/profileEmailShimmer"
+        android:layout_width="120dp"
+        android:layout_height="@dimen/dimen_16"
+        android:background="@color/grey"
         android:layout_marginTop="4dp"
-        android:fontFamily="@font/roboto_regular"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/profileName"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/profileName"
-        app:layout_constraintTop_toBottomOf="@+id/profileName"
-        tools:text="TextView" />
+        app:layout_constraintStart_toStartOf="@+id/profileNameShimmer"
+        app:layout_constraintTop_toBottomOf="@+id/profileNameShimmer"
+         />
 
-    <TextView
-        android:id="@+id/profileAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <FrameLayout
+        android:id="@+id/profileAddressShimmer"
+        android:layout_width="@dimen/dimen_64"
+        android:layout_height="@dimen/dimen_16"
         android:layout_marginTop="4dp"
-        android:fontFamily="@font/roboto_regular"
-        android:textSize="18sp"
+         android:background="@color/grey"
         app:layout_constraintEnd_toEndOf="@+id/profileEmail"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/profileEmail"
-        app:layout_constraintTop_toBottomOf="@+id/profileEmail"
-        tools:text="TextView" />
+        app:layout_constraintStart_toStartOf="@+id/profileEmailShimmer"
+        app:layout_constraintTop_toBottomOf="@+id/profileEmailShimmer"
+        />
 
-    <TextView
-        android:id="@+id/ProfileAboutMeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <FrameLayout
+        android:id="@+id/ProfileAboutMeTitleShimmer"
+        android:layout_width="@dimen/dimen_64"
+        android:layout_height="@dimen/dimen_24"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:fontFamily="@font/roboto_regular"
-        android:text="@string/profile_about_me_title"
-        android:textColor="@color/dark_blue"
-        android:textSize="20sp"
-        android:textStyle="bold"
+         android:background="@color/grey"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+        app:layout_constraintTop_toBottomOf="@+id/profileImageShimmer"
+       />
 
-    <TextView
-        android:id="@+id/ProfileAboutMeDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <FrameLayout
+        android:id="@+id/ProfileAboutMeDescriptionShimmer"
+        android:layout_width="200dp"
+        android:layout_height="@dimen/dimen_16"
+        android:background="@color/grey"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/roboto_regular"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/ProfileAboutMeTitle"
-        app:layout_constraintTop_toBottomOf="@+id/ProfileAboutMeTitle"
-        tools:text="TextView" />
+        app:layout_constraintStart_toStartOf="@+id/ProfileAboutMeTitleShimmer"
+        app:layout_constraintTop_toBottomOf="@+id/ProfileAboutMeTitleShimmer"
+         />
 
-    <TextView
-        android:id="@+id/ProfileSportsTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <FrameLayout
+        android:id="@+id/ProfileSportsTitleShimmer"
+        android:layout_width="@dimen/dimen_64"
+        android:layout_height="@dimen/dimen_24"
         android:layout_marginStart="16dp"
         android:layout_marginTop="160dp"
-        android:fontFamily="@font/roboto_regular"
-        android:text="@string/profile_sports_title"
-        android:textColor="@color/dark_blue"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:background="@color/grey"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+        app:layout_constraintTop_toBottomOf="@+id/profileImageShimmer" />
 
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroup"
+        android:id="@+id/chip_groupShimmer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:background="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ProfileSportsTitle">
+        app:layout_constraintTop_toBottomOf="@id/ProfileSportsTitleShimmer">
 
         <!-- Chips can be declared here, or added dynamically. -->
         <com.google.android.material.chip.Chip
-            android:id="@+id/sports1"
+            android:id="@+id/sportsShimmer1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/offWhite"
+            android:backgroundTint="@color/grey"
             android:clickable="false"
             android:fontFamily="@font/roboto_regular"
             tools:text="Football" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/sports2"
+            android:id="@+id/sportsShimmer2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/offWhite"
@@ -159,7 +115,7 @@
             tools:text="Football" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/sports3"
+            android:id="@+id/sportsShimmer3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/offWhite"
@@ -171,7 +127,7 @@
     </com.google.android.material.chip.ChipGroup>
 
     <View
-        android:id="@+id/divider1"
+        android:id="@+id/dividerShimmer1"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginStart="16dp"
@@ -179,10 +135,11 @@
         android:layout_marginEnd="16dp"
         android:background="@color/colorSeparator"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chipGroup" />
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/chip_groupShimmer" />
 
     <TextView
-        android:id="@+id/editProfileButton"
+        android:id="@+id/editProfileButtonShimmer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -190,26 +147,28 @@
         android:layout_marginEnd="32dp"
         android:drawableLeft="@drawable/ic_edit"
         android:drawablePadding="24dp"
+        android:visibility="invisible"
         android:fontFamily="@font/roboto_regular"
         android:text="@string/edit_profile_button"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider1" />
+        app:layout_constraintTop_toBottomOf="@+id/dividerShimmer1" />
 
     <View
-        android:id="@+id/divider2"
+        android:id="@+id/dividerShimmer2"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
+        android:visibility="invisible"
         android:background="@color/colorSeparator"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editProfileButton" />
+        app:layout_constraintTop_toBottomOf="@id/editProfileButtonShimmer" />
 
     <TextView
-        android:id="@+id/logoutButton"
+        android:id="@+id/logoutButtonShimmer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -220,9 +179,10 @@
         android:fontFamily="@font/roboto_regular"
         android:text="@string/sign_out_button"
         android:textSize="20sp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider2" />
+        app:layout_constraintTop_toBottomOf="@+id/dividerShimmer2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

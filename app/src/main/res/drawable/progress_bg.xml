@@ -11,20 +11,20 @@
     <shape
         android:innerRadiusRatio="3"
         android:shape="ring"
-        android:thicknessRatio="8"
+        android:thicknessRatio="10"
         android:useLevel="false">
 
         <!--set the size of the shape-->
         <size
-            android:width="76dip"
-            android:height="76dip" />
+            android:width="60dip"
+            android:height="60dip" />
 
         <!--set the color gradients
             of the shape-->
         <gradient
             android:angle="0"
             android:endColor="#00ffffff"
-            android:startColor="@color/orange"
+            android:startColor="@color/main_green"
             android:type="sweep"
             android:useLevel="false" />
     </shape>

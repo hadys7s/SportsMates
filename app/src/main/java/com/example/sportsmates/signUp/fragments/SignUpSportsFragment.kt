@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -24,6 +25,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import www.sanju.motiontoast.MotionToast
 
 class SignUpSportsFragment : Fragment() {
     private var _binding: SignUpSportFargmentBinding? = null
@@ -68,7 +70,11 @@ class SignUpSportsFragment : Fragment() {
         })
 
         viewModel.signUpFailed.observe(this, Observer { errorMessage ->
-            Toast.makeText(activity, errorMessage, Toast.LENGTH_LONG).show()
+            MotionToast.createToast(activity!!,"Error ",errorMessage,
+                MotionToast.TOAST_ERROR,
+                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.LONG_DURATION,
+                ResourcesCompat.getFont(activity!!,R.font.helvetica_regular))
 
         })
 
@@ -77,17 +83,20 @@ class SignUpSportsFragment : Fragment() {
     private fun validateSelectOnlyThreeSports(): Boolean {
         return when {
             getSelectedSports()?.size!! > 3 -> {
-                Toast.makeText(activity, "Please Select Only 3 Sports ", Toast.LENGTH_SHORT).show()
+                MotionToast.createToast(activity!!,"Error ","Please Select Only 3 Sports",
+                    MotionToast.TOAST_WARNING,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.LONG_DURATION,
+                    ResourcesCompat.getFont(activity!!,R.font.helvetica_regular))
                 false
 
             }
             getSelectedSports()!!.isEmpty() -> {
-                Toast.makeText(
-                    activity,
-                    "Please Select Your favourites Sports ",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
+                MotionToast.createToast(activity!!,"Error ","Please Select Your favourites Sports ",
+                    MotionToast.TOAST_WARNING,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.LONG_DURATION,
+                    ResourcesCompat.getFont(activity!!,R.font.helvetica_regular))
                 false
             }
             else -> true
