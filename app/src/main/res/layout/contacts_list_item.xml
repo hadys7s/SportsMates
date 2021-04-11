@@ -75,7 +75,7 @@
             android:layout_marginEnd="@dimen/dimen_16"
             android:layout_marginBottom="@dimen/dimen_16"
             android:background="@drawable/chat_button_background"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/main_green"
             android:padding="@dimen/dimen_8"
             android:src="@drawable/ic_chat"
             app:layout_constraintBottom_toBottomOf="parent"

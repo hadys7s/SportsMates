@@ -122,6 +122,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
+                        android:layout_marginEnd="20dp"
                         android:orientation="horizontal"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
@@ -131,6 +132,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_open_close"
+                            android:drawablePadding="8dp"
                             android:fontFamily="@font/roboto_regular"
                             android:text="Opens"
                             android:textColor="@color/dark_blue"
@@ -148,10 +151,13 @@
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
-                        <ImageView
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/dimen_24" />
+                            android:layout_marginStart="@dimen/dimen_48"
+                            android:text="|"
+                            android:textColor="@color/dark_blue"
+                            android:textSize="@dimen/dimen_16" />
 
 
                         <TextView
@@ -211,12 +217,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_24"
+                        android:layout_marginBottom="@dimen/dimen_64"
                         android:drawablePadding="8dp"
                         android:src="@drawable/bg_draft_trip_directions"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginBottom="@dimen/dimen_64"
-                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/location"
                         app:layout_constraintTop_toBottomOf="@+id/location" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -230,8 +236,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
 
 
         <com.google.android.material.button.MaterialButton
@@ -240,16 +246,16 @@
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="@dimen/dimen_32"
-            android:layout_marginEnd="@dimen/dimen_32"
-            android:text="Book Now"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginBottom="@dimen/dimen_16"
             android:layout_marginTop="@dimen/dimen_16"
-            android:textAllCaps="false"
+            android:layout_marginEnd="@dimen/dimen_32"
+            android:layout_marginBottom="@dimen/dimen_16"
             android:backgroundTint="@color/main_green"
+            android:text="Book Now"
+            android:textAllCaps="false"
             app:cornerRadius="@dimen/dimen_16"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

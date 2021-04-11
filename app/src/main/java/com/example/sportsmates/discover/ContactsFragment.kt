@@ -47,7 +47,7 @@ class ContactsFragment : Fragment() {
             stopShimmerLoading()
             MotionToast.createToast(activity!!,"",it,
                 MotionToast.TOAST_WARNING,
-                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.GRAVITY_TOP,
                 MotionToast.LONG_DURATION,
                 ResourcesCompat.getFont(activity!!, R.font.helvetica_regular))
         })

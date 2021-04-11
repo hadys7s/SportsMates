@@ -72,7 +72,7 @@ class SignUpSportsFragment : Fragment() {
         viewModel.signUpFailed.observe(this, Observer { errorMessage ->
             MotionToast.createToast(activity!!,"Error ",errorMessage,
                 MotionToast.TOAST_ERROR,
-                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.GRAVITY_TOP,
                 MotionToast.LONG_DURATION,
                 ResourcesCompat.getFont(activity!!,R.font.helvetica_regular))
 

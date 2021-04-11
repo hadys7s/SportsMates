@@ -79,7 +79,7 @@ class SignUpEmailFragment : Fragment() {
         })
         viewModel.uploadImageFailed.observe(this, Observer { errMsg ->
             dismissAlertDialog()
-            MotionToast.createToast(activity!!,"Error ",errMsg,
+            MotionToast.createColorToast(activity!!,"Error ",errMsg,
                 MotionToast.TOAST_ERROR,
                 MotionToast.GRAVITY_BOTTOM,
                 MotionToast.LONG_DURATION,
@@ -107,7 +107,7 @@ class SignUpEmailFragment : Fragment() {
         return if (!confirmPassword.contentEquals(password)) {
             MotionToast.createToast(activity!!,"Warning ","Password don't match",
                 MotionToast.TOAST_WARNING,
-                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.GRAVITY_TOP,
                 MotionToast.LONG_DURATION,
                 ResourcesCompat.getFont(activity!!,R.font.helvetica_regular))
             false
