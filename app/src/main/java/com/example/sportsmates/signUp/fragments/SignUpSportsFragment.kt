@@ -70,7 +70,7 @@ class SignUpSportsFragment : Fragment() {
         })
 
         viewModel.signUpFailed.observe(this, Observer { errorMessage ->
-            MotionToast.createToast(activity!!,"Error ",errorMessage,
+            MotionToast.darkToast(activity!!,"Error ",errorMessage,
                 MotionToast.TOAST_ERROR,
                 MotionToast.GRAVITY_BOTTOM,
                 MotionToast.LONG_DURATION,
@@ -83,7 +83,7 @@ class SignUpSportsFragment : Fragment() {
     private fun validateSelectOnlyThreeSports(): Boolean {
         return when {
             getSelectedSports()?.size!! > 3 -> {
-                MotionToast.createToast(activity!!,"Error ","Please Select Only 3 Sports",
+                MotionToast.darkToast(activity!!,"Error ","Please Select Only 3 Sports",
                     MotionToast.TOAST_WARNING,
                     MotionToast.GRAVITY_BOTTOM,
                     MotionToast.LONG_DURATION,
@@ -92,7 +92,7 @@ class SignUpSportsFragment : Fragment() {
 
             }
             getSelectedSports()!!.isEmpty() -> {
-                MotionToast.createToast(activity!!,"Error ","Please Select Your favourites Sports ",
+                MotionToast.darkToast(activity!!,"Error ","Please Select Your favourites Sports ",
                     MotionToast.TOAST_WARNING,
                     MotionToast.GRAVITY_BOTTOM,
                     MotionToast.LONG_DURATION,

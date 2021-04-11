@@ -48,7 +48,7 @@ class SignInFragment : Fragment() {
         })
         viewModel.loginFailed.observe(this, Observer { errorMessage ->
             dismissAlertDialog()
-            MotionToast.createToast(
+            MotionToast.darkToast(
                 activity!!, "Faild", errorMessage,
                 MotionToast.TOAST_ERROR,
                 MotionToast.GRAVITY_BOTTOM,
