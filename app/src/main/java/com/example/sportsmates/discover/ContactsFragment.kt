@@ -45,7 +45,7 @@ class ContactsFragment : Fragment() {
         })
         viewModel.retriveUsersError.observe(this, Observer {
             stopShimmerLoading()
-            MotionToast.createToast(activity!!,"",it,
+            MotionToast.darkToast(activity!!,"",it,
                 MotionToast.TOAST_WARNING,
                 MotionToast.GRAVITY_TOP,
                 MotionToast.LONG_DURATION,

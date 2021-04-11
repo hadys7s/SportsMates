@@ -23,7 +23,6 @@ class ProfileFragment : Fragment() {
 
     private var _binding: ProfileFragmentBinding? = null
 
-    private lateinit var _userData:User
 
     private val binding get() = _binding!!
 
@@ -53,15 +52,14 @@ class ProfileFragment : Fragment() {
     private fun attachEventObservers() {
         viewModel.userData.observe(this, Observer { userData ->
             //  Toast.makeText(activity, userData?.name, Toast.LENGTH_LONG).show()
-            _userData= userData!!
+            stopShimmerLoading()
+            bindUserData(userData)
 
         })
         viewModel.userImage.observe(this, Observer { imageUri ->
             stopShimmerLoading()
             setUserImage(imageUri)
-            if (_userData!=null){
-            bindUserData(_userData)
-            }
+
         })
     }
 
