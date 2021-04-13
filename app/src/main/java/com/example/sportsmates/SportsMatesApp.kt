@@ -1,6 +1,7 @@
 package com.example.sportsmates
 
 import android.app.Application
+import com.example.sportsmates.di.NewsModule
 import com.example.sportsmates.di.SignUpModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -12,7 +13,7 @@ class SportsMatesApp : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@SportsMatesApp)
-            modules(listOf(SignUpModule))
+            modules(listOf(SignUpModule,NewsModule))
         }
     }
 }

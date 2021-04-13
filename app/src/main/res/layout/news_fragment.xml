@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:clipToPadding="false"
+    android:layout_height="match_parent"
+    tools:context=".news.presentation.fragment.NewsFragment">
+
+
+    <TextView
+        android:id="@+id/trendingHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="Trending"
+        android:textColor="@color/dark_blue"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/trendingNewsList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingBottom="@dimen/dimen_8"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:orientation="horizontal"
+        android:clipToPadding="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/trendingHeader"
+        tools:itemCount="2"
+        tools:listitem="@layout/small_news_item" />
+
+    <TextView
+        android:id="@+id/forYouHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:text="For You"
+        android:textColor="@color/dark_blue"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/trendingNewsList" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/forYouNewsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:paddingEnd="@dimen/dimen_8"
+        android:layout_marginEnd="@dimen/dimen_16"
+        android:orientation="horizontal"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/forYouHeader"
+        app:layout_constraintVertical_bias="0.0"
+        tools:itemCount="2"
+        tools:listitem="@layout/news_tall_item" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
