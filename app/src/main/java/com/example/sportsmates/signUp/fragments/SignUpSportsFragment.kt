@@ -9,6 +9,11 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.children
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.preferencesKey
+import androidx.datastore.preferences.createDataStore
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.baoyachi.stepview.bean.StepBean
@@ -25,6 +30,8 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import www.sanju.motiontoast.MotionToast
 
 class SignUpSportsFragment : Fragment() {
@@ -48,11 +55,9 @@ class SignUpSportsFragment : Fragment() {
                 // view model signUp
                 viewModel.onDoneButtonClicked(signUpUserInfo())
 
-
             }
         }
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -134,6 +139,7 @@ class SignUpSportsFragment : Fragment() {
                     putParcelable(USER_DATA, user)
                 }
             }
+
     }
 }
 

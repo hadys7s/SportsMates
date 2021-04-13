@@ -1,5 +1,6 @@
 package com.example.sportsmates.SignUp
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,17 +8,25 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.createDataStore
 import androidx.fragment.app.Fragment
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.SignUpUserInfoFragmentBinding
 import com.example.sportsmates.ext.pushFragment
 import com.example.sportsmates.ext.setStepper
 import com.example.sportsmates.signUp.data.model.User
+import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class SignUpUserInfoFragment : Fragment() {
     private var _binding: SignUpUserInfoFragmentBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: SignUpViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,6 +59,7 @@ class SignUpUserInfoFragment : Fragment() {
                     SignUpSportsFragment.newInstance(forwardUserInfo()),
                     containerViewId = R.id.container
                 )
+
         }
     }
 
@@ -63,6 +73,7 @@ class SignUpUserInfoFragment : Fragment() {
                 )
 
     }
+
 
     private fun forwardUserInfo(): User? {
         val user: User? = arguments?.getParcelable(USER_DATA)
@@ -95,5 +106,6 @@ class SignUpUserInfoFragment : Fragment() {
 
                 }
             }
+
     }
 }
