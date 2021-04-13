@@ -1,8 +1,15 @@
 package com.example.sportsmates.signUp.data.Repo
 
+import android.content.Context
 import android.net.Uri
 import android.util.Log
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.MutableLiveData
+import com.example.sportsmates.SignUp.SignUpSportsFragment
+import com.example.sportsmates.SignUp.SignUpUserInfoFragment
+import com.example.sportsmates.signUp.SignUpActivity
 import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.utils.SingleLiveEvent
 import com.google.firebase.auth.FirebaseAuth
@@ -13,8 +20,11 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.tasks.await
 import okhttp3.internal.wait
+import java.util.prefs.Preferences
+import kotlin.coroutines.coroutineContext
 
 
 class UserRepository(
@@ -30,6 +40,7 @@ class UserRepository(
     var loginFailed = MutableLiveData<String>()
     var loginSuccess = SingleLiveEvent<Any>()
     var userData = MutableLiveData<User?>()
+
 
 
     fun login(email: String, password: String) {
@@ -51,7 +62,7 @@ class UserRepository(
         userAuth.signOut()
     }
 
-     fun deleteUser() {
+    fun deleteUser() {
         Firebase.auth.currentUser.delete()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -155,7 +166,7 @@ class UserRepository(
     }
 
 
-     fun deleteProfileImage() {
+    fun deleteProfileImage() {
         val storageReference =
             FirebaseStorage.getInstance().reference.child("images/" + userAuth.currentUser.uid)
         storageReference.delete().addOnSuccessListener {
@@ -167,6 +178,8 @@ class UserRepository(
 
 
     }
+
+
 
     companion object {
         private const val TAG = "EmailPassword"
