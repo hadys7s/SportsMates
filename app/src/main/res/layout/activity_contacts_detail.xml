@@ -1,110 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/map">
 
-    <RelativeLayout
-
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/user_idintit_Container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/map">
+        android:layout_height="wrap_content"
+        android:background="@color/black">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/user_idintit_Container"
+        <ImageView
+            android:id="@+id/userDetailImage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/black">
+            android:layout_height="400dp"
+            android:scaleType="fitXY"
+            android:transitionName="img"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/userDetailImage"
-                android:layout_width="match_parent"
-                android:transitionName="img"
-                android:layout_height="400dp"
-                android:scaleType="fitXY"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="@dimen/dimen_24"
+            android:layout_marginTop="@dimen/toolbar_margin_top_in_full_screen_mode"
+            android:src="@drawable/ic_atom_icon_navigation_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <FrameLayout
+            android:id="@+id/userinfocontainer"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@drawable/bg_top_right_rounded_corner"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <FrameLayout
-                android:id="@+id/userinfocontainer"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:background="@drawable/bg_top_right_rounded_corner"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                android:layout_height="wrap_content"
+                android:background="@drawable/map">
 
-                <FrameLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/map">
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="@dimen/dimen_32"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    tools:text="Ragaa Abo Elezz" />
 
-                    <TextView
-                        android:id="@+id/userName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="32dp"
-                        android:layout_marginTop="@dimen/dimen_32"
-                        android:fontFamily="@font/roboto_regular"
-                        tools:text="Ragaa Abo Elezz"
-                        android:textColor="@color/black"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/useraAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_32"
+                    android:layout_marginTop="@dimen/dimen_64"
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="13sp"
+                    tools:text="265 Mansoura, Egypt" />
 
-                    <TextView
-                        android:id="@+id/useraAddress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen_32"
-                        android:layout_marginTop="@dimen/dimen_64"
-                        android:fontFamily="sans-serif-light"
-                        tools:text="265 Mansoura, Egypt"
-                        android:textSize="13sp" />
+                <TextView
+                    android:id="@+id/userAge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_32"
+                    android:layout_marginTop="82dp"
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="13sp"
+                    tools:text="22 years" />
 
-                    <TextView
-                        android:id="@+id/userAge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen_32"
-                        android:layout_marginTop="82dp"
-                        android:fontFamily="sans-serif-light"
-                        tools:text="22 years"
-                        android:textSize="13sp" />
-
-                </FrameLayout>
             </FrameLayout>
-
-            <ImageButton
-                android:id="@+id/backBtn"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_marginStart="@dimen/dimen_24"
-                android:layout_marginTop="@dimen/toolbar_margin_top_in_full_screen_mode"
-                android:src="@drawable/ic_atom_icon_navigation_back"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        </FrameLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/user_idintit_Container"
-            android:layout_centerInParent="true"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_idintit_Container"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_vertical">
 
-            android:layout_gravity="center_vertical">
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-            <FrameLayout
-                android:id="@+id/frameLayout"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/content_container"
@@ -195,20 +194,29 @@
 
                     </com.google.android.material.chip.ChipGroup>
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/chat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_24"
-                        android:layout_marginRight="@dimen/dimen_16"
-                        android:backgroundTint="@color/main_green"
-                        android:src="@drawable/ic_chat"
-                        app:tint="@color/white"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/chipGroup" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </FrameLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </RelativeLayout>
-</ScrollView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/map">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_24"
+            android:layout_marginBottom="@dimen/dimen_24"
+            android:backgroundTint="@color/main_green"
+            android:src="@drawable/ic_chat"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="@color/white" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
+
