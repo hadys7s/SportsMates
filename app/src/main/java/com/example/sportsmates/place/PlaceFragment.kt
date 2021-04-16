@@ -27,17 +27,23 @@ class PlaceFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding.shimmerViewContainer.startShimmer()
         setupList()
-        viewModel._listOfSPlacesEvent.observe(this, Observer {
-            binding.shimmerViewContainer.stopShimmer()
-            binding.shimmerViewContainer.visibility = View.GONE
-            setPlaces(it)
-
-        })
+        attachObservers()
 
     }
 
+    private fun attachObservers() {
+        viewModel._listOfSPlacesEvent.observe(this, Observer {
+            stopShimmer()
+            setPlaces(it)
+
+        })
+    }
+
+    private fun stopShimmer() {
+        binding.shimmerViewContainer.stopShimmer()
+        binding.shimmerViewContainer.visibility = View.GONE
+    }
 
     private fun setupList() {
         binding.placesList.run {

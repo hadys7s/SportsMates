@@ -30,18 +30,24 @@ class CoachFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding.shimmerViewContainer.startShimmer()
         setupList()
+        attachObservers()
 
+    }
+
+    private fun attachObservers() {
         viewModel._listOfSCoachesEvent.observe(this, Observer {
-            binding.shimmerViewContainer.visibility=View.GONE
-            binding.shimmerViewContainer.stopShimmer()
+            stopShimmer()
             setCoaches(it)
 
         })
 
     }
 
+    private fun stopShimmer() {
+        binding.shimmerViewContainer.visibility = View.GONE
+        binding.shimmerViewContainer.stopShimmer()
+    }
 
     private fun setupList() {
         binding.coachList.run {

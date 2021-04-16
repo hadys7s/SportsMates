@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.DiscoverFragmentBinding
+import com.example.sportsmates.ext.displayWarningToast
 import com.example.sportsmates.signUp.data.model.User
 import org.koin.android.viewmodel.ext.android.viewModel
 import www.sanju.motiontoast.MotionToast
@@ -45,12 +46,9 @@ class ContactsFragment : Fragment() {
         })
         viewModel.retriveUsersError.observe(this, Observer {
             stopShimmerLoading()
-            MotionToast.darkToast(activity!!,"",it,
-                MotionToast.TOAST_WARNING,
-                MotionToast.GRAVITY_BOTTOM,
-                MotionToast.LONG_DURATION,
-                ResourcesCompat.getFont(activity!!, R.font.helvetica_regular))
+            displayWarningToast(" ",it)
         })
+
     }
 
     private fun setupList() {

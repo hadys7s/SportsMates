@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.SignInFragmentBinding
+import com.example.sportsmates.ext.displayErrorToast
 import com.example.sportsmates.ext.openTopActivity
 import com.example.sportsmates.ext.pushFragment
 import com.example.sportsmates.home.MainActivity
@@ -48,13 +49,7 @@ class SignInFragment : Fragment() {
         })
         viewModel.loginFailed.observe(this, Observer { errorMessage ->
             dismissAlertDialog()
-            MotionToast.darkToast(
-                activity!!, "Faild", errorMessage,
-                MotionToast.TOAST_ERROR,
-                MotionToast.GRAVITY_BOTTOM,
-                MotionToast.LONG_DURATION,
-                ResourcesCompat.getFont(activity!!, R.font.helvetica_regular)
-            )
+            displayErrorToast("faild",errorMessage)
 
         })
     }
