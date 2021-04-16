@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.sportsmates.databinding.ProfileFragmentBinding
 import com.example.sportsmates.ext.openTopActivity
+import com.example.sportsmates.ext.stopShimmer
 import com.example.sportsmates.signUp.SignUpActivity
 import com.example.sportsmates.signUp.data.model.User
 
@@ -37,7 +38,6 @@ class ProfileFragment : Fragment() {
     }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        startShimmer()
         fetchArguments()
         attachEventObservers()
         attachCLickListeners()
@@ -52,12 +52,12 @@ class ProfileFragment : Fragment() {
     private fun attachEventObservers() {
         viewModel.userData.observe(this, Observer { userData ->
             //  Toast.makeText(activity, userData?.name, Toast.LENGTH_LONG).show()
-            stopShimmerLoading()
+            stopShimmer(binding.shimmerViewContainer)
             bindUserData(userData)
 
         })
         viewModel.userImage.observe(this, Observer { imageUri ->
-            stopShimmerLoading()
+            stopShimmer(binding.shimmerViewContainer)
             setUserImage(imageUri)
 
         })

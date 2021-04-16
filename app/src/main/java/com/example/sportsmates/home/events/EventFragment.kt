@@ -44,7 +44,7 @@ class EventFragment : Fragment() {
             })
         viewModel.retriveEventError.observe(this, Observer {
             stopShimmer(binding.shimmerViewContainer)
-            displayWarningToast("", it)
+            displayWarningToast("Warning", it)
         })
     }
 
