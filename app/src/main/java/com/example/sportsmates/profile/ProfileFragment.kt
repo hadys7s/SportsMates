@@ -36,6 +36,7 @@ class ProfileFragment : Fragment() {
         _binding = ProfileFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         fetchArguments()
@@ -100,18 +101,7 @@ class ProfileFragment : Fragment() {
             }
         }
     }
-    private fun stopShimmerLoading() {
-        binding.shimmerViewContainer.stopShimmer()
-        binding.shimmerViewContainer.visibility = View.GONE
-        binding.ProfileAboutMeTitle.visibility=View.VISIBLE
-        binding.ProfileSportsTitle.visibility=View.VISIBLE
 
-    }
-    private fun startShimmer(){
-        binding.ProfileAboutMeTitle.visibility=View.INVISIBLE
-        binding.ProfileSportsTitle.visibility=View.INVISIBLE
-        binding.shimmerViewContainer.startShimmer()
-    }
 
     override fun onDestroy() {
         super.onDestroy()
