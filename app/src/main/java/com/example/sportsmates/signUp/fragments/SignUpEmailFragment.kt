@@ -58,7 +58,7 @@ class SignUpEmailFragment : Fragment() {
                     displayWarningToast("Warning ","Select a Photo !")
                 } else {
                     viewModel.onNextEmailButtonCLicked(forwardUserInfo(), filePath)
-                    startAlertDialog()
+                    showLoading()
                 }
             }
 
@@ -67,16 +67,16 @@ class SignUpEmailFragment : Fragment() {
 
     private fun attachEventObservers() {
         viewModel.signUpAuthSuccess.observe(this, Observer {
-            dismissAlertDialog()
+            hideLoading()
             navigateToNextScreen()
 
         })
         viewModel.signUpAuthFailed.observe(this, Observer { errMsg ->
-            dismissAlertDialog()
+            hideLoading()
             displayErrorToast("Error ",errMsg)
         })
         viewModel.uploadImageFailed.observe(this, Observer { errMsg ->
-            dismissAlertDialog()
+            hideLoading()
             displayErrorToast("Error ",errMsg)
         })
 
@@ -190,7 +190,7 @@ class SignUpEmailFragment : Fragment() {
 
     }
 
-    private fun startAlertDialog() {
+    private fun showLoading() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
         val inflater: LayoutInflater = activity!!.layoutInflater
         builder.setView(inflater.inflate(R.layout.progress_dialog, null))
@@ -200,7 +200,7 @@ class SignUpEmailFragment : Fragment() {
         dialog.show()
     }
 
-    private fun dismissAlertDialog() {
+    private fun hideLoading() {
         dialog.dismiss()
     }
 

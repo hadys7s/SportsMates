@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.sportsmates.R
 import com.example.sportsmates.databinding.FragmentHomeBinding
 import com.example.sportsmates.home.events.EventFragment
-import com.example.sportsmates.home.news.NewsFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeFragment : Fragment() {
@@ -27,15 +27,15 @@ class HomeFragment : Fragment() {
     }
     private fun attachViewPager(){
         val fragments:ArrayList<Fragment>?= arrayListOf(
-            NewsFragment.newInstance(),
             EventFragment.newInstance()
         )
         val adapter= activity?.let { ViewPagerAdapter(fragments!!, it) }
         binding.viewPager.adapter=adapter
         TabLayoutMediator(binding.tabs,binding.viewPager){tab ,position->
             when(position){
-                0->{tab.text="News"}
-                1->{tab.text="Events"}
+                0->{tab.text=getString(R.string.tab_layout_news)
+                }
+                1->{tab.text=getString(R.string.tab_layout_event)}
             }
         }.attach()
     }

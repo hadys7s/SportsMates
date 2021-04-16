@@ -44,11 +44,11 @@ class SignInFragment : Fragment() {
     private fun attachEventObservers() {
         viewModel.loginSuccess.observe(this, Observer { user ->
             //  redirect home
-            dismissAlertDialog()
+            hideLoading()
             openTopActivity(activity, MainActivity())
         })
         viewModel.loginFailed.observe(this, Observer { errorMessage ->
-            dismissAlertDialog()
+            hideLoading()
             displayErrorToast("faild",errorMessage)
 
         })
@@ -61,7 +61,7 @@ class SignInFragment : Fragment() {
 
         binding.loginButton.setOnClickListener {
             if (validation()) {
-                startAlertDialog()
+                showLoading()
                 login()
             }
 
@@ -94,7 +94,7 @@ class SignInFragment : Fragment() {
         }
     }
 
-    private fun startAlertDialog() {
+    private fun showLoading() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
         val inflater: LayoutInflater = activity!!.layoutInflater
         builder.setView(inflater.inflate(R.layout.progress_dialog, null))
@@ -104,7 +104,7 @@ class SignInFragment : Fragment() {
         dialog.show()
     }
 
-    private fun dismissAlertDialog() {
+    private fun hideLoading() {
         dialog.dismiss()
     }
 

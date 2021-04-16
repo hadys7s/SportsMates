@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.CoachFragmentBinding
+import com.example.sportsmates.ext.stopShimmer
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -37,17 +38,13 @@ class CoachFragment : Fragment() {
 
     private fun attachObservers() {
         viewModel._listOfSCoachesEvent.observe(this, Observer {
-            stopShimmer()
+            stopShimmer(binding.shimmerViewContainer)
             setCoaches(it)
 
         })
 
     }
 
-    private fun stopShimmer() {
-        binding.shimmerViewContainer.visibility = View.GONE
-        binding.shimmerViewContainer.stopShimmer()
-    }
 
     private fun setupList() {
         binding.coachList.run {

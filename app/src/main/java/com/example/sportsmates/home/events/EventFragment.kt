@@ -12,6 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.FragmentEventBinding
+import com.example.sportsmates.ext.displayWarningToast
+import com.example.sportsmates.ext.stopShimmer
 import org.koin.android.viewmodel.ext.android.viewModel
 import www.sanju.motiontoast.MotionToast
 
@@ -37,31 +39,19 @@ class EventFragment : Fragment() {
     private fun attachEventObservers() {
         viewModel.retriveEventSucess
             .observe(this, Observer {
-                stopShimmerLoading()
+                stopShimmer(binding.shimmerViewContainer)
                 setUsers(it)
             })
         viewModel.retriveEventError.observe(this, Observer {
-            stopShimmerLoading()
-            MotionToast.darkToast(
-                activity!!, "", it,
-                MotionToast.TOAST_WARNING,
-                MotionToast.GRAVITY_BOTTOM,
-                MotionToast.LONG_DURATION,
-                ResourcesCompat.getFont(activity!!, R.font.helvetica_regular)
-            )
+            stopShimmer(binding.shimmerViewContainer)
+            displayWarningToast("", it)
         })
     }
 
     private fun setupList() {
-        binding.shimmerViewContainer.startShimmer()
         binding.eventList.run {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
-    }
-
-    private fun stopShimmerLoading() {
-        binding.shimmerViewContainer.stopShimmer()
-        binding.shimmerViewContainer.visibility = View.GONE
     }
 
     private fun setUsers(eventList: List<Event>?) {
