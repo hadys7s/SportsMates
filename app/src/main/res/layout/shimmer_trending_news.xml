@@ -11,45 +11,48 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
+        <FrameLayout
+            android:id="@+id/newTitle"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="@dimen/dimen_12"
+            android:layout_marginTop="@dimen/dimen_12"
+            android:layout_marginEnd="@dimen/dimen_12"
+            android:layout_marginBottom="@dimen/dimen_16"
+            android:background="@color/grey"
+            android:ellipsize="end"
+            android:fontFamily="@font/roboto_regular"
+            android:maxLines="2"
+            android:text="Xabi Alonso Won't be next BVB Manager"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/dimen_16"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageGuideLine" />
+
+
+        <FrameLayout
             android:id="@+id/newsImage"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:transitionName="img1"
-            android:scaleType="fitXY"
-            android:src="@drawable/coach_bg"
+            android:layout_width="250dp"
+            android:layout_height="120dp"
+            android:background="@color/grey"
             app:layout_constraintBottom_toTopOf="@id/imageGuideLine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:layout_width="wrap_content"
             android:id="@+id/imageGuideLine"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.67"/>
+            app:layout_constraintGuide_percent="0.67" />
 
 
-        <TextView
-            android:id="@+id/newTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_12"
-            android:layout_marginTop="@dimen/dimen_12"
-            android:layout_marginBottom="@dimen/dimen_16"
-            android:ellipsize="end"
-            android:layout_marginEnd="@dimen/dimen_12"
-            android:fontFamily="@font/roboto_regular"
-            android:maxLines="2"
-            android:text="Xabi Alonso Won't be next BVB Manager"
-            android:textColor="@color/dark_blue"
-            android:textSize="@dimen/dimen_16"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageGuideLine" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

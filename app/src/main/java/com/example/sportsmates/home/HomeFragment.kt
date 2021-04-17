@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.sportsmates.databinding.FragmentHomeBinding
 import com.example.sportsmates.home.events.EventFragment
-import com.example.sportsmates.home.news.NewsFragment
+import com.example.sportsmates.home.news.presentation.fragment.NewsFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeFragment : Fragment() {
@@ -38,6 +38,7 @@ class HomeFragment : Fragment() {
                 1->{tab.text="Events"}
             }
         }.attach()
+        binding.viewPager.isUserInputEnabled = false
     }
 
     override fun onDestroy() {

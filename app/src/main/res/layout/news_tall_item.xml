@@ -19,6 +19,7 @@
             android:layout_width="120dp"
             android:layout_height="104dp"
             android:scaleType="fitXY"
+            android:transitionName="img2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
@@ -33,6 +34,7 @@
             android:ellipsize="end"
             android:textColor="@color/dark_blue"
             android:textSize="18sp"
+            android:maxLines="3"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

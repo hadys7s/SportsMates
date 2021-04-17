@@ -5,10 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.text.format.DateUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.annotation.IdRes
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -16,6 +19,11 @@ import androidx.fragment.app.FragmentActivity
 import com.baoyachi.stepview.HorizontalStepView
 import com.baoyachi.stepview.bean.StepBean
 import com.example.sportsmates.R
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 fun AppCompatActivity.replaceFragment(
@@ -162,6 +170,11 @@ fun Fragment.openTopActivity(activity: FragmentActivity?, targetActivity: Activi
     )
     targetActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
     startActivity(targetActivity)
+}
+
+fun String.convertToAgoFormat(): CharSequence? {
+    Log.v("time",DateUtils.getRelativeTimeSpanString(Instant.parse(this).toEpochMilli()).toString())
+    return DateUtils.getRelativeTimeSpanString(Instant.parse(this).toEpochMilli())
 }
 
 val Context.inflater: LayoutInflater

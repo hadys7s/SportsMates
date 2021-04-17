@@ -1,6 +1,6 @@
 package com.example.sportsmates.networking
 
-import com.example.sportsmates.news.data.endpoint.NewsEndpoint
+import com.example.sportsmates.home.news.data.endpoint.NewsEndpoint
 import com.example.sportsmates.utils.Constants
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
@@ -33,9 +33,9 @@ data class Resource<out T>(val status: Status, val data: T?, val message: String
 
 class ApiHelper(private val apiService: NewsEndpoint) {
     suspend fun getNews(
-        mainSport: String,
-        optionalSport1: String = mainSport,
-        optionalSport2: String = mainSport
+        mainSport: String?,
+        optionalSport1: String? = mainSport,
+        optionalSport2: String? = mainSport
     ) =
         apiService.getRecommendedNews("$mainSport OR $optionalSport1 OR $optionalSport2")
 

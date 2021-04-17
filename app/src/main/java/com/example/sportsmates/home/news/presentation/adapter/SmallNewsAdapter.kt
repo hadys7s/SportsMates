@@ -1,21 +1,20 @@
-package com.example.sportsmates.news.presentation.adapter
+package com.example.sportsmates.home.news.presentation.adapter
 
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.sportsmates.coach.GlideApp
-import com.example.sportsmates.databinding.CoachListItemBinding
 import com.example.sportsmates.databinding.SmallNewsItemBinding
 import com.example.sportsmates.ext.inflater
-import com.example.sportsmates.news.presentation.model.NewsItemUIModel
+import com.example.sportsmates.home.news.presentation.model.NewsItemUIModel
 
 class SmallNewsAdapter(
     private val newsList: List<NewsItemUIModel>?,
     private val context: FragmentActivity?
 ) :
     RecyclerView.Adapter<SmallNewsAdapter.ViewHolder>() {
-    var onItemClick: ((NewsItemUIModel) -> Unit)? = null
+    var onItemClick: ((NewsItemUIModel,ImageView) -> Unit)? = null
 
 
     inner class ViewHolder(private val binding: SmallNewsItemBinding) :
@@ -26,7 +25,7 @@ class SmallNewsAdapter(
             Glide.with(context!!)
                 .load(newsItem.imageUrl)
                 .into(binding.newsImage)
-            itemView.setOnClickListener { onItemClick?.invoke(newsItem) }
+            itemView.setOnClickListener { onItemClick?.invoke(newsItem,binding.newsImage) }
         }
     }
 

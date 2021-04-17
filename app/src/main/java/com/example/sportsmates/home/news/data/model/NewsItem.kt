@@ -1,6 +1,9 @@
-package com.example.sportsmates.news
+package com.example.sportsmates.home.news
 
-import com.example.sportsmates.news.presentation.model.NewsItemUIModel
+import android.os.Build
+import androidx.annotation.RequiresApi
+import com.example.sportsmates.ext.convertToAgoFormat
+import com.example.sportsmates.home.news.presentation.model.NewsItemUIModel
 import com.google.gson.annotations.SerializedName
 
 data class NewsItem(
@@ -19,13 +22,12 @@ fun NewsItem.toUiModel(): NewsItemUIModel {
         website = source?.name.orEmpty(),
         title = this.title.orEmpty(),
         imageUrl = this.urlToImage.orEmpty(),
-        content = this.content.orEmpty(),
-        publishedAt = this.publishedAt.orEmpty()
+        content = this.description.orEmpty(),
+        publishedAt = "." + this.publishedAt?.convertToAgoFormat().toString()
     )
 }
 
 data class Source(
-
     @SerializedName("id") val id: String,
     @SerializedName("name") val name: String
 )

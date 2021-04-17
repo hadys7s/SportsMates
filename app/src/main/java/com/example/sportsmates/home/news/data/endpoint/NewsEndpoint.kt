@@ -1,9 +1,7 @@
-package com.example.sportsmates.news.data.endpoint
+package com.example.sportsmates.home.news.data.endpoint
 
-import com.example.sportsmates.news.data.model.NewsListResponse
-import retrofit2.http.Field
+import com.example.sportsmates.home.news.data.model.NewsListResponse
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface NewsEndpoint {
