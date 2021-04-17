@@ -42,18 +42,10 @@ class SliderAdapterExample(val context: Context) :
     }
 
     inner class SliderAdapterVH(itemView: View) : ViewHolder(itemView) {
-        var myitemView: View
-        var imageViewBackground: ImageView
-        var imageGifContainer: ImageView
-        var textViewDescription: TextView
+        var myitemView: View = itemView
+        var imageViewBackground: ImageView = itemView.findViewById(R.id.iv_auto_image_slider)
+        var imageGifContainer: ImageView = itemView.findViewById(R.id.iv_gif_container)
+        var textViewDescription: TextView = itemView.findViewById(R.id.tv_auto_image_slider)
 
-        init {
-            imageViewBackground = itemView.findViewById(R.id.iv_auto_image_slider)
-            imageGifContainer = itemView.findViewById(R.id.iv_gif_container)
-            textViewDescription = itemView.findViewById(R.id.tv_auto_image_slider)
-            myitemView = itemView
-        }
     }
-
-
 }

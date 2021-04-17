@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.sportsmates.R
-
 import com.example.sportsmates.coach.CoachFragment
 import com.example.sportsmates.databinding.ActivityMainBinding
 import com.example.sportsmates.discover.ContactsFragment
@@ -27,9 +26,7 @@ class MainActivity : AppCompatActivity() {
         addfragment(HomeFragment.newInstance())
         bottomNavigationController()
         binding.chatBot.setOnClickListener {
-
         }
-
     }
 
 
@@ -97,6 +94,5 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val USER_ID = "userId"
     }
-
 
 }

@@ -111,5 +111,4 @@ class ContactsViewModel() : ViewModel() {
         }.await()
         return userImage
     }
-
 }

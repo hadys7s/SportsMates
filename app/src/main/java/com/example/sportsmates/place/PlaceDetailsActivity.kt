@@ -1,15 +1,11 @@
 package com.example.sportsmates.place
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
-import com.example.sportsmates.coach.CoachDetailsActivity
-import com.example.sportsmates.coach.CoachUiModel
-import com.example.sportsmates.coach.CoachViewModel
 import com.example.sportsmates.coach.SliderAdapterExample
-import com.example.sportsmates.databinding.ActivityCoashDetailsBinding
 import com.example.sportsmates.databinding.ActivityPlaceDetailsBinding
 import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType

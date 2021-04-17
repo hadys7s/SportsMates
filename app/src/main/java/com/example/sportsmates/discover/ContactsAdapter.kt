@@ -36,7 +36,6 @@ class ContactsAdapter(private val userList: List<User>?, private val context: Fr
 
     override fun getItemCount(): Int = userList!!.size
 
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         userList?.get(position)?.let { holder.bind(it) }
     }

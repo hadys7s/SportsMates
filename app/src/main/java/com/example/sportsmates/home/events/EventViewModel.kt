@@ -11,15 +11,14 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-class EventViewModel :ViewModel(){
-    private var listOfEvents:MutableList<Event>?= mutableListOf()
-    var retriveEventSucess=MutableLiveData<List<Event>?>()
-    var retriveEventError=MutableLiveData<String>()
+class EventViewModel : ViewModel() {
+    private var listOfEvents: MutableList<Event>? = mutableListOf()
+    var retriveEventSucess = MutableLiveData<List<Event>?>()
+    var retriveEventError = MutableLiveData<String>()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -27,18 +26,14 @@ class EventViewModel :ViewModel(){
                 val events = getRelatedEvents(getUserSportsList())
                 if (!events.isNullOrEmpty()) {
                     events.forEach { event ->
-                        event.img = retriveUserPhoto(event.eventId)
+                        event.img = reteriveUserPhoto(event.eventId)
                     }
                     retriveEventSucess.postValue(events)
                 }
             } catch (e: Exception) {
             }
-
         }
-
     }
-
-
 
     private suspend fun getRelatedEvents(
         listOfSports: MutableList<String>?
@@ -52,7 +47,7 @@ class EventViewModel :ViewModel(){
                     listOfEvents?.add(event!!)
                 }
             }
-            if (listOfEvents.isNullOrEmpty()){
+            if (listOfEvents.isNullOrEmpty()) {
                 retriveEventError.postValue("There is No Event For The Sport You Are interested in ")
             }
 
@@ -62,6 +57,7 @@ class EventViewModel :ViewModel(){
         }.await()
         return listOfEvents
     }
+
     private suspend fun getUserSportsList(): MutableList<String>? {
         var listOfSports: MutableList<String>? = mutableListOf()
         FirebaseDatabase.getInstance().getReference("Users")
@@ -79,11 +75,12 @@ class EventViewModel :ViewModel(){
 
         return listOfSports
     }
-    private suspend fun retriveUserPhoto(eventId:String?): Uri? {
+
+    private suspend fun reteriveUserPhoto(eventId: String?): Uri? {
         var eventImage: Uri? = null
         val storageReference = FirebaseStorage.getInstance().reference.child("event/$eventId.jpg")
         storageReference.downloadUrl.addOnSuccessListener { imgList ->
-            eventImage=imgList
+            eventImage = imgList
         }.addOnFailureListener {
             retriveEventError.postValue(it.message.toString())
         }.await()

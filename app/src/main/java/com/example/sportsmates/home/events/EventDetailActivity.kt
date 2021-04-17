@@ -1,8 +1,8 @@
 package com.example.sportsmates.home.events
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -21,10 +21,12 @@ class EventDetailActivity : AppCompatActivity() {
         attachCLickListeners()
         fetchEventData()
     }
+
     private fun fetchEventData(){
         val event:Event?=intent.getParcelableExtra(EVENT_ITEM)
         bindData(event)
     }
+
     private fun bindData(event:Event?){
         binding.eventName.text=event!!.name
         binding.details.text=event!!.description
@@ -37,11 +39,13 @@ class EventDetailActivity : AppCompatActivity() {
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(binding.eventImg)
     }
+
     private fun attachCLickListeners() {
         binding.backBtn.setOnClickListener {
             onBackPressed()
         }
     }
+
     companion object {
         private const val EVENT_ITEM = "eventItem"
         fun start(activity: FragmentActivity?, eventItem: Event,option:Bundle) {

@@ -2,7 +2,7 @@ package com.example.sportsmates.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.sportsmates.signUp.data.Repo.UserRepository
+import com.example.sportsmates.signUp.data.repo.UserRepository
 import com.example.sportsmates.utils.SingleLiveEvent
 
 class SignInViewModel(private val userRepository: UserRepository) :

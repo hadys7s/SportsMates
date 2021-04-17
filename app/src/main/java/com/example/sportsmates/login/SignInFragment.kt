@@ -16,6 +16,7 @@ import com.example.sportsmates.ext.openTopActivity
 import com.example.sportsmates.ext.pushFragment
 import com.example.sportsmates.home.MainActivity
 import com.example.sportsmates.login.SignInViewModel
+import com.example.sportsmates.signUp.fragments.SignUpEmailFragment
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.viewmodel.ext.android.viewModel
 import www.sanju.motiontoast.MotionToast

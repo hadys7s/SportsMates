@@ -1,4 +1,4 @@
-package com.example.sportsmates.SignUp
+package com.example.sportsmates.signUp.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.FragmentHomeBinding
 import com.example.sportsmates.home.events.EventFragment
+import com.example.sportsmates.home.news.presentation.fragment.NewsFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeFragment : Fragment() {
@@ -27,6 +28,7 @@ class HomeFragment : Fragment() {
     }
     private fun attachViewPager(){
         val fragments:ArrayList<Fragment>?= arrayListOf(
+            NewsFragment.newInstance(),
             EventFragment.newInstance()
         )
         val adapter= activity?.let { ViewPagerAdapter(fragments!!, it) }
@@ -38,6 +40,7 @@ class HomeFragment : Fragment() {
                 1->{tab.text=getString(R.string.tab_layout_event)}
             }
         }.attach()
+        binding.viewPager.isUserInputEnabled = false
     }
 
     override fun onDestroy() {
