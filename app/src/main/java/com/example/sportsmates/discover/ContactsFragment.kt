@@ -13,6 +13,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.DiscoverFragmentBinding
+import com.example.sportsmates.ext.displayWarningToast
+import com.example.sportsmates.ext.stopShimmer
 import com.example.sportsmates.signUp.data.model.User
 import org.koin.android.viewmodel.ext.android.viewModel
 import www.sanju.motiontoast.MotionToast
@@ -40,30 +42,22 @@ class ContactsFragment : Fragment() {
 
     private fun attachEventObservers() {
         viewModel.retriveUsersSuccess.observe(this, Observer {
-            stopShimmerLoading()
+            stopShimmer(binding.shimmerViewContainer)
             setUsers(it)
         })
         viewModel.retriveUsersError.observe(this, Observer {
-            stopShimmerLoading()
-            MotionToast.darkToast(activity!!,"",it,
-                MotionToast.TOAST_WARNING,
-                MotionToast.GRAVITY_TOP,
-                MotionToast.LONG_DURATION,
-                ResourcesCompat.getFont(activity!!, R.font.helvetica_regular))
+            stopShimmer(binding.shimmerViewContainer)
+            displayWarningToast(" ",it)
         })
+
     }
 
     private fun setupList() {
-        binding.shimmerViewContainer.startShimmer()
         binding.contactsList.run {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
     }
 
-    private fun stopShimmerLoading() {
-        binding.shimmerViewContainer.stopShimmer()
-        binding.shimmerViewContainer.visibility = View.GONE
-    }
 
     private fun setUsers(usersList: List<User>?) {
         contactsAdapter = ContactsAdapter(usersList, activity)

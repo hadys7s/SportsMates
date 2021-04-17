@@ -3,6 +3,7 @@ package com.example.sportsmates.di
 import android.app.Application
 import com.example.sportsmates.coach.CoachViewModel
 import com.example.sportsmates.discover.ContactsViewModel
+import com.example.sportsmates.home.events.EventViewModel
 import com.example.sportsmates.signUp.data.Repo.UserRepository
 import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
 import com.example.sportsmates.login.SignInViewModel
@@ -23,7 +24,7 @@ val SignUpModule = module {
     viewModel { CoachViewModel() }
     viewModel { PLaceViewModel() }
     viewModel { ContactsViewModel() }
-
+    viewModel { EventViewModel() }
 
     single { FirebaseAuth.getInstance() }
 

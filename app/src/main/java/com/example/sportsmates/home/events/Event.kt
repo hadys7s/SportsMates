@@ -5,16 +5,16 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Event(
-    val eventId: String? = "",
-    val name: String? = "",
-    val description: String? = "",
-    val date: String? = "",
-    val place: String? = "",
-    val sport: String? = "",
-    val start: String? = "",
-    val finish: String? = "",
-    val ticketPrice: String? = "",
-    val img :Uri?=null
+    var eventId: String? = "",
+    var name: String? = "",
+    var description: String? = "",
+    var date: String? = "",
+    var place: String? = "",
+    var sport: String? = "",
+    var start: String? = "",
+    var finish: String? = "",
+    var ticketPrice: String? = "",
+    var img :Uri?=null
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),

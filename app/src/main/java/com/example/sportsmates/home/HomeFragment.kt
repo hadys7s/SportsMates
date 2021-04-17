@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.sportsmates.R
 import com.example.sportsmates.databinding.FragmentHomeBinding
 import com.example.sportsmates.home.events.EventFragment
 import com.example.sportsmates.home.news.presentation.fragment.NewsFragment
@@ -34,8 +35,9 @@ class HomeFragment : Fragment() {
         binding.viewPager.adapter=adapter
         TabLayoutMediator(binding.tabs,binding.viewPager){tab ,position->
             when(position){
-                0->{tab.text="News"}
-                1->{tab.text="Events"}
+                0->{tab.text=getString(R.string.tab_layout_news)
+                }
+                1->{tab.text=getString(R.string.tab_layout_event)}
             }
         }.attach()
         binding.viewPager.isUserInputEnabled = false

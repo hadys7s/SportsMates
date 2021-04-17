@@ -53,46 +53,27 @@
         app:layout_constraintTop_toBottomOf="@+id/profileEmailShimmer"
         />
 
-    <FrameLayout
-        android:id="@+id/ProfileAboutMeTitleShimmer"
-        android:layout_width="@dimen/dimen_64"
-        android:layout_height="@dimen/dimen_24"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-         android:background="@color/grey"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImageShimmer"
-       />
+
 
     <FrameLayout
         android:id="@+id/ProfileAboutMeDescriptionShimmer"
         android:layout_width="200dp"
         android:layout_height="@dimen/dimen_16"
         android:background="@color/grey"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@+id/ProfileAboutMeTitleShimmer"
-        app:layout_constraintTop_toBottomOf="@+id/ProfileAboutMeTitleShimmer"
+        android:layout_marginTop="80dp"
+        app:layout_constraintStart_toStartOf="@+id/profileImageShimmer"
+        app:layout_constraintTop_toBottomOf="@+id/profileImageShimmer"
          />
-
-    <FrameLayout
-        android:id="@+id/ProfileSportsTitleShimmer"
-        android:layout_width="@dimen/dimen_64"
-        android:layout_height="@dimen/dimen_24"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="160dp"
-        android:background="@color/grey"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImageShimmer" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_groupShimmer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="100dp"
         android:background="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ProfileSportsTitleShimmer">
+        app:layout_constraintTop_toBottomOf="@id/ProfileAboutMeDescriptionShimmer">
 
         <!-- Chips can be declared here, or added dynamically. -->
         <com.google.android.material.chip.Chip

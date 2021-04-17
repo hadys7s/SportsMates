@@ -1,6 +1,7 @@
 package com.example.sportsmates.ext
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,6 +15,7 @@ import androidx.annotation.IdRes
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.baoyachi.stepview.HorizontalStepView
@@ -24,6 +26,9 @@ import java.text.SimpleDateFormat
 import java.time.Instant
 import java.util.*
 import kotlin.collections.ArrayList
+import com.facebook.shimmer.Shimmer
+import com.facebook.shimmer.ShimmerFrameLayout
+import www.sanju.motiontoast.MotionToast
 
 
 fun AppCompatActivity.replaceFragment(
@@ -179,3 +184,42 @@ fun String.convertToAgoFormat(): CharSequence? {
 
 val Context.inflater: LayoutInflater
     get() = LayoutInflater.from(this)
+
+fun Fragment.displayErrorToast(title: String?, message: String) {
+    MotionToast.darkToast(
+        activity!!,
+        title,
+        message,
+        MotionToast.TOAST_ERROR,
+        MotionToast.GRAVITY_BOTTOM,
+        MotionToast.LONG_DURATION,
+        ResourcesCompat.getFont(activity!!, R.font.helvetica_regular)
+    )
+}
+    fun Fragment.displayWarningToast(title: String?, message: String) {
+        MotionToast.darkToast(
+            activity!!,
+            title,
+            message,
+            MotionToast.TOAST_WARNING,
+            MotionToast.GRAVITY_BOTTOM,
+            MotionToast.LONG_DURATION,
+            ResourcesCompat.getFont(activity!!, R.font.helvetica_regular)
+        )
+    }
+fun Fragment.displayInfoToast(title: String?, message: String) {
+    MotionToast.darkToast(
+        activity!!,
+        title,
+        message,
+        MotionToast.TOAST_INFO,
+        MotionToast.GRAVITY_BOTTOM,
+        MotionToast.LONG_DURATION,
+        ResourcesCompat.getFont(activity!!, R.font.helvetica_regular)
+    )
+}
+fun Fragment.stopShimmer(shimmer:ShimmerFrameLayout){
+    shimmer.stopShimmer()
+    shimmer.visibility=View.GONE
+}
+

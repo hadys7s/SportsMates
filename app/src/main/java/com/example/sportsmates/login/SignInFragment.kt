@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.SignInFragmentBinding
+import com.example.sportsmates.ext.displayErrorToast
 import com.example.sportsmates.ext.openTopActivity
 import com.example.sportsmates.ext.pushFragment
 import com.example.sportsmates.home.MainActivity
@@ -43,18 +44,12 @@ class SignInFragment : Fragment() {
     private fun attachEventObservers() {
         viewModel.loginSuccess.observe(this, Observer { user ->
             //  redirect home
-            dismissAlertDialog()
+            hideLoading()
             openTopActivity(activity, MainActivity())
         })
         viewModel.loginFailed.observe(this, Observer { errorMessage ->
-            dismissAlertDialog()
-            MotionToast.darkToast(
-                activity!!, "Faild", errorMessage,
-                MotionToast.TOAST_ERROR,
-                MotionToast.GRAVITY_BOTTOM,
-                MotionToast.LONG_DURATION,
-                ResourcesCompat.getFont(activity!!, R.font.helvetica_regular)
-            )
+            hideLoading()
+            displayErrorToast("faild",errorMessage)
 
         })
     }
@@ -66,7 +61,7 @@ class SignInFragment : Fragment() {
 
         binding.loginButton.setOnClickListener {
             if (validation()) {
-                startAlertDialog()
+                showLoading()
                 login()
             }
 
@@ -99,7 +94,7 @@ class SignInFragment : Fragment() {
         }
     }
 
-    private fun startAlertDialog() {
+    private fun showLoading() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
         val inflater: LayoutInflater = activity!!.layoutInflater
         builder.setView(inflater.inflate(R.layout.progress_dialog, null))
@@ -109,7 +104,7 @@ class SignInFragment : Fragment() {
         dialog.show()
     }
 
-    private fun dismissAlertDialog() {
+    private fun hideLoading() {
         dialog.dismiss()
     }
 

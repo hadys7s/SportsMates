@@ -55,16 +55,10 @@ class SignUpEmailFragment : Fragment() {
         binding.nextButton.setOnClickListener {
             if (validateAllFields()) {
                 if (!validateImage) {
-                    MotionToast.darkToast(
-                        activity!!, "Warning ", "Select a Photo !",
-                        MotionToast.TOAST_WARNING,
-                        MotionToast.GRAVITY_BOTTOM,
-                        MotionToast.SHORT_DURATION,
-                        ResourcesCompat.getFont(activity!!, R.font.helvetica_regular)
-                    )
+                    displayWarningToast("Warning ","Select a Photo !")
                 } else {
                     viewModel.onNextEmailButtonCLicked(forwardUserInfo(), filePath)
-                    startAlertDialog()
+                    showLoading()
                 }
             }
 
@@ -73,29 +67,17 @@ class SignUpEmailFragment : Fragment() {
 
     private fun attachEventObservers() {
         viewModel.signUpAuthSuccess.observe(this, Observer {
-            dismissAlertDialog()
+            hideLoading()
             navigateToNextScreen()
 
         })
         viewModel.signUpAuthFailed.observe(this, Observer { errMsg ->
-            dismissAlertDialog()
-            MotionToast.darkToast(
-                activity!!, "Error ", errMsg,
-                MotionToast.TOAST_ERROR,
-                MotionToast.GRAVITY_BOTTOM,
-                MotionToast.LONG_DURATION,
-                ResourcesCompat.getFont(activity!!, R.font.helvetica_regular)
-            )
+            hideLoading()
+            displayErrorToast("Error ",errMsg)
         })
         viewModel.uploadImageFailed.observe(this, Observer { errMsg ->
-            dismissAlertDialog()
-            MotionToast.darkToast(
-                activity!!, "Error ", errMsg,
-                MotionToast.TOAST_ERROR,
-                MotionToast.GRAVITY_BOTTOM,
-                MotionToast.LONG_DURATION,
-                ResourcesCompat.getFont(activity!!, R.font.helvetica_regular)
-            )
+            hideLoading()
+            displayErrorToast("Error ",errMsg)
         })
 
     }
@@ -117,13 +99,7 @@ class SignUpEmailFragment : Fragment() {
         val confirmPassword = binding.edConfirmPassword.editText?.text.toString()
         val password = binding.edPassword.editText?.text.toString()
         return if (!confirmPassword.contentEquals(password)) {
-            MotionToast.darkToast(
-                activity!!, "Warning ", "Password don't match",
-                MotionToast.TOAST_WARNING,
-                MotionToast.GRAVITY_BOTTOM,
-                MotionToast.LONG_DURATION,
-                ResourcesCompat.getFont(activity!!, R.font.helvetica_regular)
-            )
+            displayWarningToast("Warning ","Password don't match")
             false
 
         } else {
@@ -206,20 +182,14 @@ class SignUpEmailFragment : Fragment() {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     selectImage(PICK_IMAGE_REQUEST)
                 } else {
-                    MotionToast.darkToast(
-                        activity!!, "info ", "Permission Denied",
-                        MotionToast.TOAST_INFO,
-                        MotionToast.GRAVITY_TOP,
-                        MotionToast.LONG_DURATION,
-                        ResourcesCompat.getFont(activity!!, R.font.helvetica_regular)
-                    )
+                    displayInfoToast("info","Permission Denied")
                 }
             }
         }
 
     }
 
-    private fun startAlertDialog() {
+    private fun showLoading() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
         val inflater: LayoutInflater = activity!!.layoutInflater
         builder.setView(inflater.inflate(R.layout.progress_dialog, null))
@@ -229,7 +199,7 @@ class SignUpEmailFragment : Fragment() {
         dialog.show()
     }
 
-    private fun dismissAlertDialog() {
+    private fun hideLoading() {
         dialog.dismiss()
     }
 
