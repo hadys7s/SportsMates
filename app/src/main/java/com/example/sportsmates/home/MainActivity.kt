@@ -2,6 +2,7 @@ package com.example.sportsmates.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.sportsmates.R
 
 import com.example.sportsmates.coach.CoachFragment
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        addfragment(HomeFragment.newInstance())
         bottomNavigationController()
         binding.chatBot.setOnClickListener {
 
@@ -36,6 +38,10 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.home -> {
                     // Respond to navigation item 1 reselection
+                    replaceFragment(
+                        HomeFragment.newInstance(),
+                        containerViewId = R.id.main_container_view
+                    )
                     true
                 }
                 R.id.places -> {
@@ -80,6 +86,13 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+    private fun addfragment(fragment: Fragment) {
+        val fragmentTransiction = supportFragmentManager.beginTransaction()
+        fragmentTransiction.add(R.id.main_container_view, fragment)
+            .addToBackStack(Fragment::class.java.simpleName).commit()
+    }
+
+
 
     companion object {
         private const val USER_ID = "userId"

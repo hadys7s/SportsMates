@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/map"
+    tools:context=".profile.ProfileFragment">
+
+
+    <FrameLayout
+        android:id="@+id/profileImageShimmer"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/profileNameShimmer"
+        android:layout_width="@dimen/dimen_72"
+        android:layout_height="@dimen/dimen_16"
+        android:layout_marginStart="16dp"
+        android:background="@color/grey"
+        app:layout_constraintStart_toEndOf="@+id/profileImageShimmer"
+        app:layout_constraintTop_toTopOf="@+id/profileImageShimmer"
+        />
+
+
+    <FrameLayout
+        android:id="@+id/profileEmailShimmer"
+        android:layout_width="120dp"
+        android:layout_height="@dimen/dimen_16"
+        android:background="@color/grey"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="@+id/profileName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/profileNameShimmer"
+        app:layout_constraintTop_toBottomOf="@+id/profileNameShimmer"
+         />
+
+    <FrameLayout
+        android:id="@+id/profileAddressShimmer"
+        android:layout_width="@dimen/dimen_64"
+        android:layout_height="@dimen/dimen_16"
+        android:layout_marginTop="4dp"
+         android:background="@color/grey"
+        app:layout_constraintEnd_toEndOf="@+id/profileEmail"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/profileEmailShimmer"
+        app:layout_constraintTop_toBottomOf="@+id/profileEmailShimmer"
+        />
+
+
+
+    <FrameLayout
+        android:id="@+id/ProfileAboutMeDescriptionShimmer"
+        android:layout_width="200dp"
+        android:layout_height="@dimen/dimen_16"
+        android:background="@color/grey"
+        android:layout_marginTop="80dp"
+        app:layout_constraintStart_toStartOf="@+id/profileImageShimmer"
+        app:layout_constraintTop_toBottomOf="@+id/profileImageShimmer"
+         />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_groupShimmer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="100dp"
+        android:background="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ProfileAboutMeDescriptionShimmer">
+
+        <!-- Chips can be declared here, or added dynamically. -->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/sportsShimmer1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/grey"
+            android:clickable="false"
+            android:fontFamily="@font/roboto_regular"
+            tools:text="Football" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/sportsShimmer2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/offWhite"
+            android:clickable="false"
+            android:fontFamily="@font/roboto_regular"
+            android:visibility="gone"
+            tools:text="Football" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/sportsShimmer3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/offWhite"
+            android:clickable="false"
+            android:fontFamily="@font/roboto_regular"
+            android:visibility="gone"
+            tools:text="Football" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <View
+        android:id="@+id/dividerShimmer1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/colorSeparator"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/chip_groupShimmer" />
+
+    <TextView
+        android:id="@+id/editProfileButtonShimmer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:drawableLeft="@drawable/ic_edit"
+        android:drawablePadding="24dp"
+        android:visibility="invisible"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/edit_profile_button"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dividerShimmer1" />
+
+    <View
+        android:id="@+id/dividerShimmer2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:visibility="invisible"
+        android:background="@color/colorSeparator"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editProfileButtonShimmer" />
+
+    <TextView
+        android:id="@+id/logoutButtonShimmer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:drawableLeft="@drawable/ic_logout"
+        android:drawablePadding="24dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/sign_out_button"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dividerShimmer2" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

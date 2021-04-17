@@ -1,16 +1,23 @@
 package com.example.sportsmates.discover
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.sportsmates.R
 import com.example.sportsmates.databinding.DiscoverFragmentBinding
+import com.example.sportsmates.ext.displayWarningToast
+import com.example.sportsmates.ext.stopShimmer
 import com.example.sportsmates.signUp.data.model.User
 import org.koin.android.viewmodel.ext.android.viewModel
+import www.sanju.motiontoast.MotionToast
 
 class ContactsFragment : Fragment() {
 
@@ -29,9 +36,20 @@ class ContactsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupList()
-        viewModel._listOfUsersEvent.observe(this, Observer {
+        attachEventObservers()
+
+    }
+
+    private fun attachEventObservers() {
+        viewModel.retriveUsersSuccess.observe(this, Observer {
+            stopShimmer(binding.shimmerViewContainer)
             setUsers(it)
         })
+        viewModel.retriveUsersError.observe(this, Observer {
+            stopShimmer(binding.shimmerViewContainer)
+            displayWarningToast(" ",it)
+        })
+
     }
 
     private fun setupList() {
@@ -40,12 +58,20 @@ class ContactsFragment : Fragment() {
         }
     }
 
+
     private fun setUsers(usersList: List<User>?) {
         contactsAdapter = ContactsAdapter(usersList, activity)
         binding.contactsList.adapter = contactsAdapter
-        contactsAdapter.onItemClick = { user ->
-            ContactsDetail.start(activity, user)
+        contactsAdapter.onItemClick = { user, targetImage ->
+            openActivityWithTransitionAnimation(user, targetImage)
         }
+    }
+
+    private fun openActivityWithTransitionAnimation(user: User, targetImage: ImageView) {
+        val option =
+            ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, targetImage, "img")
+                .toBundle()
+        ContactsDetails.start(activity, user, option!!)
     }
 
 
@@ -53,7 +79,6 @@ class ContactsFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
 
     companion object {
         fun newInstance() = ContactsFragment()

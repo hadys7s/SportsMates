@@ -1,29 +1,22 @@
 package com.example.sportsmates.SignUp
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.baoyachi.stepview.bean.StepBean
-import com.example.sportsmates.R
 import com.example.sportsmates.databinding.SignUpSportFargmentBinding
-import com.example.sportsmates.ext.openTopActivity
-import com.example.sportsmates.ext.replaceFragment
-import com.example.sportsmates.ext.setStepper
+import com.example.sportsmates.ext.*
 import com.example.sportsmates.home.MainActivity
-import com.example.sportsmates.signUp.SignUpActivity
 import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+
 
 class SignUpSportsFragment : Fragment() {
     private var _binding: SignUpSportFargmentBinding? = null
@@ -46,11 +39,9 @@ class SignUpSportsFragment : Fragment() {
                 // view model signUp
                 viewModel.onDoneButtonClicked(signUpUserInfo())
 
-
             }
         }
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -68,7 +59,7 @@ class SignUpSportsFragment : Fragment() {
         })
 
         viewModel.signUpFailed.observe(this, Observer { errorMessage ->
-            Toast.makeText(activity, errorMessage, Toast.LENGTH_LONG).show()
+            displayErrorToast("Error ",errorMessage)
 
         })
 
@@ -77,17 +68,12 @@ class SignUpSportsFragment : Fragment() {
     private fun validateSelectOnlyThreeSports(): Boolean {
         return when {
             getSelectedSports()?.size!! > 3 -> {
-                Toast.makeText(activity, "Please Select Only 3 Sports ", Toast.LENGTH_SHORT).show()
+                displayWarningToast("Warning","Please Select Only 3 Sports")
                 false
 
             }
             getSelectedSports()!!.isEmpty() -> {
-                Toast.makeText(
-                    activity,
-                    "Please Select Your favourites Sports ",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
+                displayWarningToast("Warning","Please Select Your favourites Sports")
                 false
             }
             else -> true
@@ -125,6 +111,7 @@ class SignUpSportsFragment : Fragment() {
                     putParcelable(USER_DATA, user)
                 }
             }
+
     }
 }
 

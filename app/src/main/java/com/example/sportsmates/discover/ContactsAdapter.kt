@@ -1,27 +1,32 @@
 package com.example.sportsmates.discover
+
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.sportsmates.coach.GlideApp
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.sportsmates.databinding.ContactsListItemBinding
 import com.example.sportsmates.ext.inflater
 import com.example.sportsmates.signUp.data.model.User
 
 class ContactsAdapter(private val userList: List<User>?, private val context: FragmentActivity?) :
     RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
-    var onItemClick: ((User) -> Unit)? = null
+    var onItemClick: ((User,ImageView) -> Unit)? = null
 
     inner class ViewHolder(private val binding: ContactsListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(userItem: User) {
             binding.userName.text = userItem.name
             binding.useraAddress.text = userItem.city
-            binding.userAge.text=userItem.age+" "+"years"
+            binding.userAge.text = userItem.age + " " + "years"
             Glide.with(context!!)
                 .load(userItem.userImage)
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.userImage)
-            itemView.setOnClickListener { onItemClick?.invoke(userItem) }
+
+            itemView.setOnClickListener { onItemClick?.invoke(userItem, binding.userImage) }
+
         }
     }
 
@@ -35,4 +40,5 @@ class ContactsAdapter(private val userList: List<User>?, private val context: Fr
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         userList?.get(position)?.let { holder.bind(it) }
     }
+
 }

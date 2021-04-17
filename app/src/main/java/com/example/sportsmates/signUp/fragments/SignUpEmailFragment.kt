@@ -1,6 +1,7 @@
 package com.example.sportsmates.SignUp
 
 import android.app.Activity.*
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
@@ -9,7 +10,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
@@ -20,13 +21,16 @@ import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.viewmodel.ext.android.viewModel
+import www.sanju.motiontoast.MotionToast
 import java.lang.Exception
 
 class SignUpEmailFragment : Fragment() {
 
     private lateinit var filePath: Uri
+    private lateinit var dialog: AlertDialog
     private var _binding: SignUpEmailPasswordFragmentBinding? = null
     private val binding get() = _binding!!
+    private var validateImage: Boolean = false
     private val viewModel: SignUpViewModel by viewModel()
 
     override fun onCreateView(
@@ -49,19 +53,31 @@ class SignUpEmailFragment : Fragment() {
 
     private fun attachOnclickListeners() {
         binding.nextButton.setOnClickListener {
-            validateAllFields()
+            if (validateAllFields()) {
+                if (!validateImage) {
+                    displayWarningToast("Warning ","Select a Photo !")
+                } else {
+                    viewModel.onNextEmailButtonCLicked(forwardUserInfo(), filePath)
+                    showLoading()
+                }
+            }
+
         }
     }
 
     private fun attachEventObservers() {
         viewModel.signUpAuthSuccess.observe(this, Observer {
+            hideLoading()
             navigateToNextScreen()
+
         })
         viewModel.signUpAuthFailed.observe(this, Observer { errMsg ->
-            Toast.makeText(activity, errMsg, Toast.LENGTH_SHORT).show()
+            hideLoading()
+            displayErrorToast("Error ",errMsg)
         })
         viewModel.uploadImageFailed.observe(this, Observer { errMsg ->
-            Toast.makeText(activity, errMsg, Toast.LENGTH_SHORT).show()
+            hideLoading()
+            displayErrorToast("Error ",errMsg)
         })
 
     }
@@ -83,7 +99,7 @@ class SignUpEmailFragment : Fragment() {
         val confirmPassword = binding.edConfirmPassword.editText?.text.toString()
         val password = binding.edPassword.editText?.text.toString()
         return if (!confirmPassword.contentEquals(password)) {
-            Toast.makeText(activity, "Passwords don't match", Toast.LENGTH_SHORT).show()
+            displayWarningToast("Warning ","Password don't match")
             false
 
         } else {
@@ -95,20 +111,16 @@ class SignUpEmailFragment : Fragment() {
     }
 
 
-    private fun validateAllFields() {
-        if (validateUserInfoFiledisEmpty(binding.edName) && validateUserInfoFiledisEmpty(binding.edEmail) && validateUserInfoFiledisEmpty(
-                binding.edPassword
-            ) && validateUserInfoFiledisEmpty(binding.edConfirmPassword) && validateConfirmPasswordAndPasswordAreTheSame()
-        ) {
-            viewModel.onNextEmailButtonCLicked(forwardUserInfo(), filePath)
-
-
-        }
+    private fun validateAllFields(): Boolean {
+        return validateUserInfoFiledisEmpty(binding.edName) && validateUserInfoFiledisEmpty(binding.edEmail) && validateUserInfoFiledisEmpty(
+            binding.edPassword
+        ) && validateUserInfoFiledisEmpty(binding.edConfirmPassword) && validateConfirmPasswordAndPasswordAreTheSame()
 
     }
 
     private fun navigateToNextScreen() {
         pushFragment(
+
             SignUpUserInfoFragment.newInstance(forwardUserInfo()),
             containerViewId = R.id.container
         )
@@ -133,6 +145,7 @@ class SignUpEmailFragment : Fragment() {
     private fun bindProfilePicture() {
         val inputStream = context?.contentResolver?.openInputStream(filePath)
         val selectedImage = BitmapFactory.decodeStream(inputStream)
+        validateImage = true
         Glide.with(activity!!)
             .load(selectedImage)
             .circleCrop()
@@ -170,12 +183,27 @@ class SignUpEmailFragment : Fragment() {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     selectImage(PICK_IMAGE_REQUEST)
                 } else {
-                    Toast.makeText(requireContext(), "Permission Denied", Toast.LENGTH_SHORT).show()
+                    displayInfoToast("info","Permission Denied")
                 }
             }
         }
 
     }
+
+    private fun showLoading() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
+        val inflater: LayoutInflater = activity!!.layoutInflater
+        builder.setView(inflater.inflate(R.layout.progress_dialog, null))
+        builder.setCancelable(false)
+        dialog = builder.create()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
+    }
+
+    private fun hideLoading() {
+        dialog.dismiss()
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()

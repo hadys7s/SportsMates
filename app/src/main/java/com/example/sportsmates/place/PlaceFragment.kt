@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sportsmates.databinding.FragmentPlaceBinding
+import com.example.sportsmates.ext.stopShimmer
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class PlaceFragment : Fragment() {
@@ -28,10 +29,16 @@ class PlaceFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupList()
-        viewModel._listOfSPlacesEvent.observe(this, Observer {
-            setPlaces(it)
-        })
+        attachObservers()
 
+    }
+
+    private fun attachObservers() {
+        viewModel._listOfSPlacesEvent.observe(this, Observer {
+            stopShimmer(binding.shimmerViewContainer)
+            setPlaces(it)
+
+        })
     }
 
 
@@ -49,6 +56,7 @@ class PlaceFragment : Fragment() {
             PlaceDetailsActivity.start(activity, it.toUiModel())
         }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

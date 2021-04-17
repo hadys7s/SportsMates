@@ -6,16 +6,13 @@ import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
-import com.example.sportsmates.R
-import com.example.sportsmates.databinding.ActivityCoashDetailsBinding
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.sportsmates.databinding.ActivityContactsDetailBinding
 import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
-import com.example.sportsmates.place.PlaceDetailsActivity
-import com.example.sportsmates.place.PlaceUiModel
 import com.example.sportsmates.signUp.data.model.User
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class ContactsDetail : AppCompatActivity() {
+class ContactsDetails : AppCompatActivity() {
     private lateinit var binding: ActivityContactsDetailBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +33,7 @@ class ContactsDetail : AppCompatActivity() {
     private fun bindData(user: User?) {
         binding.userName.text = user?.name
         binding.useraAddress.text = user?.city
-        binding.userAge.text = user?.age+" "+"years"
+        binding.userAge.text = user?.age + " " + "years"
         binding.sports1.text = user?.sportsList?.get(0)
         if (user?.sportsList?.size!! > 1) {
             binding.sports2.text = user.sportsList?.get(1)
@@ -50,7 +47,8 @@ class ContactsDetail : AppCompatActivity() {
         }
         Glide.with(this)
             .load(user.userImage)
-            .into(binding.userImage)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(binding.userDetailImage)
     }
 
     private fun attachCLickListeners() {
@@ -61,10 +59,11 @@ class ContactsDetail : AppCompatActivity() {
 
     companion object {
         private const val USER_ITEM = "userItem"
-        fun start(activity: FragmentActivity?, userItem: User) {
-            val intent = Intent(activity, ContactsDetail::class.java)
+        fun start(activity: FragmentActivity?, userItem: User, options: Bundle) {
+            val intent = Intent(activity, ContactsDetails::class.java)
             intent.putExtra(USER_ITEM, userItem)
-            activity?.startActivity(intent)
+            activity?.startActivity(intent, options)
         }
     }
+
 }

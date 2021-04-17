@@ -79,7 +79,7 @@
 
                 <TextView
                     android:id="@+id/coachName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:fontFamily="@font/roboto_regular"
@@ -87,7 +87,7 @@
                     android:textColor="@color/dark_blue"
                     android:textSize="24dp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/guideline3"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -111,8 +111,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     android:text="Details"
-                    android:textSize="18sp"
                     android:textColor="@color/dark_blue"
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/address"
@@ -152,13 +152,20 @@
                     android:layout_marginEnd="@dimen/dimen_16"
                     android:drawableLeft="@drawable/ic_medal"
                     android:drawablePadding="8dp"
-                    android:text="Football"
                     android:fontFamily="@font/roboto_regular"
+                    android:text="Football"
                     android:textColor="@color/green"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="@+id/partnerName"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/partnerName" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.66" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </FrameLayout>

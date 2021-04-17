@@ -1,26 +1,30 @@
 package com.example.sportsmates.SignUp
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.SignInFragmentBinding
+import com.example.sportsmates.ext.displayErrorToast
 import com.example.sportsmates.ext.openTopActivity
 import com.example.sportsmates.ext.pushFragment
-import com.example.sportsmates.ext.replaceFragment
 import com.example.sportsmates.home.MainActivity
 import com.example.sportsmates.login.SignInViewModel
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.viewmodel.ext.android.viewModel
+import www.sanju.motiontoast.MotionToast
 
 class SignInFragment : Fragment() {
     private val viewModel: SignInViewModel by viewModel()
     private var _binding: SignInFragmentBinding? = null
     private val binding get() = _binding!!
+    private lateinit var dialog: AlertDialog
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         attachCLickListeners()
@@ -40,10 +44,13 @@ class SignInFragment : Fragment() {
     private fun attachEventObservers() {
         viewModel.loginSuccess.observe(this, Observer { user ->
             //  redirect home
+            hideLoading()
             openTopActivity(activity, MainActivity())
         })
         viewModel.loginFailed.observe(this, Observer { errorMessage ->
-            Toast.makeText(activity, errorMessage, Toast.LENGTH_SHORT).show()
+            hideLoading()
+            displayErrorToast("faild",errorMessage)
+
         })
     }
 
@@ -54,6 +61,7 @@ class SignInFragment : Fragment() {
 
         binding.loginButton.setOnClickListener {
             if (validation()) {
+                showLoading()
                 login()
             }
 
@@ -84,6 +92,20 @@ class SignInFragment : Fragment() {
             textInputLayout.isErrorEnabled = false
             true
         }
+    }
+
+    private fun showLoading() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
+        val inflater: LayoutInflater = activity!!.layoutInflater
+        builder.setView(inflater.inflate(R.layout.progress_dialog, null))
+        builder.setCancelable(false)
+        dialog = builder.create()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
+    }
+
+    private fun hideLoading() {
+        dialog.dismiss()
     }
 
     override fun onDestroy() {

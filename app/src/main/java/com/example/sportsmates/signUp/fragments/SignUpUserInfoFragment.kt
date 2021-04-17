@@ -13,11 +13,14 @@ import com.example.sportsmates.databinding.SignUpUserInfoFragmentBinding
 import com.example.sportsmates.ext.pushFragment
 import com.example.sportsmates.ext.setStepper
 import com.example.sportsmates.signUp.data.model.User
+import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
 import com.google.android.material.textfield.TextInputLayout
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class SignUpUserInfoFragment : Fragment() {
     private var _binding: SignUpUserInfoFragmentBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: SignUpViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,6 +53,7 @@ class SignUpUserInfoFragment : Fragment() {
                     SignUpSportsFragment.newInstance(forwardUserInfo()),
                     containerViewId = R.id.container
                 )
+
         }
     }
 
@@ -63,6 +67,7 @@ class SignUpUserInfoFragment : Fragment() {
                 )
 
     }
+
 
     private fun forwardUserInfo(): User? {
         val user: User? = arguments?.getParcelable(USER_DATA)
@@ -95,5 +100,6 @@ class SignUpUserInfoFragment : Fragment() {
 
                 }
             }
+
     }
 }
