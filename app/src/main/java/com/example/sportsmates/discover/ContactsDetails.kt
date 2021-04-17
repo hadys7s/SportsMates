@@ -1,8 +1,8 @@
 package com.example.sportsmates.discover
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
@@ -10,7 +10,6 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.sportsmates.databinding.ActivityContactsDetailBinding
 import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
 import com.example.sportsmates.signUp.data.model.User
-import org.koin.android.viewmodel.ext.android.viewModel
 
 class ContactsDetails : AppCompatActivity() {
     private lateinit var binding: ActivityContactsDetailBinding
@@ -65,5 +64,4 @@ class ContactsDetails : AppCompatActivity() {
             activity?.startActivity(intent, options)
         }
     }
-
 }

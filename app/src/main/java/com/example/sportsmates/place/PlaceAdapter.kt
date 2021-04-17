@@ -11,7 +11,6 @@ class PlaceAdapter(private val placeList: List<Place>?, private val context: Fra
     RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
     var onItemClick: ((Place) -> Unit)? = null
 
-
     inner class ViewHolder(private val binding: CoachListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 

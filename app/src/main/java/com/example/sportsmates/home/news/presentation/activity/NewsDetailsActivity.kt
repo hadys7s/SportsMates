@@ -1,18 +1,14 @@
 package com.example.sportsmates.home.news.presentation.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.format.DateUtils
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.example.sportsmates.databinding.ActivityMainBinding
 import com.example.sportsmates.databinding.ActivityNewsDetailsBinding
 import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
 import com.example.sportsmates.home.news.presentation.model.NewsItemUIModel
-import com.example.sportsmates.place.PlaceDetailsActivity
-import com.example.sportsmates.place.PlaceUiModel
 
 class NewsDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewsDetailsBinding
@@ -26,7 +22,6 @@ class NewsDetailsActivity : AppCompatActivity() {
         setFullScreenWithTransparentStatusBar()
         attachCLickListeners()
     }
-
 
     private fun fetchArguments() {
         val newsItem: NewsItemUIModel? = intent.getParcelableExtra((NEWS_ITEM))

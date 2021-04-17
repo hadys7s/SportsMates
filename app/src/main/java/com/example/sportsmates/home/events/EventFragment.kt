@@ -1,21 +1,18 @@
 package com.example.sportsmates.home.events
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.sportsmates.R
 import com.example.sportsmates.databinding.FragmentEventBinding
 import com.example.sportsmates.ext.displayWarningToast
 import com.example.sportsmates.ext.stopShimmer
 import org.koin.android.viewmodel.ext.android.viewModel
-import www.sanju.motiontoast.MotionToast
 
 class EventFragment : Fragment() {
     private val viewModel: EventViewModel by viewModel()
@@ -74,8 +71,8 @@ class EventFragment : Fragment() {
         _binding = null
     }
 
+
     companion object {
         fun newInstance() = EventFragment()
     }
-
 }

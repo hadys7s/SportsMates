@@ -1,6 +1,5 @@
 package com.example.sportsmates.home.news.data.model
 
-import com.example.sportsmates.home.news.NewsItem
 import com.google.gson.annotations.SerializedName
 
 data class NewsListResponse(

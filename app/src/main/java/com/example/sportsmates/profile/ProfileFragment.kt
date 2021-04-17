@@ -97,7 +97,6 @@ class ProfileFragment : Fragment() {
             if (userInfo?.sportsList?.size!! > 2) {
                 binding.sports3.text = userInfo?.sportsList?.get(2)
                 binding.sports3.isVisible = true
-
             }
         }
     }
@@ -111,7 +110,6 @@ class ProfileFragment : Fragment() {
     companion object {
         private const val USER_ID = "userId"
 
-
         fun newInstance(userID: String?) =
             ProfileFragment().apply {
                 arguments = Bundle().apply {
@@ -119,6 +117,4 @@ class ProfileFragment : Fragment() {
                 }
             }
     }
-
-
 }

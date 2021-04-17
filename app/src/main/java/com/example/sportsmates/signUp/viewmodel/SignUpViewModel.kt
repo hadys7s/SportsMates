@@ -3,8 +3,8 @@ package com.example.sportsmates.signUp.viewmodel
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.sportsmates.signUp.data.Repo.UserRepository
 import com.example.sportsmates.signUp.data.model.User
+import com.example.sportsmates.signUp.data.repo.UserRepository
 import com.example.sportsmates.utils.SingleLiveEvent
 
 class SignUpViewModel(private val userRepository: UserRepository) :
@@ -33,4 +33,3 @@ class SignUpViewModel(private val userRepository: UserRepository) :
     }
 
 }
-

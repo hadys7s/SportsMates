@@ -1,8 +1,7 @@
 package com.example.sportsmates.splash
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.sportsmates.R
 import com.example.sportsmates.ext.openTopActivity
@@ -26,21 +25,14 @@ class SplashActivity : AppCompatActivity() {
 
             viewModel.checkCurrentUserAuthorization()
         }
-
-
     }
 
     private fun attachEventObservers() {
         viewModel.authenticationNavigationEvent.observe(this, Observer {
-            //  redirect signIn
             openTopActivity(this, SignUpActivity())
-
-
         })
         viewModel.homeNavigationEvent.observe(this, Observer {
-            // redirect home
             openTopActivity(this, MainActivity())
-
         })
     }
 

@@ -1,7 +1,6 @@
 package com.example.sportsmates.ext
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.annotation.IdRes
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -21,14 +19,9 @@ import androidx.fragment.app.FragmentActivity
 import com.baoyachi.stepview.HorizontalStepView
 import com.baoyachi.stepview.bean.StepBean
 import com.example.sportsmates.R
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.time.Instant
-import java.util.*
-import kotlin.collections.ArrayList
-import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerFrameLayout
 import www.sanju.motiontoast.MotionToast
+import java.time.Instant
 
 
 fun AppCompatActivity.replaceFragment(
@@ -218,6 +211,7 @@ fun Fragment.displayInfoToast(title: String?, message: String) {
         ResourcesCompat.getFont(activity!!, R.font.helvetica_regular)
     )
 }
+
 fun Fragment.stopShimmer(shimmer:ShimmerFrameLayout){
     shimmer.stopShimmer()
     shimmer.visibility=View.GONE

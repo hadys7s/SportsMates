@@ -1,4 +1,4 @@
-package com.example.sportsmates.SignUp
+package com.example.sportsmates.signUp.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -60,12 +60,7 @@ class SignUpUserInfoFragment : Fragment() {
     private fun validation(): Boolean {
         return (validateUserInfoFieldIsEmpty(binding.chooseCity) && validateUserInfoFieldIsEmpty(
             binding.edAge
-        ) && validateUserInfoFieldIsEmpty(
-            binding.chooseGender
-        )
-
-                )
-
+        ) && validateUserInfoFieldIsEmpty(binding.chooseGender))
     }
 
 

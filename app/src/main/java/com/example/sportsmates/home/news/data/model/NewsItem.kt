@@ -1,7 +1,5 @@
-package com.example.sportsmates.home.news
+package com.example.sportsmates.home.news.data.model
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.example.sportsmates.ext.convertToAgoFormat
 import com.example.sportsmates.home.news.presentation.model.NewsItemUIModel
 import com.google.gson.annotations.SerializedName

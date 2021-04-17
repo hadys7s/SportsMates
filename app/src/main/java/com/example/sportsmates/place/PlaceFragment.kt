@@ -64,6 +64,7 @@ class PlaceFragment : Fragment() {
     }
 
 
+
     companion object {
         fun newInstance() = PlaceFragment()
     }

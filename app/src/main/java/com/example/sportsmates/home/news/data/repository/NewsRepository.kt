@@ -24,6 +24,4 @@ class NewsRepository(private val apiHelper: ApiHelper) {
 
     suspend fun getTrendingNews() = apiHelper.getTrendingNews()
 
-
 }
-

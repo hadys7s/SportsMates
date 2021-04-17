@@ -5,6 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface NewsEndpoint {
+
     @GET("everything")
     suspend fun getRecommendedNews(
         @Query("q") sports: String?

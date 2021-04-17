@@ -26,9 +26,7 @@ class PLaceViewModel() : ViewModel() {
                 place.imageList = retrievePhoto(place.placeId)
             }
             _listOfSPlacesEvent.postValue(places)
-
         }
-
     }
 
 
@@ -69,7 +67,5 @@ class PLaceViewModel() : ViewModel() {
             Log.d(ContentValues.TAG, listResult.items.toString())
             _listOfPlacesImagesEvent.postValue(listResult.items)
         }
-
-
     }
 }

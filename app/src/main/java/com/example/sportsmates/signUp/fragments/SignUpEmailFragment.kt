@@ -1,4 +1,4 @@
-package com.example.sportsmates.SignUp
+package com.example.sportsmates.signUp.fragments
 
 import android.app.Activity.*
 import android.app.AlertDialog
@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.sportsmates.R
+import com.example.sportsmates.SignUp.SignUpUserInfoFragment
 import com.example.sportsmates.databinding.SignUpEmailPasswordFragmentBinding
 import com.example.sportsmates.ext.*
 import com.example.sportsmates.signUp.data.model.User

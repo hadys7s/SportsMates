@@ -11,7 +11,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -33,11 +32,8 @@ class EventViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
             }
-
         }
-
     }
-
 
     private suspend fun getRelatedEvents(
         listOfSports: MutableList<String>?

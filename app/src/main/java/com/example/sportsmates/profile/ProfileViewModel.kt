@@ -3,7 +3,7 @@ package com.example.sportsmates.profile
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.sportsmates.signUp.data.Repo.UserRepository
+import com.example.sportsmates.signUp.data.repo.UserRepository
 import com.example.sportsmates.signUp.data.model.User
 
 class ProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
