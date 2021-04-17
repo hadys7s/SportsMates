@@ -10,19 +10,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.sportsmates.R
-import com.example.sportsmates.SignUp.SignUpUserInfoFragment
 import com.example.sportsmates.databinding.SignUpEmailPasswordFragmentBinding
 import com.example.sportsmates.ext.*
 import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.viewmodel.ext.android.viewModel
-import www.sanju.motiontoast.MotionToast
 import java.lang.Exception
 
 class SignUpEmailFragment : Fragment() {
