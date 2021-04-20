@@ -11,6 +11,7 @@
     <string name="sign_out_button">Sign out</string>
     <string name="tab_layout_news">News</string>
     <string name="tab_layout_event">Events</string>
+    <string name="tv_Message">Message</string>
     <string-array name="citys">
         <item>Damietta</item>
         <item>Mansoura</item>

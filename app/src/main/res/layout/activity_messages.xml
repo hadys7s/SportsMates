@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".chat.MessagesActivity">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:backgroundTint="@color/main_green"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:backgroundTint="@color/main_green"
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/back_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/main_green"
+                    android:src="@drawable/ic_baseline_arrow_back_24" />
+                <ImageView
+                    android:id="@+id/userImage"
+                    android:layout_width="@dimen/dimen_48"
+                    android:layout_height="@dimen/dimen_48"
+                    android:src="@drawable/ic_profile"
+                    android:transitionName="img"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/dimen_16"/>
+
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@string/app_name"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/coachList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/app_bar"
+        android:layout_above="@id/message_field"
+        android:layout_marginStart="@dimen/dimen_16"
+        android:layout_marginTop="@dimen/dimen_12"
+        android:layout_marginEnd="@dimen/dimen_16"
+        android:layout_marginBottom="@dimen/dimen_12"
+        tools:listitem="@layout/chat_item_right" />
+    <FrameLayout
+        android:id="@+id/message_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_green"
+        android:layout_alignParentBottom="true">
+          <androidx.cardview.widget.CardView
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              app:cardCornerRadius="@dimen/dimen_12"
+              android:layout_margin="@dimen/dimen_12">
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="horizontal">
+              <ImageButton
+                  android:id="@+id/emoji_btn"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:backgroundTint="@color/white"
+                  android:src="@drawable/ic_emoji"/>
+                  <EditText
+                      android:layout_width="280dp"
+                      android:layout_height="match_parent"
+                      android:background="@drawable/chat_ed_bg"/>
+                  <ImageButton
+                      android:id="@+id/send_btn"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:backgroundTint="@color/white"
+                      android:src="@drawable/ic_send"/>
+              </LinearLayout>
+          </androidx.cardview.widget.CardView>
+
+    </FrameLayout>
+
+</RelativeLayout>

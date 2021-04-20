@@ -9,6 +9,7 @@ import android.text.format.DateUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
 import androidx.annotation.ColorRes
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
@@ -210,6 +211,10 @@ fun Fragment.displayInfoToast(title: String?, message: String) {
         MotionToast.LONG_DURATION,
         ResourcesCompat.getFont(activity!!, R.font.helvetica_regular)
     )
+}
+fun Activity.changeStatusBarColor(color:Int){
+    val window: Window =this.window
+    window.statusBarColor= ContextCompat.getColor(this,color)
 }
 
 fun Fragment.stopShimmer(shimmer:ShimmerFrameLayout){
