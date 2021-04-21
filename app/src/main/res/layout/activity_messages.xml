@@ -59,6 +59,7 @@
         android:layout_marginTop="@dimen/dimen_12"
         android:layout_marginEnd="@dimen/dimen_16"
         android:layout_marginBottom="@dimen/dimen_12"
+        tools:itemCount="20"
         tools:listitem="@layout/chat_item_right" />
     <FrameLayout
         android:id="@+id/message_field"
@@ -82,6 +83,7 @@
                   android:backgroundTint="@color/white"
                   android:src="@drawable/ic_emoji"/>
                   <EditText
+                      android:id="@+id/ed_message"
                       android:layout_width="280dp"
                       android:layout_height="match_parent"
                       android:background="@drawable/chat_ed_bg"/>
