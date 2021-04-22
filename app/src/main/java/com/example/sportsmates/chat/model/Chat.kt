@@ -6,9 +6,11 @@ data class Chat(
     var id:String?="",
     var senderId:String?="",
     var receiverId:String?="",
-    var message:String?=""
+    var message:String?="",
+    var time :String?=""
 ):Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -21,6 +23,7 @@ data class Chat(
         parcel.writeString(senderId)
         parcel.writeString(receiverId)
         parcel.writeString(message)
+        parcel.writeString(time)
     }
 
     override fun describeContents(): Int {
