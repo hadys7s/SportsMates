@@ -17,12 +17,17 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModel
 import com.baoyachi.stepview.HorizontalStepView
 import com.baoyachi.stepview.bean.StepBean
 import com.example.sportsmates.R
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.google.firebase.auth.FirebaseAuth
 import www.sanju.motiontoast.MotionToast
+import java.text.SimpleDateFormat
 import java.time.Instant
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 fun AppCompatActivity.replaceFragment(
@@ -217,8 +222,17 @@ fun Activity.changeStatusBarColor(color:Int){
     window.statusBarColor= ContextCompat.getColor(this,color)
 }
 
-fun Fragment.stopShimmer(shimmer:ShimmerFrameLayout){
+fun stopShimmer(shimmer:ShimmerFrameLayout){
     shimmer.stopShimmer()
     shimmer.visibility=View.GONE
+}
+fun Activity.getCurrentTime():String{
+    val sdf = SimpleDateFormat("hh.mm aa ")
+    val currentTime = sdf.format(Date())
+    return currentTime
+}
+fun ViewModel.getCurrentUserID():String{
+    val currentUserId = FirebaseAuth.getInstance().currentUser.uid
+    return currentUserId
 }
 

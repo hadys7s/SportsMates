@@ -8,13 +8,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sportsmates.R
 import com.example.sportsmates.chat.model.Chat
+import com.example.sportsmates.utils.Constants.MESSAGE_TYPE_LEFT
+import com.example.sportsmates.utils.Constants.MESSAGE_TYPE_RIGHT
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
 class ChatAdapter(private val listOfChat: List<Chat>?, private val context: Context?) :
     RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
-    private val MESSAGE_TYPE_LEFT = 0
-    private val MESSAGE_TYPE_RIGHT = 1
+
     var firebaseUser: FirebaseUser? = null
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

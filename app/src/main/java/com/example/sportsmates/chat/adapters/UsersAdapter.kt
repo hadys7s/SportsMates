@@ -20,6 +20,7 @@ class UsersAdapter(private val userList: List<MessageModel>?, private val contex
         fun bind(messageItem: MessageModel) {
             binding.userName.text = messageItem.userName
             binding.lastImage.text = messageItem.message
+            binding.time.text=messageItem.time
             Glide.with(context!!)
                 .load(messageItem.userImage)
                 .circleCrop()
