@@ -1,4 +1,5 @@
 package com.example.sportsmates.chat.model
+import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
 
@@ -39,4 +40,13 @@ data class Chat(
             return arrayOfNulls(size)
         }
     }
+
+}
+
+fun Chat.toMessageModel(userId: String): MessageUIModel {
+    return MessageUIModel(
+        message = this.message,
+        time = this.time,
+        userId = userId
+    )
 }
