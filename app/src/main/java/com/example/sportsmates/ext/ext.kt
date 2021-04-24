@@ -24,9 +24,6 @@ import androidx.lifecycle.ViewModel
 import com.baoyachi.stepview.HorizontalStepView
 import com.baoyachi.stepview.bean.StepBean
 import com.example.sportsmates.R
-import com.example.sportsmates.signUp.data.model.User
-import com.example.sportsmates.utils.Constants.USER
-import com.example.sportsmates.utils.Constants.USER_PREFERENCE_NAME
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.firebase.auth.FirebaseAuth
 import www.sanju.motiontoast.MotionToast
