@@ -8,15 +8,22 @@ import com.example.sportsmates.home.news.data.model.toUiModel
 import com.example.sportsmates.home.news.data.repository.NewsRepository
 import com.example.sportsmates.networking.Resource
 import com.example.sportsmates.signUp.data.model.User
+import com.example.sportsmates.signUp.data.repo.UserRepository
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 
-class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
+class NewsViewModel(private val newsRepository: NewsRepository, userRepository: UserRepository) :
+    ViewModel() {
 
     var listOfSports: MutableList<String>? = mutableListOf()
+
+    init {
+        userRepository.fetchUserData()
+        userRepository.retrievePhoto()
+    }
 
 
     fun getRecommendedNews() = liveData(Dispatchers.IO) {

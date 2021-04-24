@@ -3,13 +3,16 @@ package com.example.sportsmates.chat.adapters
 import android.content.Context
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.sportsmates.chat.model.MessageModel
+import com.example.sportsmates.coach.GlideApp
 import com.example.sportsmates.databinding.ChatUsersListItemBinding
 import com.example.sportsmates.ext.inflater
+import com.google.firebase.storage.StorageReference
 
 class UsersAdapter(private val userList: List<MessageModel>?, private val context: Context?) :
     RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
@@ -20,7 +23,7 @@ class UsersAdapter(private val userList: List<MessageModel>?, private val contex
         fun bind(messageItem: MessageModel) {
             binding.userName.text = messageItem.userName
             binding.lastImage.text = messageItem.message
-            Glide.with(context!!)
+                GlideApp.with(context!!)
                 .load(messageItem.userImage)
                 .circleCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())

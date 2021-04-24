@@ -103,7 +103,7 @@ class ContactsViewModel() : ViewModel() {
 
     private suspend fun retriveUserPhoto(user: User): Uri? {
         var userImage: Uri? = null
-        val storageReference = FirebaseStorage.getInstance().reference.child("images/" + user.id)
+        val storageReference = FirebaseStorage.getInstance().reference.child("userImages/" + user.id)
         storageReference.downloadUrl.addOnSuccessListener { imgUrl ->
             userImage = imgUrl
         }.addOnFailureListener {

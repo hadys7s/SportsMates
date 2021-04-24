@@ -11,7 +11,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 
 val NewsModule = module {
-    viewModel { NewsViewModel(get()) }
+    viewModel { NewsViewModel(get(),get()) }
     factory { NewsRepository(get()) }
     factory {
         val api = RetrofitBuilder.apiService

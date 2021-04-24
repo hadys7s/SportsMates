@@ -3,6 +3,7 @@ package com.example.sportsmates.ext
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.text.format.DateUtils
@@ -17,9 +18,14 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKeys
 import com.baoyachi.stepview.HorizontalStepView
 import com.baoyachi.stepview.bean.StepBean
 import com.example.sportsmates.R
+import com.example.sportsmates.signUp.data.model.User
+import com.example.sportsmates.utils.Constants.USER
+import com.example.sportsmates.utils.Constants.USER_PREFERENCE_NAME
 import com.facebook.shimmer.ShimmerFrameLayout
 import www.sanju.motiontoast.MotionToast
 import java.time.Instant
@@ -222,3 +228,16 @@ fun Fragment.stopShimmer(shimmer:ShimmerFrameLayout){
     shimmer.visibility=View.GONE
 }
 
+fun Context.getEncryptedSharedPreferences(fileName: String): SharedPreferences {
+    val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
+    val masterKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
+
+    return EncryptedSharedPreferences
+        .create(
+            fileName,
+            masterKeyAlias,
+            this,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+}
