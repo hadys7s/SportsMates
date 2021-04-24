@@ -1,6 +1,5 @@
 package com.example.sportsmates.discover
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +15,7 @@ import com.example.sportsmates.ext.displayWarningToast
 import com.example.sportsmates.ext.stopShimmer
 import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.signUp.data.model.toMessageModel
+import com.example.sportsmates.utils.TargetActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class ContactsFragment : Fragment() {
@@ -61,22 +61,22 @@ class ContactsFragment : Fragment() {
         contactsAdapter = ContactsAdapter(usersList, activity)
         binding.contactsList.adapter = contactsAdapter
         contactsAdapter.onItemClick = { user, targetImage ->
-            openActivityWithTransitionAnimation(user, targetImage,1)
+            openActivityWithTransitionAnimation(user, targetImage,TargetActivity.CONTACTS_DETAIL)
         }
         contactsAdapter.onBtnClick = { user,targetImage ->
-            openActivityWithTransitionAnimation(user, targetImage,2)
+            openActivityWithTransitionAnimation(user, targetImage,TargetActivity.MESSAGE_ACTIVITY)
         }
     }
 
     private fun openActivityWithTransitionAnimation(
         user: User,
         targetImage: ImageView,
-        targetActivity: Int
+        targetActivity: TargetActivity
     ) {
         val option =
             ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, targetImage, "img")
                 .toBundle()
-        if (targetActivity == 1) {
+        if (targetActivity == TargetActivity.CONTACTS_DETAIL) {
             ContactsDetails.start(activity, user, option!!)
         } else {
             MessagesActivity.start(activity, user.toMessageModel(), option!!)
@@ -93,4 +93,5 @@ class ContactsFragment : Fragment() {
     companion object {
         fun newInstance() = ContactsFragment()
     }
+
 }

@@ -11,6 +11,7 @@ import com.example.sportsmates.chat.adapters.UsersAdapter
 import com.example.sportsmates.chat.model.MessageModel
 import com.example.sportsmates.databinding.ActivityChatBinding
 import com.example.sportsmates.ext.changeStatusBarColor
+import com.example.sportsmates.ext.stopShimmer
 import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.signUp.data.model.toMessageModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -28,9 +29,14 @@ class ChatActivity : AppCompatActivity() {
         changeStatusBarColor(R.color.main_green)
         attachClickListeners()
         setupList()
+        attachObservers()
+    }
+
+    private fun attachObservers(){
         viewModel.getUserListOfChat()
         viewModel.listOfChat.observe(this, Observer { listOfChat ->
             setUserChatList(listOfChat)
+            stopShimmer(binding.shimmerViewContainer)
         })
     }
 

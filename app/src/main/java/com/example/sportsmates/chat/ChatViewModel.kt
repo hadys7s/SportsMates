@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.example.sportsmates.UserPreferences
 import com.example.sportsmates.chat.model.Chat
 import com.example.sportsmates.chat.model.MessageModel
+import com.example.sportsmates.ext.getCurrentUserID
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.text.SimpleDateFormat
@@ -14,13 +15,12 @@ import kotlin.collections.HashMap
 class ChatViewModel(private val userPreferences: UserPreferences) : ViewModel() {
     var retriveChatSuceess = MutableLiveData<List<Chat>?>()
     var retriveChatErorr = MutableLiveData<String?>()
-    val currentUserId = FirebaseAuth.getInstance().currentUser.uid
     var listOfChat = MutableLiveData<MutableList<MessageModel>?>()
 
     fun getUserListOfChat() {
         val listOfUserChat: MutableList<MessageModel>? = mutableListOf()
         val reference: DatabaseReference? =
-            FirebaseDatabase.getInstance().getReference("UserChatList").child(currentUserId)
+            FirebaseDatabase.getInstance().getReference("UserChatList").child(getCurrentUserID())
         reference!!.addValueEventListener(object : ValueEventListener {
 
             override fun onCancelled(error: DatabaseError) {
@@ -39,19 +39,16 @@ class ChatViewModel(private val userPreferences: UserPreferences) : ViewModel() 
     }
 
 
-    fun sendMessage(messageModel: MessageModel) {
-        val reference: DatabaseReference = FirebaseDatabase.getInstance().reference
-        val sdf = SimpleDateFormat("hh.mm aa ")
-        val currentTime = sdf.format(Date())
-        val hashMap: HashMap<String, String> = HashMap()
-
-        hashMap["receiverId"] = messageModel.userId!!
-        hashMap["senderId"] = currentUserId
-        hashMap["message"] = messageModel.message!!
-        hashMap["time"] = currentTime.toString()
-        reference.child("Chat").child(calculateChatId(messageModel.userId)).push()
-            .setValue(hashMap)
-        updateUserChatList(messageModel, currentTime.toString())
+    fun sendMessage(messageModel: MessageModel, currentTime: String) {
+        val reference: DatabaseReference? = FirebaseDatabase.getInstance().reference
+        val hashMap: HashMap<String, String>? = HashMap()
+        hashMap?.put("receiverId", messageModel.userId!!)
+        hashMap?.put("senderId", getCurrentUserID())
+        hashMap?.put("message", messageModel.message!!)
+        hashMap?.put("time", currentTime)
+        reference?.child("Chat")?.child(calculateChatId(messageModel.userId))?.push()
+            ?.setValue(hashMap)
+        updateUserChatList(messageModel, currentTime)
     }
 
     private fun updateUserChatList(messageModel: MessageModel, currentTime: String) {
@@ -64,7 +61,7 @@ class ChatViewModel(private val userPreferences: UserPreferences) : ViewModel() 
         hashMap["userImage"] = messageModel.userImage.toString()
 
         FirebaseDatabase.getInstance().getReference("UserChatList")
-            .child(currentUserId).child(messageModel.userId!!)
+            .child(getCurrentUserID()).child(messageModel.userId!!)
             .addListenerForSingleValueEvent(object :
                 ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -107,16 +104,15 @@ class ChatViewModel(private val userPreferences: UserPreferences) : ViewModel() 
                 }
 
             }
-
             )
     }
 
 
     private fun calculateChatId(receiverId: String?): String {
-        return if (currentUserId > receiverId!!) {
-            receiverId + currentUserId
+        return if (getCurrentUserID() > receiverId!!) {
+            receiverId + getCurrentUserID()
         } else {
-            currentUserId + receiverId
+            getCurrentUserID() + receiverId
         }
     }
 
