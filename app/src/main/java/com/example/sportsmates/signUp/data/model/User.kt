@@ -3,6 +3,7 @@ package com.example.sportsmates.signUp.data.model
 import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
+import com.example.sportsmates.chat.model.MessageModel
 
 
 data class User(
@@ -57,4 +58,12 @@ data class User(
             return arrayOfNulls(size)
         }
     }
+}
+
+fun User.toMessageModel(): MessageModel {
+    return MessageModel(
+        userId = this.id,
+        userName = this.name,
+        userImage = this.userImage.toString()
+    )
 }

@@ -15,6 +15,7 @@ import com.example.sportsmates.databinding.DiscoverFragmentBinding
 import com.example.sportsmates.ext.displayWarningToast
 import com.example.sportsmates.ext.stopShimmer
 import com.example.sportsmates.signUp.data.model.User
+import com.example.sportsmates.signUp.data.model.toMessageModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class ContactsFragment : Fragment() {
@@ -78,7 +79,7 @@ class ContactsFragment : Fragment() {
         if (targetActivity == 1) {
             ContactsDetails.start(activity, user, option!!)
         } else {
-            MessagesActivity.start(activity, user, option!!)
+            MessagesActivity.start(activity, user.toMessageModel(), option!!)
         }
 
     }

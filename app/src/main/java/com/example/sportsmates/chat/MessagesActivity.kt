@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.sportsmates.R
 import com.example.sportsmates.chat.adapters.ChatAdapter
 import com.example.sportsmates.chat.model.Chat
+import com.example.sportsmates.chat.model.MessageModel
 import com.example.sportsmates.databinding.ActivityMessagesBinding
 import com.example.sportsmates.ext.changeStatusBarColor
 import com.example.sportsmates.signUp.data.model.User
@@ -22,15 +23,16 @@ class MessagesActivity : AppCompatActivity() {
     private lateinit var adapter: ChatAdapter
     private var userId: String? = null
     private var userName: String? = null
+    private var userImage: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMessagesBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        fetchUserData()
         changeStatusBarColor(R.color.main_green)
         setupList()
         attachClickListeners()
-        fetchUserData()
         attachObservers()
     }
 
@@ -65,15 +67,17 @@ class MessagesActivity : AppCompatActivity() {
     }
 
     private fun fetchUserData() {
-        val user: User? = intent.getParcelableExtra(USER_ITEM)
-        userId = user?.id
+        val user: MessageModel? = intent.getParcelableExtra(USER_ITEM)
+        userId = user?.userId
+        userName = user?.userName
+        userImage = user?.userImage.toString()
         bindData(user)
     }
 
-    private fun bindData(user: User?) {
-        binding.userName.text = user!!.name
+    private fun bindData(user: MessageModel?) {
+        binding.userName.text = user?.userName
         Glide.with(this)
-            .load(user.userImage)
+            .load(user?.userImage)
             .circleCrop()
             .into(binding.userImage)
     }
@@ -81,15 +85,23 @@ class MessagesActivity : AppCompatActivity() {
     private fun sendMessage() {
         val message = binding.edMessage.text.toString()
         if (message.isNotEmpty()) {
-            viewModel.sendMessage(userId!!, message)
+            viewModel.sendMessage(
+                MessageModel(
+                    userId = userId,
+                    userName = userName,
+                    message = message,
+                    userImage = userImage
+                )
+            )
         } else {
             Toast.makeText(this, "field is empty", Toast.LENGTH_SHORT).show()
         }
     }
 
+
     companion object {
         private const val USER_ITEM = "userItem"
-        fun start(activity: FragmentActivity?, userItem: User, options: Bundle) {
+        fun start(activity: FragmentActivity?, userItem: MessageModel, options: Bundle) {
             val intent = Intent(activity, MessagesActivity::class.java)
             intent.putExtra(USER_ITEM, userItem)
             activity?.startActivity(intent, options)
