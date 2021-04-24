@@ -39,7 +39,6 @@ class ChatActivity : AppCompatActivity() {
         binding.chatList.adapter = userChatListAdapter
         userChatListAdapter.onItemClick = { messageModel, imageView ->
             openActivityWithTransitionAnimation(messageModel,imageView)
-
         }
     }
 
