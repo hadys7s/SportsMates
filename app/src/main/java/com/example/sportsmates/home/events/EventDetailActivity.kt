@@ -48,7 +48,7 @@ class EventDetailActivity : AppCompatActivity() {
 
     companion object {
         private const val EVENT_ITEM = "eventItem"
-        fun start(activity: FragmentActivity?, eventItem: Event,option:Bundle) {
+        fun start(activity: FragmentActivity?, eventItem: Event, option: Bundle?) {
             val intent = Intent(activity, EventDetailActivity::class.java)
             intent.putExtra(EVENT_ITEM, eventItem)
             activity?.startActivity(intent,option)

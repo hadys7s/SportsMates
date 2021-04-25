@@ -1,41 +1,42 @@
 package com.example.sportsmates.chat.adapters
-
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sportsmates.R
 import com.example.sportsmates.chat.model.Chat
+import com.example.sportsmates.databinding.ChatItemLeftBinding
+import com.example.sportsmates.databinding.ChatItemRightBinding
+import com.example.sportsmates.ext.inflater
 import com.example.sportsmates.utils.Constants.MESSAGE_TYPE_LEFT
 import com.example.sportsmates.utils.Constants.MESSAGE_TYPE_RIGHT
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
 class ChatAdapter(private val listOfChat: List<Chat>?, private val context: Context?) :
-    RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var firebaseUser: FirebaseUser? = null
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val message: TextView = view.findViewById(R.id.tv_message)
-        val time: TextView = view.findViewById(R.id.tv_time)
+    inner class ViewHolder1(private val binding: ChatItemLeftBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(chat: Chat) {
-            message.text = chat.message
-            time.text=chat.time
+            binding.tvMessage.text = chat.message
+            binding.tvTime.text = chat.time
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatAdapter.ViewHolder {
-        if (viewType == MESSAGE_TYPE_LEFT) {
-            val view =
-                LayoutInflater.from(parent.context).inflate(R.layout.chat_item_left, parent, false)
-            return ViewHolder(view)
+    inner class ViewHolder2(private val binding: ChatItemRightBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(chat: Chat) {
+            binding.tvMessage.text = chat.message
+            binding.tvTime.text = chat.time
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == MESSAGE_TYPE_LEFT) {
+            ViewHolder1(ChatItemLeftBinding.inflate(parent.context.inflater, parent, false))
         } else {
-            val view =
-                LayoutInflater.from(parent.context).inflate(R.layout.chat_item_right, parent, false)
-            return ViewHolder(view)
+            ViewHolder2(ChatItemRightBinding.inflate(parent.context.inflater, parent, false))
         }
     }
 
@@ -43,8 +44,13 @@ class ChatAdapter(private val listOfChat: List<Chat>?, private val context: Cont
         return listOfChat!!.size
     }
 
-    override fun onBindViewHolder(holder: ChatAdapter.ViewHolder, position: Int) {
-        listOfChat?.get(position)?.let { holder.bind(it) }
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder.itemViewType== MESSAGE_TYPE_LEFT) {
+            listOfChat?.get(position)?.let { (holder as ViewHolder1).bind(it) }
+        }else
+        {
+            listOfChat?.get(position)?.let { (holder as ViewHolder2).bind(it) }
+        }
     }
 
     override fun getItemViewType(position: Int): Int {

@@ -8,6 +8,6 @@ object Constants {
 }
 
 enum class TargetActivity {
-    CONTACTS_DETAIL,
+    CONTACTS_DETAILS,
     MESSAGE_ACTIVITY
 }

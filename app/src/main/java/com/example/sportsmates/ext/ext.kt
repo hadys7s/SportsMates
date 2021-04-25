@@ -6,14 +6,17 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.Bundle
 import android.text.format.DateUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
+import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -24,6 +27,11 @@ import androidx.lifecycle.ViewModel
 import com.baoyachi.stepview.HorizontalStepView
 import com.baoyachi.stepview.bean.StepBean
 import com.example.sportsmates.R
+import com.example.sportsmates.chat.MessagesActivity
+import com.example.sportsmates.discover.ContactsDetails
+import com.example.sportsmates.signUp.data.model.User
+import com.example.sportsmates.signUp.data.model.toMessageModel
+import com.example.sportsmates.utils.TargetActivity
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.firebase.auth.FirebaseAuth
 import www.sanju.motiontoast.MotionToast
@@ -229,15 +237,10 @@ fun stopShimmer(shimmer:ShimmerFrameLayout){
     shimmer.stopShimmer()
     shimmer.visibility=View.GONE
 }
-fun Activity.getCurrentTime():String{
-    val sdf = SimpleDateFormat("hh.mm aa ")
-    val currentTime = sdf.format(Date())
-    return currentTime
-}
-fun ViewModel.getCurrentUserID():String{
-    val currentUserId = FirebaseAuth.getInstance().currentUser.uid
-    return currentUserId
-}
+
+fun Activity.getCurrentTime(): String = SimpleDateFormat("hh:mm aa ").format(Date())
+
+fun ViewModel.getCurrentUserID(): String = FirebaseAuth.getInstance().currentUser.uid
 
 fun Context.getEncryptedSharedPreferences(fileName: String): SharedPreferences {
     val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
@@ -251,4 +254,16 @@ fun Context.getEncryptedSharedPreferences(fileName: String): SharedPreferences {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
+}
+ fun Fragment. openActivityWithTransitionAnimation(
+    targetImage: ImageView
+) :Bundle?{
+         return  ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, targetImage, "img")
+            .toBundle()
+}
+fun Activity. openActivityWithTransitionAnimation(
+    targetImage: ImageView
+) :Bundle?{
+    return  ActivityOptionsCompat.makeSceneTransitionAnimation(this, targetImage, "img")
+        .toBundle()
 }

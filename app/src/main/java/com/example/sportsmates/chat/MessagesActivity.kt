@@ -8,14 +8,13 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.sportsmates.R
 import com.example.sportsmates.chat.adapters.ChatAdapter
+import com.example.sportsmates.R
 import com.example.sportsmates.chat.model.Chat
 import com.example.sportsmates.chat.model.MessageModel
 import com.example.sportsmates.databinding.ActivityMessagesBinding
 import com.example.sportsmates.ext.changeStatusBarColor
 import com.example.sportsmates.ext.getCurrentTime
-import com.example.sportsmates.signUp.data.model.User
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MessagesActivity : AppCompatActivity() {
@@ -103,7 +102,7 @@ class MessagesActivity : AppCompatActivity() {
 
     companion object {
         private const val USER_ITEM = "userItem"
-        fun start(activity: FragmentActivity?, userItem: MessageModel, options: Bundle) {
+        fun start(activity: FragmentActivity?, userItem: MessageModel, options: Bundle?) {
             val intent = Intent(activity, MessagesActivity::class.java)
             intent.putExtra(USER_ITEM, userItem)
             activity?.startActivity(intent, options)

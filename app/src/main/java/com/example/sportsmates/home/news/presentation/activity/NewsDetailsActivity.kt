@@ -48,7 +48,7 @@ class NewsDetailsActivity : AppCompatActivity() {
 
     companion object {
         private const val NEWS_ITEM = "newsItem"
-        fun start(activity: FragmentActivity?, newsItem: NewsItemUIModel, options: Bundle) {
+        fun start(activity: FragmentActivity?, newsItem: NewsItemUIModel, options: Bundle?) {
             val intent = Intent(activity, NewsDetailsActivity::class.java)
             intent.putExtra(NEWS_ITEM, newsItem)
             activity?.startActivity(intent,options)

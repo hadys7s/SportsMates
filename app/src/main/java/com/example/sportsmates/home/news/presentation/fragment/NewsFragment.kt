@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sportsmates.databinding.NewsFragmentBinding
+import com.example.sportsmates.ext.openActivityWithTransitionAnimation
 import com.example.sportsmates.ext.stopShimmer
 import com.example.sportsmates.home.news.presentation.activity.NewsDetailsActivity
 import com.example.sportsmates.home.news.presentation.adapter.SmallNewsAdapter
@@ -93,7 +94,7 @@ class NewsFragment : Fragment() {
         smallNewsAdapter = SmallNewsAdapter(newsList, activity)
         binding.trendingNewsList.adapter = smallNewsAdapter
         smallNewsAdapter.onItemClick = { news, targetImage ->
-            openActivityWithTransitionAnimation(news, targetImage)
+            NewsDetailsActivity.start(activity, news, openActivityWithTransitionAnimation(targetImage))
         }
     }
 
@@ -102,18 +103,8 @@ class NewsFragment : Fragment() {
         tallNewsAdapter = TallNewsAdapter(newsList, activity)
         binding.forYouNewsList.adapter = tallNewsAdapter
         tallNewsAdapter.onItemClick = { news, targetImage ->
-            openActivityWithTransitionAnimation(news, targetImage)
+            NewsDetailsActivity.start(activity, news, openActivityWithTransitionAnimation(targetImage))
         }
-    }
-
-    private fun openActivityWithTransitionAnimation(
-        newsItem: NewsItemUIModel,
-        targetImage: ImageView
-    ) {
-        val option =
-            ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, targetImage, "img")
-                .toBundle()
-        NewsDetailsActivity.start(activity, newsItem, option!!)
     }
 
 

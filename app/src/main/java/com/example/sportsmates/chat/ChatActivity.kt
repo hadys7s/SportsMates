@@ -11,9 +11,8 @@ import com.example.sportsmates.chat.adapters.UsersAdapter
 import com.example.sportsmates.chat.model.MessageModel
 import com.example.sportsmates.databinding.ActivityChatBinding
 import com.example.sportsmates.ext.changeStatusBarColor
+import com.example.sportsmates.ext.openActivityWithTransitionAnimation
 import com.example.sportsmates.ext.stopShimmer
-import com.example.sportsmates.signUp.data.model.User
-import com.example.sportsmates.signUp.data.model.toMessageModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class ChatActivity : AppCompatActivity() {
@@ -32,7 +31,7 @@ class ChatActivity : AppCompatActivity() {
         attachObservers()
     }
 
-    private fun attachObservers(){
+    private fun attachObservers() {
         viewModel.getUserListOfChat()
         viewModel.listOfChat.observe(this, Observer { listOfChat ->
             setUserChatList(listOfChat)
@@ -44,21 +43,13 @@ class ChatActivity : AppCompatActivity() {
         userChatListAdapter = UsersAdapter(listOfChat?.reversed(), this)
         binding.chatList.adapter = userChatListAdapter
         userChatListAdapter.onItemClick = { messageModel, imageView ->
-            openActivityWithTransitionAnimation(messageModel,imageView)
+            MessagesActivity.start(
+                this,
+                messageModel,
+                openActivityWithTransitionAnimation(imageView)
+            )
         }
     }
-
-    private fun openActivityWithTransitionAnimation(
-        messageModel: MessageModel,
-        targetImage: ImageView
-    ) {
-        val option =
-            ActivityOptionsCompat.makeSceneTransitionAnimation(this, targetImage, "img")
-                .toBundle()
-        MessagesActivity.start(this, messageModel, option!!)
-
-    }
-
 
     private fun setupList() {
         binding.chatList.run {
