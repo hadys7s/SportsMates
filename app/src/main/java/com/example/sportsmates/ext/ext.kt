@@ -18,9 +18,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModel
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
-import androidx.lifecycle.ViewModel
 import com.baoyachi.stepview.HorizontalStepView
 import com.baoyachi.stepview.bean.StepBean
 import com.example.sportsmates.R
@@ -225,19 +225,14 @@ fun Activity.changeStatusBarColor(color:Int){
     window.statusBarColor= ContextCompat.getColor(this,color)
 }
 
-fun stopShimmer(shimmer:ShimmerFrameLayout){
+fun stopShimmer(shimmer: ShimmerFrameLayout) {
     shimmer.stopShimmer()
-    shimmer.visibility=View.GONE
+    shimmer.visibility = View.GONE
 }
-fun Activity.getCurrentTime():String{
-    val sdf = SimpleDateFormat("hh.mm aa ")
-    val currentTime = sdf.format(Date())
-    return currentTime
-}
-fun ViewModel.getCurrentUserID():String{
-    val currentUserId = FirebaseAuth.getInstance().currentUser.uid
-    return currentUserId
-}
+
+fun ViewModel.getCurrentTime(): String = SimpleDateFormat("hh.mm aa ").format(Date())
+
+fun ViewModel.getCurrentUserID(): String = FirebaseAuth.getInstance().currentUser.uid
 
 fun Context.getEncryptedSharedPreferences(fileName: String): SharedPreferences {
     val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC

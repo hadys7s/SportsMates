@@ -14,8 +14,6 @@ import com.example.sportsmates.chat.model.Chat
 import com.example.sportsmates.chat.model.MessageModel
 import com.example.sportsmates.databinding.ActivityMessagesBinding
 import com.example.sportsmates.ext.changeStatusBarColor
-import com.example.sportsmates.ext.getCurrentTime
-import com.example.sportsmates.signUp.data.model.User
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MessagesActivity : AppCompatActivity() {
@@ -92,8 +90,7 @@ class MessagesActivity : AppCompatActivity() {
                     userName = userName,
                     message = message,
                     userImage = userImage
-                ),
-                getCurrentTime()
+                )
             )
         } else {
             Toast.makeText(this, "field is empty", Toast.LENGTH_SHORT).show()
