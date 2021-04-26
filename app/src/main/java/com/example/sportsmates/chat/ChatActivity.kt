@@ -31,7 +31,7 @@ class ChatActivity : AppCompatActivity() {
         attachObservers()
     }
 
-    private fun attachObservers() {
+    private fun attachObservers(){
         viewModel.getUserListOfChat()
         viewModel.listOfChat.observe(this, Observer { listOfChat ->
             setUserChatList(listOfChat)
@@ -43,13 +43,12 @@ class ChatActivity : AppCompatActivity() {
         userChatListAdapter = UsersAdapter(listOfChat?.reversed(), this)
         binding.chatList.adapter = userChatListAdapter
         userChatListAdapter.onItemClick = { messageModel, imageView ->
-            MessagesActivity.start(
-                this,
-                messageModel,
-                openActivityWithTransitionAnimation(imageView)
-            )
+            MessagesActivity.start(this, messageModel, openActivityWithTransitionAnimation(imageView))
         }
     }
+
+
+
 
     private fun setupList() {
         binding.chatList.run {

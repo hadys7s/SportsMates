@@ -91,8 +91,7 @@ class MessagesActivity : AppCompatActivity() {
                     userName = userName,
                     message = message,
                     userImage = userImage
-                ),
-                getCurrentTime()
+                )
             )
         } else {
             Toast.makeText(this, "field is empty", Toast.LENGTH_SHORT).show()

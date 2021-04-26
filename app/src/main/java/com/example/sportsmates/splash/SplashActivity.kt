@@ -2,6 +2,7 @@ package com.example.sportsmates.splash
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import com.example.sportsmates.R
 import com.example.sportsmates.ext.openTopActivity
@@ -22,7 +23,6 @@ class SplashActivity : AppCompatActivity() {
         attachEventObservers()
         setFullScreenWithTransparentStatusBar()
         Timer().schedule(DELAY_FINISH) {
-
             viewModel.checkCurrentUserAuthorization()
         }
     }
@@ -37,7 +37,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val DELAY_FINISH: Long = 4000
+        private const val DELAY_FINISH: Long = 3000
 
     }
 }
