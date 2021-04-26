@@ -34,6 +34,7 @@ class MessagesActivity : AppCompatActivity() {
         setupList()
         attachClickListeners()
         attachObservers()
+        viewModel.readMessage(userId)
     }
 
     private fun attachClickListeners() {
@@ -43,12 +44,10 @@ class MessagesActivity : AppCompatActivity() {
         binding.sendBtn.setOnClickListener {
             sendMessage()
             binding.edMessage.text.clear()
-            attachObservers()
         }
     }
 
     private fun attachObservers() {
-        viewModel.readMessage(userId)
         viewModel.retriveChatSuceess.observe(this, Observer {
             setMessage(it)
         })

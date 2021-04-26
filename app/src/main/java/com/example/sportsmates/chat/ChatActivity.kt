@@ -25,6 +25,7 @@ class ChatActivity : AppCompatActivity() {
         binding = ActivityChatBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        viewModel.getUserListOfChat()
         changeStatusBarColor(R.color.main_green)
         attachClickListeners()
         setupList()
@@ -32,31 +33,28 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun attachObservers(){
-        viewModel.getUserListOfChat()
         viewModel.listOfChat.observe(this, Observer { listOfChat ->
             setUserChatList(listOfChat)
             stopShimmer(binding.shimmerViewContainer)
         })
     }
-
     private fun setUserChatList(listOfChat: List<MessageModel>?) {
         userChatListAdapter = UsersAdapter(listOfChat?.reversed(), this)
         binding.chatList.adapter = userChatListAdapter
         userChatListAdapter.onItemClick = { messageModel, imageView ->
-            MessagesActivity.start(this, messageModel, openActivityWithTransitionAnimation(imageView))
+            MessagesActivity.start(
+                this,
+                messageModel,
+                openActivityWithTransitionAnimation(imageView)
+            )
         }
     }
-
-
-
-
     private fun setupList() {
         binding.chatList.run {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
     }
-
     private fun attachClickListeners() {
         binding.backBtn.setOnClickListener {
             onBackPressed()
