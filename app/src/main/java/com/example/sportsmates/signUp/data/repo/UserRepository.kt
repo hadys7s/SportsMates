@@ -3,6 +3,7 @@ package com.example.sportsmates.signUp.data.repo
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.sportsmates.UserPreferences
 import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.utils.SingleLiveEvent
 import com.google.firebase.auth.FirebaseAuth
@@ -13,7 +14,8 @@ import com.google.firebase.storage.FirebaseStorage
 
 
 class UserRepository(
-    private val userAuth: FirebaseAuth
+    private val userAuth: FirebaseAuth,
+    private val userpref: UserPreferences
 ) {
 
     var signUpAuthSuccess = SingleLiveEvent<Any>()
@@ -25,8 +27,6 @@ class UserRepository(
     var loginFailed = MutableLiveData<String>()
     var loginSuccess = SingleLiveEvent<Any>()
     var userData = MutableLiveData<User?>()
-
-
 
     fun login(email: String, password: String) {
         userAuth.signInWithEmailAndPassword(email, password)
@@ -44,6 +44,7 @@ class UserRepository(
     }
 
     fun logout() {
+        userpref.clear()
         userAuth.signOut()
     }
 
@@ -91,8 +92,9 @@ class UserRepository(
             .get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "getUser:Success")
-                    userData.postValue(task.result?.getValue(User::class.java))
-
+                    val user = task.result?.getValue(User::class.java)
+                    userData.postValue(user!!)
+                    userpref.name = user.name
                 } else {
                     Log.d(TAG, "getUser:Failed", task.exception)
 
@@ -100,48 +102,26 @@ class UserRepository(
             }
     }
 
-    /*suspend fun getUserSportsList(): MutableList<String>? {
-        var listOfSports: MutableList<String>? = mutableListOf()
-        GlobalScope.launch(Dispatchers.IO) {
-            FirebaseDatabase.getInstance().getReference("Users")
-                .child(Firebase.auth.currentUser.uid)
-                .get().addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Log.d(TAG, "getUser:Success")
-                        val user: User? = task.result?.getValue(User::class.java)
-                        listOfSports = user?.sportsList
-
-                    } else {
-                        Log.d(TAG, "getUser:Failed", task.exception)
-                    }
-                }.await()
-        }
-
-        return listOfSports
-    }
-*/
-
     private fun uploadPhoto(filepath: Uri) {
-
         val storageReference =
-            FirebaseStorage.getInstance().reference.child("images/" + userAuth.currentUser.uid)
-        storageReference.putFile(filepath)
+            FirebaseStorage.getInstance().reference.child("userImages/" + userAuth.currentUser.uid)
 
-            .addOnSuccessListener {
+        storageReference.putFile(filepath)
+            .addOnSuccessListener { task ->
                 Log.d(TAG, "ImageUpload:Success")
                 signUpAuthSuccess.call()
             }
             .addOnFailureListener {
                 uploadImageFailed.postValue(it.message.toString())
             }
-
     }
 
     fun retrievePhoto() {
         val storageReference =
-            FirebaseStorage.getInstance().reference.child("images/" + userAuth.currentUser.uid)
+            FirebaseStorage.getInstance().reference.child("userImages/" + userAuth.currentUser.uid)
         storageReference.downloadUrl.addOnSuccessListener { imageUri ->
             Log.d(TAG, "ImageUpload:Success")
+            userpref.image = imageUri.toString()
             retriveImage.postValue(imageUri)
         }
             .addOnFailureListener {
@@ -153,7 +133,7 @@ class UserRepository(
 
     fun deleteProfileImage() {
         val storageReference =
-            FirebaseStorage.getInstance().reference.child("images/" + userAuth.currentUser.uid)
+            FirebaseStorage.getInstance().reference.child("userImages/" + userAuth.currentUser.uid)
         storageReference.delete().addOnSuccessListener {
             Log.d(TAG, "ImageUpload:Success")
         }

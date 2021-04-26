@@ -5,14 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.sportsmates.chat.MessagesActivity
 import com.example.sportsmates.databinding.DiscoverFragmentBinding
 import com.example.sportsmates.ext.displayWarningToast
+import com.example.sportsmates.ext.openActivityWithTransitionAnimation
 import com.example.sportsmates.ext.stopShimmer
 import com.example.sportsmates.signUp.data.model.User
+import com.example.sportsmates.signUp.data.model.toMessageModel
+import com.example.sportsmates.utils.TargetActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class ContactsFragment : Fragment() {
@@ -43,7 +46,7 @@ class ContactsFragment : Fragment() {
         })
         viewModel.retriveUsersError.observe(this, Observer {
             stopShimmer(binding.shimmerViewContainer)
-            displayWarningToast(" ",it)
+            displayWarningToast(" ", it)
         })
 
     }
@@ -58,15 +61,24 @@ class ContactsFragment : Fragment() {
         contactsAdapter = ContactsAdapter(usersList, activity)
         binding.contactsList.adapter = contactsAdapter
         contactsAdapter.onItemClick = { user, targetImage ->
-            openActivityWithTransitionAnimation(user, targetImage)
+            openActivity(user, targetImage,TargetActivity.CONTACTS_DETAILS)
+        }
+        contactsAdapter.onBtnClick = { user,targetImage ->
+            openActivity(user, targetImage,TargetActivity.MESSAGE_ACTIVITY)
         }
     }
 
-    private fun openActivityWithTransitionAnimation(user: User, targetImage: ImageView) {
-        val option =
-            ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, targetImage, "img")
-                .toBundle()
-        ContactsDetails.start(activity, user, option!!)
+    private fun openActivity(
+        user: User,
+        targetImage: ImageView,
+        targetActivity: TargetActivity
+    ) {
+        if (targetActivity == TargetActivity.CONTACTS_DETAILS) {
+            ContactsDetails.start(activity, user, openActivityWithTransitionAnimation(targetImage))
+        } else {
+            MessagesActivity.start(activity, user.toMessageModel(), openActivityWithTransitionAnimation(targetImage))
+        }
+
     }
 
 
@@ -78,4 +90,5 @@ class ContactsFragment : Fragment() {
     companion object {
         fun newInstance() = ContactsFragment()
     }
+
 }

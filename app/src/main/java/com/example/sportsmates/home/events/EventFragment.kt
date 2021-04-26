@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sportsmates.databinding.FragmentEventBinding
 import com.example.sportsmates.ext.displayWarningToast
+import com.example.sportsmates.ext.openActivityWithTransitionAnimation
 import com.example.sportsmates.ext.stopShimmer
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -55,15 +56,8 @@ class EventFragment : Fragment() {
         eventAdapter = EventAdapter(eventList, activity)
         binding.eventList.adapter = eventAdapter
         eventAdapter.onItemClick = { event, targetImage ->
-            openActivityWithTransitionAnimation(event, targetImage)
+            EventDetailActivity.start(activity, event, openActivityWithTransitionAnimation(targetImage))
         }
-    }
-
-    private fun openActivityWithTransitionAnimation(event: Event, targetImage: ImageView) {
-        val option =
-            ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, targetImage, "img")
-                .toBundle()
-        EventDetailActivity.start(activity, event, option!!)
     }
 
     override fun onDestroy() {

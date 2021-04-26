@@ -70,6 +70,7 @@
             tools:text="22 years" />
 
         <ImageButton
+            android:id="@+id/chat_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dimen_16"

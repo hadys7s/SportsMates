@@ -3,6 +3,7 @@ package com.example.sportsmates.home.events
 import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 
 data class Event(
     var eventId: String? = "",
@@ -14,7 +15,7 @@ data class Event(
     var start: String? = "",
     var finish: String? = "",
     var ticketPrice: String? = "",
-    var img :Uri?=null
+    var img: Uri? = null
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),

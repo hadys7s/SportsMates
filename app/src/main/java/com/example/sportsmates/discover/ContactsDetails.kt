@@ -58,7 +58,7 @@ class ContactsDetails : AppCompatActivity() {
 
     companion object {
         private const val USER_ITEM = "userItem"
-        fun start(activity: FragmentActivity?, userItem: User, options: Bundle) {
+        fun start(activity: FragmentActivity?, userItem: User, options: Bundle?) {
             val intent = Intent(activity, ContactsDetails::class.java)
             intent.putExtra(USER_ITEM, userItem)
             activity?.startActivity(intent, options)
