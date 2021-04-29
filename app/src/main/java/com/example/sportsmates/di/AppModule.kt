@@ -4,6 +4,7 @@ import com.example.sportsmates.UserPreferences
 import com.example.sportsmates.chat.ChatViewModel
 import com.example.sportsmates.coach.CoachViewModel
 import com.example.sportsmates.discover.ContactsViewModel
+import com.example.sportsmates.editProfile.EditProfileViewModel
 import com.example.sportsmates.home.events.EventViewModel
 import com.example.sportsmates.login.SignInViewModel
 import com.example.sportsmates.place.PLaceViewModel
@@ -22,6 +23,7 @@ val SignUpModule = module {
     viewModel { SignUpViewModel(get()) }
     viewModel { SignInViewModel(get()) }
     viewModel { ProfileViewModel(get()) }
+    viewModel { EditProfileViewModel(get()) }
     viewModel { SplashViewModel(get()) }
     viewModel { CoachViewModel() }
     viewModel { PLaceViewModel() }

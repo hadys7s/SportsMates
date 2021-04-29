@@ -12,6 +12,7 @@
     <string name="tab_layout_news">News</string>
     <string name="tab_layout_event">Events</string>
     <string name="tv_Message">Message</string>
+    <string name="tv_edit_profile">Edit Profile</string>
     <string-array name="citys">
         <item>Damietta</item>
         <item>Mansoura</item>
@@ -22,4 +23,16 @@
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_edit_profile">EditProfile</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+    <string name="password">Password</string>
+    <string name="city">City</string>
+    <string name="mail">Mail</string>
+    <string name="name">Name</string>
+    <string name="bio">Bio</string>
+    <string name="sports">Sports</string>
 </resources>
