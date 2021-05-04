@@ -11,3 +11,11 @@ enum class TargetActivity {
     CONTACTS_DETAILS,
     MESSAGE_ACTIVITY
 }
+enum class InfoType{
+    SPORTS,
+    CITY,
+    NAME,
+    MAIL,
+    PASSWORD,
+    BIO
+}

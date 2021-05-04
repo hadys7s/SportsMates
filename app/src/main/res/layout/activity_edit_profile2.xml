@@ -64,14 +64,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
             <ImageView
                 android:id="@+id/uploaded_pic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:src="@drawable/upload_pic"
-                 />
+                />
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                app:shimmer_auto_start="false"
+                >
+                <include layout="@layout/update_photo_shimmer"/>
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
             <ImageButton
                 android:id="@+id/upload_photo_button"

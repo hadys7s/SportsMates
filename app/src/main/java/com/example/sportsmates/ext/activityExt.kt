@@ -33,13 +33,13 @@ fun AppCompatActivity.replaceFragment(
         .commit()
 }
 
-fun AppCompatActivity.openTopActivity(context: Context, targetActivity: Activity) {
+fun AppCompatActivity.openTopActivity(context: Context, targetActivity: Activity,bundle: Bundle?=null) {
     val targetActivity = Intent(
         context,
         targetActivity::class.java
     )
     targetActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-    startActivity(targetActivity)
+    startActivity(targetActivity,bundle)
 }
 
 fun Activity.isNotchDevice(): Boolean {
@@ -117,6 +117,17 @@ fun Activity.displayInfoToast(title: String?, message: String) {
         title,
         message,
         MotionToast.TOAST_INFO,
+        MotionToast.GRAVITY_BOTTOM,
+        MotionToast.LONG_DURATION,
+        ResourcesCompat.getFont(this, R.font.helvetica_regular)
+    )
+}
+fun Activity.displaySuccessToast(title: String?, message: String) {
+    MotionToast.darkToast(
+        this,
+        title,
+        message,
+        MotionToast.TOAST_SUCCESS,
         MotionToast.GRAVITY_BOTTOM,
         MotionToast.LONG_DURATION,
         ResourcesCompat.getFont(this, R.font.helvetica_regular)

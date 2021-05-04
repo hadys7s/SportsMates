@@ -4,9 +4,13 @@ import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.sportsmates.UserPreferences
+import com.example.sportsmates.ext.getCurrentUserID
 import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.utils.SingleLiveEvent
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
@@ -21,12 +25,15 @@ class UserRepository(
     var signUpAuthSuccess = SingleLiveEvent<Any>()
     var signUpAuthFailed = MutableLiveData<String>()
     var uploadImageFailed = MutableLiveData<String>()
+    var uploadImageSucess = MutableLiveData<String>()
     var retriveImage = MutableLiveData<Uri>()
     var signUpSuccess = SingleLiveEvent<Any>()
     var signUpFailed = MutableLiveData<String>()
     var loginFailed = MutableLiveData<String>()
     var loginSuccess = SingleLiveEvent<Any>()
     var userData = MutableLiveData<User?>()
+    var updateInfoSuccess=MutableLiveData<String>()
+    var updateInfoFailuer=MutableLiveData<String>()
 
     fun login(email: String, password: String) {
         userAuth.signInWithEmailAndPassword(email, password)
@@ -102,14 +109,15 @@ class UserRepository(
             }
     }
 
-    private fun uploadPhoto(filepath: Uri) {
+       fun uploadPhoto(filepath: Uri) {
         val storageReference =
-            FirebaseStorage.getInstance().reference.child("userImages/" + userAuth.currentUser.uid)
+            FirebaseStorage.getInstance().reference.child("userImages/" + userAuth.currentUser?.uid)
 
         storageReference.putFile(filepath)
             .addOnSuccessListener { task ->
                 Log.d(TAG, "ImageUpload:Success")
                 signUpAuthSuccess.call()
+                uploadImageSucess.postValue("Image Uploaded Successfully")
             }
             .addOnFailureListener {
                 uploadImageFailed.postValue(it.message.toString())
@@ -118,7 +126,7 @@ class UserRepository(
 
     fun retrievePhoto() {
         val storageReference =
-            FirebaseStorage.getInstance().reference.child("userImages/" + userAuth.currentUser.uid)
+            FirebaseStorage.getInstance().reference.child("userImages/" + userAuth.currentUser?.uid)
         storageReference.downloadUrl.addOnSuccessListener { imageUri ->
             Log.d(TAG, "ImageUpload:Success")
             userpref.image = imageUri.toString()
@@ -133,7 +141,7 @@ class UserRepository(
 
     fun deleteProfileImage() {
         val storageReference =
-            FirebaseStorage.getInstance().reference.child("userImages/" + userAuth.currentUser.uid)
+            FirebaseStorage.getInstance().reference.child("userImages/" + userAuth.currentUser?.uid)
         storageReference.delete().addOnSuccessListener {
             Log.d(TAG, "ImageUpload:Success")
         }
@@ -142,6 +150,39 @@ class UserRepository(
             }
 
 
+    }
+    fun updateUserInfo(user: User) {
+        FirebaseDatabase.getInstance().getReference("Users").child(userAuth.currentUser!!.uid).get()
+            .addOnSuccessListener { dataSnapshot ->
+                dataSnapshot.child("name").ref.setValue(user.name)
+                dataSnapshot.child("email").ref.setValue(user.email)
+                dataSnapshot.child("city").ref.setValue(user.city)
+                dataSnapshot.child("password").ref.setValue(user.password)
+                dataSnapshot.child("sportsList").ref.setValue(user.sportsList)
+                updateInfoSuccess.postValue("Data Updated Successfully")
+            }.addOnFailureListener {
+                updateInfoFailuer.postValue(it.toString())
+            }
+
+    }
+    fun updateUserAuthentication(
+        newEmail: String,
+        oldEmail: String,
+        newPassword: String,
+        oldPassword: String
+    ) {
+        val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+        val credential: AuthCredential = EmailAuthProvider.getCredential(oldEmail, oldPassword)
+        user!!.reauthenticate(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                user.updatePassword(newPassword).addOnCompleteListener { it ->
+                }
+                user.updateEmail(newEmail).addOnCompleteListener {
+                }
+            } else{
+                Log.d("Auth", task.exception.toString())
+            }
+        }
     }
 
 
