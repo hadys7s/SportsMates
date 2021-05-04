@@ -111,7 +111,7 @@ class UserRepository(
 
        fun uploadPhoto(filepath: Uri) {
         val storageReference =
-            FirebaseStorage.getInstance().reference.child("userImages/" + userAuth.currentUser?.uid)
+            FirebaseStorage.getInstance().reference.child("userImages/" + userAuth.currentUser.uid)
 
         storageReference.putFile(filepath)
             .addOnSuccessListener { task ->
@@ -126,7 +126,7 @@ class UserRepository(
 
     fun retrievePhoto() {
         val storageReference =
-            FirebaseStorage.getInstance().reference.child("userImages/" + userAuth.currentUser?.uid)
+            FirebaseStorage.getInstance().reference.child("userImages/" + userAuth.currentUser.uid)
         storageReference.downloadUrl.addOnSuccessListener { imageUri ->
             Log.d(TAG, "ImageUpload:Success")
             userpref.image = imageUri.toString()
@@ -141,7 +141,7 @@ class UserRepository(
 
     fun deleteProfileImage() {
         val storageReference =
-            FirebaseStorage.getInstance().reference.child("userImages/" + userAuth.currentUser?.uid)
+            FirebaseStorage.getInstance().reference.child("userImages/" + userAuth.currentUser.uid)
         storageReference.delete().addOnSuccessListener {
             Log.d(TAG, "ImageUpload:Success")
         }
@@ -152,7 +152,7 @@ class UserRepository(
 
     }
     fun updateUserInfo(user: User) {
-        FirebaseDatabase.getInstance().getReference("Users").child(userAuth.currentUser!!.uid).get()
+        FirebaseDatabase.getInstance().getReference("Users").child(userAuth.currentUser.uid).get()
             .addOnSuccessListener { dataSnapshot ->
                 dataSnapshot.child("name").ref.setValue(user.name)
                 dataSnapshot.child("email").ref.setValue(user.email)
