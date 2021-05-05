@@ -32,8 +32,8 @@ class UserRepository(
     var loginFailed = MutableLiveData<String>()
     var loginSuccess = SingleLiveEvent<Any>()
     var userData = MutableLiveData<User?>()
-    var updateInfoSuccess=MutableLiveData<String>()
-    var updateInfoFailuer=MutableLiveData<String>()
+    var updateInfoSuccess = MutableLiveData<String>()
+    var updateInfoFailuer = MutableLiveData<String>()
 
     fun login(email: String, password: String) {
         userAuth.signInWithEmailAndPassword(email, password)
@@ -109,7 +109,7 @@ class UserRepository(
             }
     }
 
-       fun uploadPhoto(filepath: Uri) {
+    fun uploadPhoto(filepath: Uri) {
         val storageReference =
             FirebaseStorage.getInstance().reference.child("userImages/" + userAuth.currentUser.uid)
 
@@ -151,20 +151,65 @@ class UserRepository(
 
 
     }
-    fun updateUserInfo(user: User) {
+    fun updateUserBio(bio:String){
         FirebaseDatabase.getInstance().getReference("Users").child(userAuth.currentUser.uid).get()
             .addOnSuccessListener { dataSnapshot ->
-                dataSnapshot.child("name").ref.setValue(user.name)
-                dataSnapshot.child("email").ref.setValue(user.email)
-                dataSnapshot.child("city").ref.setValue(user.city)
-                dataSnapshot.child("password").ref.setValue(user.password)
-                dataSnapshot.child("sportsList").ref.setValue(user.sportsList)
-                updateInfoSuccess.postValue("Data Updated Successfully")
+                dataSnapshot.child("about").ref.setValue(bio)
+                updateInfoSuccess.postValue("Name Updated Successfully")
             }.addOnFailureListener {
                 updateInfoFailuer.postValue(it.toString())
             }
-
     }
+    fun updateUserName(name: String) {
+        FirebaseDatabase.getInstance().getReference("Users").child(userAuth.currentUser.uid).get()
+            .addOnSuccessListener { dataSnapshot ->
+                dataSnapshot.child("name").ref.setValue(name)
+                updateInfoSuccess.postValue("Name Updated Successfully")
+            }.addOnFailureListener {
+                updateInfoFailuer.postValue(it.toString())
+            }
+    }
+
+   private fun updateUserEmail(email: String) {
+        FirebaseDatabase.getInstance().getReference("Users").child(userAuth.currentUser.uid).get()
+            .addOnSuccessListener { dataSnapshot ->
+                dataSnapshot.child("email").ref.setValue(email)
+                updateInfoSuccess.postValue("Email Updated Successfully")
+            }.addOnFailureListener {
+                updateInfoFailuer.postValue(it.toString())
+            }
+    }
+
+    fun updateUserCity(city: String) {
+        FirebaseDatabase.getInstance().getReference("Users").child(userAuth.currentUser.uid).get()
+            .addOnSuccessListener { dataSnapshot ->
+                dataSnapshot.child("city").ref.setValue(city)
+                updateInfoSuccess.postValue("City Updated Successfully")
+            }.addOnFailureListener {
+                updateInfoFailuer.postValue(it.toString())
+            }
+    }
+
+   private fun updateUserPassword(password: String) {
+        FirebaseDatabase.getInstance().getReference("Users").child(userAuth.currentUser.uid).get()
+            .addOnSuccessListener { dataSnapshot ->
+                dataSnapshot.child("password").ref.setValue(password)
+                updateInfoSuccess.postValue("Password Updated Successfully")
+            }.addOnFailureListener {
+                updateInfoFailuer.postValue(it.toString())
+            }
+    }
+
+    fun updateUserSportsList(sports: List<String>) {
+        FirebaseDatabase.getInstance().getReference("Users").child(userAuth.currentUser.uid).get()
+            .addOnSuccessListener { dataSnapshot ->
+                dataSnapshot.child("sportsList").ref.setValue(sports)
+                updateInfoSuccess.postValue("Sports Updated Successfully")
+            }.addOnFailureListener {
+                updateInfoFailuer.postValue(it.toString())
+            }
+    }
+
     fun updateUserAuthentication(
         newEmail: String,
         oldEmail: String,
@@ -179,13 +224,54 @@ class UserRepository(
                 }
                 user.updateEmail(newEmail).addOnCompleteListener {
                 }
-            } else{
+            } else {
                 Log.d("Auth", task.exception.toString())
             }
         }
     }
 
-
+    fun updateUserAuthenticationWithEmail(
+        newEmail: String,
+        oldEmail: String,
+        oldPassword: String
+    ){
+        val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+        val credential: AuthCredential = EmailAuthProvider.getCredential(oldEmail, oldPassword)
+        user!!.reauthenticate(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                user.updateEmail(newEmail).addOnCompleteListener {
+                    if (it.isSuccessful){
+                        updateUserEmail(newEmail)
+                    }else{
+                        updateInfoFailuer.postValue(it.exception.toString())
+                    }
+                }
+            } else {
+                updateInfoFailuer.postValue(task.exception.toString())
+            }
+        }
+    }
+    fun updateUserAuthenticationWithPassword(
+        oldEmail: String,
+        newPassword: String,
+        oldPassword: String
+    ){
+        val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+        val credential: AuthCredential = EmailAuthProvider.getCredential(oldEmail, oldPassword)
+        user!!.reauthenticate(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                user.updatePassword(newPassword).addOnCompleteListener {
+                    if (it.isSuccessful){
+                        updateUserPassword(newPassword)
+                    }else{
+                        updateInfoFailuer.postValue(it.exception.toString())
+                    }
+                }
+            } else {
+                updateInfoFailuer.postValue(task.exception.toString())
+            }
+        }
+    }
 
     companion object {
         private const val TAG = "EmailPassword"

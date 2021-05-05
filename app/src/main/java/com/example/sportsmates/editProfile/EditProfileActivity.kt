@@ -21,6 +21,7 @@ import com.example.sportsmates.signUp.fragments.SignUpEmailFragment
 import com.example.sportsmates.utils.InfoType
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import org.koin.android.ext.android.get
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.lang.Exception
 
@@ -35,19 +36,20 @@ class EditProfileActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         changeStatusBarColor(R.color.main_green)
-        fetchArguments()
         attachObservers()
         attachClickListeners()
         onUploadedButtonSelected()
 
     }
-
+    override fun onResume() {
+        super.onResume()
+        fetchArguments()
+    }
 
     private fun fetchArguments() {
         viewModel.fetchUserData()
         viewModel.getUserImage()
     }
-
     private fun attachObservers() {
         viewModel.userData.observe(this, Observer {
             bindUserData(it)
@@ -57,11 +59,11 @@ class EditProfileActivity : AppCompatActivity() {
             setImage(it)
         })
         viewModel.uploadImageSuccess.observe(this, Observer {
-            displaySuccessToast("Success",it)
+            displaySuccessToast(getString(R.string.success_toast_title),it)
             stopShimmer(binding.shimmerViewContainer)
         })
         viewModel.uploadImageFailed.observe(this, Observer {
-            displayErrorToast("Error",it)
+            displayErrorToast(getString(R.string.error_toast_title),it)
             stopShimmer(binding.shimmerViewContainer)
         })
     }
@@ -78,6 +80,7 @@ class EditProfileActivity : AppCompatActivity() {
         binding.mail.setText(userData.email, TextView.BufferType.EDITABLE)
         binding.city.setText(userData.city, TextView.BufferType.EDITABLE)
         binding.password.setText(userData.password, TextView.BufferType.EDITABLE)
+        binding.bio.setText(userData.about,TextView.BufferType.EDITABLE)
         val sports = userData.sportsList!!.joinToString(
             " , "
         )
@@ -122,17 +125,17 @@ class EditProfileActivity : AppCompatActivity() {
         val intent = Intent(this, UpdateUserInfoActivity::class.java).apply {
             when (infoType) {
                 InfoType.SPORTS -> {
-                    putExtra("Sports", text.text.toString())
-                    putExtra("user",user)
+                    putExtra(getString(R.string.sports), text.text.toString())
+                    putExtra(getString(R.string.intent_extra_user),user)
                 }
                 InfoType.CITY -> {
-                    putExtra("City", text.text.toString())
-                    putExtra("user",user)
+                    putExtra(getString(R.string.city), text.text.toString())
+                    putExtra(getString(R.string.intent_extra_user),user)
                 }
                 else -> {
-                    putExtra("Edit", text.text.toString())
-                    putExtra("Hint", textInputLayout.hint.toString())
-                    putExtra("user",user)
+                    putExtra(getString(R.string.intent_extra_edit), text.text.toString())
+                    putExtra(getString(R.string.intent_extra_hint), textInputLayout.hint.toString())
+                    putExtra(getString(R.string.intent_extra_user),user)
                 }
             }
         }
@@ -188,7 +191,7 @@ class EditProfileActivity : AppCompatActivity() {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     selectImage(SignUpEmailFragment.PICK_IMAGE_REQUEST)
                 } else {
-                    displayInfoToast("info", "Permission Denied")
+                    displayInfoToast(getString(R.string.info_toast_title), "Permission Denied")
                 }
             }
         }

@@ -21,8 +21,6 @@ class EditProfileViewModel(private val userRepository: UserRepository) : ViewMod
     var userImage = MutableLiveData<Uri>()
     var updateInfoFailuer = MutableLiveData<String>()
     var updateInfoSuccess = MutableLiveData<String>()
-    var updatePasswordFauiler = MutableLiveData<String?>()
-    var updateEmailFauiler = MutableLiveData<String?>()
     var uploadImageFailed = MutableLiveData<String>()
     var uploadImageSuccess = MutableLiveData<String>()
 
@@ -47,8 +45,23 @@ class EditProfileViewModel(private val userRepository: UserRepository) : ViewMod
         userRepository.uploadPhoto(filePath)
     }
 
-    fun updateUserInfo(user: User) {
-        userRepository.updateUserInfo(user)
+    fun updateUserName(name:String){
+        userRepository.updateUserName(name)
+    }
+    fun updateUserEmail(newEmail:String,oldEmail: String,oldPassword: String){
+        userRepository.updateUserAuthenticationWithEmail(newEmail, oldEmail, oldPassword)
+    }
+    fun updateUserCity(city:String){
+        userRepository.updateUserCity(city)
+    }
+    fun updateUserPassword(oldEmail: String,newPassword:String,oldPassword: String){
+        userRepository.updateUserAuthenticationWithPassword(oldEmail, newPassword, oldPassword)
+    }
+    fun updateUserSportsList(sports:List<String>){
+        userRepository.updateUserSportsList(sports)
+    }
+    fun updateUserBio(bio:String){
+        userRepository.updateUserBio(bio)
     }
 
     fun updateUserAuthentication(

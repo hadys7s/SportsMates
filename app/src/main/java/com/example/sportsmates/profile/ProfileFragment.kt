@@ -90,6 +90,7 @@ class ProfileFragment : Fragment() {
         //   binding.profilePhoneNumber.text = userInfo?.phoneNumber
         binding.profileEmail.text = userInfo?.email
         binding.profileAddress.text = userInfo?.city
+        binding.ProfileAboutMeDescription.text=userInfo?.about
         //     binding.ProfileAboutMeDescription.text = userInfo?.phoneNumber
         binding.sports1.text = userInfo?.sportsList?.get(0)
         if (userInfo?.sportsList?.size!! > 1) {

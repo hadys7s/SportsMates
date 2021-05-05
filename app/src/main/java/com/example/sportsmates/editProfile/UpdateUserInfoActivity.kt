@@ -1,4 +1,5 @@
 package com.example.sportsmates.editProfile
+
 import com.example.sportsmates.editProfile.EditProfileActivity
 import com.example.sportsmates.editProfile.EditProfileViewModel
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.utils.InfoType
 import com.example.sportsmates.utils.InfoType.*
 import com.google.android.material.chip.Chip
+import org.koin.android.ext.android.get
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class UpdateUserInfoActivity : AppCompatActivity() {
@@ -31,27 +33,27 @@ class UpdateUserInfoActivity : AppCompatActivity() {
         changeStatusBarColor(R.color.main_green)
         attachClickListener()
         attachObservers()
-        setupMenu("Damietta", "Mansoura", binding.chooseCity.editText)
+        setupMenu(getString(R.string.damietta), getString(R.string.mansoura), binding.chooseCity.editText)
         getEditField()
     }
 
     private fun getEditField() {
         val intent = intent
         when {
-            intent.hasExtra("Sports") -> {
-                user = intent.getParcelableExtra("user")
+            intent.hasExtra(getString(R.string.sports)) -> {
+                user = intent.getParcelableExtra(getString(R.string.intent_extra_user))
                 binding.editBox.visibility = View.GONE
                 binding.sportsGroup.visibility = VISIBLE
             }
-            intent.hasExtra("City") -> {
-                user = intent.getParcelableExtra("user")
+            intent.hasExtra(getString(R.string.city)) -> {
+                user = intent.getParcelableExtra(getString(R.string.intent_extra_user))
                 binding.editBox.visibility = View.GONE
                 binding.chooseCity.visibility = VISIBLE
             }
             else -> {
-                val text = intent.getStringExtra("Edit")
-                val hint = intent.getStringExtra("Hint")
-                user = intent.getParcelableExtra("user")
+                val text = intent.getStringExtra(getString(R.string.intent_extra_edit))
+                val hint = intent.getStringExtra(getString(R.string.intent_extra_hint))
+                user = intent.getParcelableExtra(getString(R.string.intent_extra_user))
                 binding.editField.setText(text)
                 binding.editBox.hint = hint
             }
@@ -63,29 +65,29 @@ class UpdateUserInfoActivity : AppCompatActivity() {
             binding.editBox.visibility == VISIBLE -> {
                 val text = binding.editBox.editText?.text.toString()
                 when (binding.editBox.hint.toString()) {
-                    "Name" -> {
+                    getString(R.string.name) -> {
                         updateUserInfo(text, NAME)
                     }
-                    "Mail" -> {
-                        updateUserInfo(text, MAIL)
-                        viewModel.updateUserAuthentication(
+                    getString(R.string.mail) -> {
+                        updateUserAuthentication(
                             text,
                             user!!.email!!,
+                            text,
                             user!!.password!!,
-                            user!!.password!!
+                            MAIL
                         )
                     }
-                    "Password" -> {
-                        updateUserInfo(text, PASSWORD)
-                        viewModel.updateUserAuthentication(
-                            user!!.email!!,
+                    getString(R.string.password) -> {
+                        updateUserAuthentication(
+                            text,
                             user!!.email!!,
                             text,
-                            user!!.password!!
+                            user!!.password!!,
+                            PASSWORD
                         )
                     }
-                    "Bio" -> {
-                        updateUserInfo(text, BIO)
+                    getString(R.string.bio) -> {
+                        updateUserInfo(text,BIO)
                     }
                 }
             }
@@ -109,98 +111,68 @@ class UpdateUserInfoActivity : AppCompatActivity() {
 
     private fun attachObservers() {
         viewModel.updateInfoSuccess.observe(this, Observer {
-            displaySuccessToast("Success", it!!)
+            displaySuccessToast(getString(R.string.success_toast_title), it!!)
+            onBackPressed()
         })
         viewModel.updateInfoFailuer.observe(this, Observer {
-            displayErrorToast("Error", it!!)
+            displayErrorToast(getString(R.string.error_toast_title), it!!)
         })
     }
 
     private fun attachClickListener() {
         binding.backBtn.setOnClickListener {
-            openTopActivity(this, EditProfileActivity())
+            onBackPressed()
         }
         binding.updateBtn.setOnClickListener {
             getUpdatedUserInfo()
         }
     }
+
     private fun updateUserInfo(
         adjustedData: String,
         infoType: InfoType
     ) {
         when (infoType) {
             NAME -> {
-                viewModel.updateUserInfo(
-                    User(
-                        name = adjustedData,
-                        email = user!!.email,
-                        password = user!!.password,
-                        city = user!!.city,
-                        sportsList = user!!.sportsList
-                    )
-                )
-            }
-            MAIL -> {
-                viewModel.updateUserInfo(
-                    User(
-                        name = user!!.name,
-                        email = adjustedData,
-                        password = user!!.password,
-                        city = user!!.city,
-                        sportsList = user!!.sportsList
-
-                    )
-                )
+                viewModel.updateUserName(adjustedData)
             }
             CITY -> {
-                viewModel.updateUserInfo(
-                    User(
-                        name = user!!.name,
-                        email = user!!.email,
-                        password = user!!.password,
-                        city = adjustedData,
-                        sportsList = user!!.sportsList
-                    )
-                )
-            }
-            PASSWORD -> {
-                viewModel.updateUserInfo(
-                    User(
-                        name = user!!.name,
-                        email = user!!.email,
-                        password = adjustedData,
-                        city = user!!.city,
-                        sportsList = user!!.sportsList
-                    )
-                )
+                viewModel.updateUserCity(adjustedData)
             }
             else -> {
+                viewModel.updateUserBio(adjustedData)
             }
         }
 
     }
 
+    private fun updateUserAuthentication(
+        newEmail: String,
+        oldEmail: String,
+        newPassword: String,
+        oldPassword: String,
+        infoType: InfoType
+    ) {
+        if (infoType == MAIL) {
+            viewModel.updateUserEmail(newEmail, oldEmail, oldPassword)
+        } else {
+            viewModel.updateUserPassword(oldEmail, newPassword, oldPassword)
+        }
+    }
+
     private fun udpateUserSportsList(newSportsList: List<String>) {
-        viewModel.updateUserInfo(
-            User(
-                name = user!!.name,
-                email = user!!.email,
-                password = user!!.password,
-                city = user!!.city,
-                sportsList = newSportsList
-            )
-        )
+        viewModel.updateUserSportsList(newSportsList)
     }
 
     private fun validateSelectOnlyThreeSports(): Boolean {
         return when {
             getSelectedSports()?.size!! > 3 -> {
-                displayWarningToast("Warning", "Please Select Only 3 Sports")
+                displayWarningToast(getString(R.string.warning_toast_title), "Please Select Only 3 Sports")
                 false
 
             }
             getSelectedSports()!!.isEmpty() -> {
-                displayWarningToast("Warning", "Please Select Your favourites Sports")
+                displayWarningToast(getString(R.string.warning_toast_title), "Please Select Your favourites Sports")
                 false
             }
             else -> true
