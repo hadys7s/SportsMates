@@ -5,6 +5,11 @@ object Constants {
     const val API_KEY_NAME: String = "apiKey"
     const val MESSAGE_TYPE_LEFT = 0
     const val MESSAGE_TYPE_RIGHT = 1
+    const val NAME_SPORT="Sports"
+    const val NAME_CITY="City"
+    const val USER="User"
+    const val HINT="Hint"
+    const val EDIT="Edit"
 }
 
 enum class TargetActivity {

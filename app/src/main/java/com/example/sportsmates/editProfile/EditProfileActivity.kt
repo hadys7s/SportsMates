@@ -18,6 +18,11 @@ import com.example.sportsmates.ext.*
 import com.example.sportsmates.home.MainActivity
 import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.signUp.fragments.SignUpEmailFragment
+import com.example.sportsmates.utils.Constants.EDIT
+import com.example.sportsmates.utils.Constants.HINT
+import com.example.sportsmates.utils.Constants.NAME_CITY
+import com.example.sportsmates.utils.Constants.NAME_SPORT
+import com.example.sportsmates.utils.Constants.USER
 import com.example.sportsmates.utils.InfoType
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -37,6 +42,7 @@ class EditProfileActivity : AppCompatActivity() {
         setContentView(view)
         changeStatusBarColor(R.color.main_green)
         attachObservers()
+        loadImage()
         attachClickListeners()
         onUploadedButtonSelected()
 
@@ -48,6 +54,8 @@ class EditProfileActivity : AppCompatActivity() {
 
     private fun fetchArguments() {
         viewModel.fetchUserData()
+    }
+    private fun loadImage(){
         viewModel.getUserImage()
     }
     private fun attachObservers() {
@@ -125,17 +133,17 @@ class EditProfileActivity : AppCompatActivity() {
         val intent = Intent(this, UpdateUserInfoActivity::class.java).apply {
             when (infoType) {
                 InfoType.SPORTS -> {
-                    putExtra(getString(R.string.sports), text.text.toString())
-                    putExtra(getString(R.string.intent_extra_user),user)
+                    putExtra(NAME_SPORT, text.text.toString())
+                    putExtra(USER,user)
                 }
                 InfoType.CITY -> {
-                    putExtra(getString(R.string.city), text.text.toString())
-                    putExtra(getString(R.string.intent_extra_user),user)
+                    putExtra(NAME_CITY, text.text.toString())
+                    putExtra(USER,user)
                 }
                 else -> {
-                    putExtra(getString(R.string.intent_extra_edit), text.text.toString())
-                    putExtra(getString(R.string.intent_extra_hint), textInputLayout.hint.toString())
-                    putExtra(getString(R.string.intent_extra_user),user)
+                    putExtra(EDIT, text.text.toString())
+                    putExtra(HINT, textInputLayout.hint.toString())
+                    putExtra(USER,user)
                 }
             }
         }
@@ -191,7 +199,7 @@ class EditProfileActivity : AppCompatActivity() {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     selectImage(SignUpEmailFragment.PICK_IMAGE_REQUEST)
                 } else {
-                    displayInfoToast(getString(R.string.info_toast_title), "Permission Denied")
+                    displayInfoToast(getString(R.string.info_toast_title), getString(R.string.permissin_denied))
                 }
             }
         }

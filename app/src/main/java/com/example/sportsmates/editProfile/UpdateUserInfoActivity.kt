@@ -15,6 +15,11 @@ import com.example.sportsmates.R
 import com.example.sportsmates.databinding.ActivityUpdateUserInfoBinding
 import com.example.sportsmates.ext.*
 import com.example.sportsmates.signUp.data.model.User
+import com.example.sportsmates.utils.Constants.EDIT
+import com.example.sportsmates.utils.Constants.HINT
+import com.example.sportsmates.utils.Constants.NAME_CITY
+import com.example.sportsmates.utils.Constants.NAME_SPORT
+import com.example.sportsmates.utils.Constants.USER
 import com.example.sportsmates.utils.InfoType
 import com.example.sportsmates.utils.InfoType.*
 import com.google.android.material.chip.Chip
@@ -40,20 +45,20 @@ class UpdateUserInfoActivity : AppCompatActivity() {
     private fun getEditField() {
         val intent = intent
         when {
-            intent.hasExtra(getString(R.string.sports)) -> {
-                user = intent.getParcelableExtra(getString(R.string.intent_extra_user))
+            intent.hasExtra(NAME_SPORT) -> {
+                user = intent.getParcelableExtra(USER)
                 binding.editBox.visibility = View.GONE
                 binding.sportsGroup.visibility = VISIBLE
             }
-            intent.hasExtra(getString(R.string.city)) -> {
-                user = intent.getParcelableExtra(getString(R.string.intent_extra_user))
+            intent.hasExtra(NAME_CITY) -> {
+                user = intent.getParcelableExtra(USER)
                 binding.editBox.visibility = View.GONE
                 binding.chooseCity.visibility = VISIBLE
             }
             else -> {
-                val text = intent.getStringExtra(getString(R.string.intent_extra_edit))
-                val hint = intent.getStringExtra(getString(R.string.intent_extra_hint))
-                user = intent.getParcelableExtra(getString(R.string.intent_extra_user))
+                val text = intent.getStringExtra(EDIT)
+                val hint = intent.getStringExtra(HINT)
+                user = intent.getParcelableExtra(USER)
                 binding.editField.setText(text)
                 binding.editBox.hint = hint
             }
@@ -98,7 +103,7 @@ class UpdateUserInfoActivity : AppCompatActivity() {
             }
             else -> {
                 val text = binding.chooseCity.editText?.text.toString()
-                updateUserInfo(text, CITY)
+                updateUserInfo(text,CITY)
             }
         }
     }
@@ -136,7 +141,7 @@ class UpdateUserInfoActivity : AppCompatActivity() {
             NAME -> {
                 viewModel.updateUserName(adjustedData)
             }
-            CITY -> {
+           CITY -> {
                 viewModel.updateUserCity(adjustedData)
             }
             else -> {

@@ -13,6 +13,7 @@
     <string name="tab_layout_event">Events</string>
     <string name="tv_Message">Message</string>
     <string name="tv_edit_profile">Edit Profile</string>
+    <string name="permissin_denied">Permission Denied</string>
     <string-array name="citys">
         <item>Damietta</item>
         <item>Mansoura</item>
