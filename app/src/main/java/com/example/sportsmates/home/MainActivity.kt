@@ -2,6 +2,7 @@ package com.example.sportsmates.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -12,10 +13,13 @@ import com.example.sportsmates.chat.ChatActivity
 import com.example.sportsmates.coach.CoachFragment
 import com.example.sportsmates.databinding.ActivityMainBinding
 import com.example.sportsmates.discover.ContactsFragment
+import com.example.sportsmates.ext.getCurrentUserID
 import com.example.sportsmates.ext.replaceFragment
 import com.example.sportsmates.place.PlaceFragment
 import com.example.sportsmates.profile.ProfileFragment
-
+import io.kommunicate.KmConversationBuilder
+import io.kommunicate.callbacks.KmCallback
+import io.kommunicate.users.KMUser
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         addfragment(HomeFragment.newInstance())
         bottomNavigationController()
         binding.chatBot.setOnClickListener {
+            openChatBotConnection()
         }
     }
 
@@ -103,12 +108,29 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+    private fun openChatBotConnection() {
+        val user = KMUser()
+        user.userId = getCurrentUserID()
+
+        KmConversationBuilder(this)
+            .setKmUser(user)
+            .launchConversation(object : KmCallback {
+                override fun onSuccess(message: Any) {
+                    Log.d("Conversation", "Success : $message")
+                }
+
+                override fun onFailure(error: Any) {
+                    Log.d("Conversation", "Failure : $error")
+                }
+            })
+    }
+
     private fun addfragment(fragment: Fragment) {
         val fragmentTransiction = supportFragmentManager.beginTransaction()
         fragmentTransiction.add(R.id.main_container_view, fragment)
             .addToBackStack(Fragment::class.java.simpleName).commit()
     }
-
 
 
     companion object {
