@@ -20,8 +20,6 @@ import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.signUp.fragments.SignUpEmailFragment
 import com.example.sportsmates.utils.Constants.EDIT
 import com.example.sportsmates.utils.Constants.HINT
-import com.example.sportsmates.utils.Constants.NAME_CITY
-import com.example.sportsmates.utils.Constants.NAME_SPORT
 import com.example.sportsmates.utils.Constants.USER
 import com.example.sportsmates.utils.InfoType
 import com.google.android.material.textfield.TextInputEditText
@@ -84,15 +82,15 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun bindUserData(userData: User?) {
-        binding.name.setText(userData!!.name, TextView.BufferType.EDITABLE)
-        binding.mail.setText(userData.email, TextView.BufferType.EDITABLE)
-        binding.city.setText(userData.city, TextView.BufferType.EDITABLE)
-        binding.password.setText(userData.password, TextView.BufferType.EDITABLE)
-        binding.bio.setText(userData.about,TextView.BufferType.EDITABLE)
+        binding.nameTextField.setText(userData!!.name, TextView.BufferType.EDITABLE)
+        binding.mailTextField.setText(userData.email, TextView.BufferType.EDITABLE)
+        binding.cityTextField.setText(userData.city, TextView.BufferType.EDITABLE)
+        binding.passwordTextField.setText(userData.password, TextView.BufferType.EDITABLE)
+        binding.bioTextField.setText(userData.about,TextView.BufferType.EDITABLE)
         val sports = userData.sportsList!!.joinToString(
             " , "
         )
-        binding.sports.setText(sports, TextView.BufferType.EDITABLE)
+        binding.sportsTextField.setText(sports, TextView.BufferType.EDITABLE)
     }
 
     override fun onBackPressed() {
@@ -105,49 +103,43 @@ class EditProfileActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        binding.name.setOnClickListener {
-            openUpdateActivityAndSendText(binding.nameBox, binding.name, InfoType.NAME)
+        binding.nameTextField.setOnClickListener {
+            openUpdateActivityAndSendText(binding.nameBox, binding.nameTextField, InfoType.NAME)
         }
-        binding.mail.setOnClickListener {
-            openUpdateActivityAndSendText(binding.mailBox, binding.mail, InfoType.MAIL)
+        binding.mailTextField.setOnClickListener {
+            openUpdateActivityAndSendText(binding.mailBox, binding.mailTextField, InfoType.MAIL)
         }
-        binding.city.setOnClickListener {
-            openUpdateActivityAndSendText(binding.cityBox, binding.city, InfoType.CITY)
+        binding.cityTextField.setOnClickListener {
+            openUpdateActivityAndSendText(binding.cityBox, binding.cityTextField, InfoType.CITY)
         }
-        binding.password.setOnClickListener {
-            openUpdateActivityAndSendText(binding.passwordBox, binding.password, InfoType.PASSWORD)
+        binding.passwordTextField.setOnClickListener {
+            openUpdateActivityAndSendText(binding.passwordBox, binding.passwordTextField, InfoType.PASSWORD)
         }
-        binding.bio.setOnClickListener {
-            openUpdateActivityAndSendText(binding.bioBox, binding.bio, InfoType.BIO)
+        binding.bioTextField.setOnClickListener {
+            openUpdateActivityAndSendText(binding.bioBox, binding.bioTextField, InfoType.BIO)
         }
-        binding.sports.setOnClickListener {
-            openUpdateActivityAndSendText(binding.sportsBox, binding.sports, InfoType.SPORTS)
+        binding.sportsTextField.setOnClickListener {
+            openUpdateActivityAndSendText(binding.sportsBox, binding.sportsTextField, InfoType.SPORTS)
         }
     }
 
     private fun openUpdateActivityAndSendText(
-        textInputLayout: TextInputLayout,
-        text: TextInputEditText,
+        hint: TextInputLayout,
+        oldData: TextInputEditText,
         infoType: InfoType
     ) {
-        val intent = Intent(this, UpdateUserInfoActivity::class.java).apply {
             when (infoType) {
                 InfoType.SPORTS -> {
-                    putExtra(NAME_SPORT, text.text.toString())
-                    putExtra(USER,user)
+                    UpdateUserInfoActivity.start(this,infoType = InfoType.SPORTS.toString())
                 }
                 InfoType.CITY -> {
-                    putExtra(NAME_CITY, text.text.toString())
-                    putExtra(USER,user)
+                    UpdateUserInfoActivity.start(this,infoType = InfoType.CITY.toString())
                 }
                 else -> {
-                    putExtra(EDIT, text.text.toString())
-                    putExtra(HINT, textInputLayout.hint.toString())
-                    putExtra(USER,user)
+                    UpdateUserInfoActivity.start(this,oldValue = oldData.text.toString(),oldPassword = user?.password!!,hint = hint.hint.toString())
                 }
             }
-        }
-        startActivity(intent)
+
     }
 
     private fun onUploadedButtonSelected() {

@@ -210,33 +210,12 @@ class UserRepository(
             }
     }
 
-    fun updateUserAuthentication(
+    fun updateUserAuthenticationEmail(
         newEmail: String,
-        oldEmail: String,
-        newPassword: String,
-        oldPassword: String
-    ) {
-        val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
-        val credential: AuthCredential = EmailAuthProvider.getCredential(oldEmail, oldPassword)
-        user!!.reauthenticate(credential).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                user.updatePassword(newPassword).addOnCompleteListener { it ->
-                }
-                user.updateEmail(newEmail).addOnCompleteListener {
-                }
-            } else {
-                Log.d("Auth", task.exception.toString())
-            }
-        }
-    }
-
-    fun updateUserAuthenticationWithEmail(
-        newEmail: String,
-        oldEmail: String,
         oldPassword: String
     ){
         val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
-        val credential: AuthCredential = EmailAuthProvider.getCredential(oldEmail, oldPassword)
+        val credential: AuthCredential = EmailAuthProvider.getCredential(user!!.email, oldPassword)
         user!!.reauthenticate(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 user.updateEmail(newEmail).addOnCompleteListener {
@@ -251,13 +230,12 @@ class UserRepository(
             }
         }
     }
-    fun updateUserAuthenticationWithPassword(
-        oldEmail: String,
+    fun updateUserAuthenticationPassword(
         newPassword: String,
         oldPassword: String
     ){
         val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
-        val credential: AuthCredential = EmailAuthProvider.getCredential(oldEmail, oldPassword)
+        val credential: AuthCredential = EmailAuthProvider.getCredential(user!!.email, oldPassword)
         user!!.reauthenticate(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 user.updatePassword(newPassword).addOnCompleteListener {

@@ -1,5 +1,7 @@
 package com.example.sportsmates.editProfile
 
+import android.app.Activity
+import android.content.Intent
 import com.example.sportsmates.editProfile.EditProfileActivity
 import com.example.sportsmates.editProfile.EditProfileViewModel
 import androidx.appcompat.app.AppCompatActivity
@@ -10,16 +12,18 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import androidx.core.view.children
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import com.example.sportsmates.R
+import com.example.sportsmates.coach.CoachDetailsActivity
+import com.example.sportsmates.coach.CoachUiModel
 import com.example.sportsmates.databinding.ActivityUpdateUserInfoBinding
 import com.example.sportsmates.ext.*
-import com.example.sportsmates.signUp.data.model.User
-import com.example.sportsmates.utils.Constants.EDIT
-import com.example.sportsmates.utils.Constants.HINT
-import com.example.sportsmates.utils.Constants.NAME_CITY
-import com.example.sportsmates.utils.Constants.NAME_SPORT
 import com.example.sportsmates.utils.Constants.USER
+import com.example.sportsmates.utils.Constants._BIO
+import com.example.sportsmates.utils.Constants._MAIL
+import com.example.sportsmates.utils.Constants._NAME
+import com.example.sportsmates.utils.Constants._PASSWORD
 import com.example.sportsmates.utils.InfoType
 import com.example.sportsmates.utils.InfoType.*
 import com.google.android.material.chip.Chip
@@ -29,7 +33,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class UpdateUserInfoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUpdateUserInfoBinding
     private val viewModel: EditProfileViewModel by viewModel()
-    var user: User? = null
+    var oldPassword: String? = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUpdateUserInfoBinding.inflate(layoutInflater)
@@ -38,27 +42,30 @@ class UpdateUserInfoActivity : AppCompatActivity() {
         changeStatusBarColor(R.color.main_green)
         attachClickListener()
         attachObservers()
-        setupMenu(getString(R.string.damietta), getString(R.string.mansoura), binding.chooseCity.editText)
+        setupMenu(
+            getString(R.string.damietta),
+            getString(R.string.mansoura),
+            binding.chooseCity.editText
+        )
         getEditField()
     }
 
     private fun getEditField() {
         val intent = intent
-        when {
-            intent.hasExtra(NAME_SPORT) -> {
-                user = intent.getParcelableExtra(USER)
+        val infoType = intent.getStringExtra(EDITABLE_USER_INFO_TYPE)
+        oldPassword = intent.getStringExtra(EDITABLE_USER_OLD_PASSWORD_ITEM)
+        when (infoType) {
+            SPORTS.toString() -> {
                 binding.editBox.visibility = View.GONE
                 binding.sportsGroup.visibility = VISIBLE
             }
-            intent.hasExtra(NAME_CITY) -> {
-                user = intent.getParcelableExtra(USER)
+            CITY.toString() -> {
                 binding.editBox.visibility = View.GONE
                 binding.chooseCity.visibility = VISIBLE
             }
             else -> {
-                val text = intent.getStringExtra(EDIT)
-                val hint = intent.getStringExtra(HINT)
-                user = intent.getParcelableExtra(USER)
+                val text = intent.getStringExtra(EDITABLE_USER_OLD_VALUE)
+                val hint = intent.getStringExtra(EDITABLE_USER_HINT_ITEM)
                 binding.editField.setText(text)
                 binding.editBox.hint = hint
             }
@@ -68,31 +75,30 @@ class UpdateUserInfoActivity : AppCompatActivity() {
     private fun getUpdatedUserInfo() {
         when {
             binding.editBox.visibility == VISIBLE -> {
-                val text = binding.editBox.editText?.text.toString()
+                val adjustedData = binding.editBox.editText?.text.toString()
                 when (binding.editBox.hint.toString()) {
-                    getString(R.string.name) -> {
-                        updateUserInfo(text, NAME)
+                    _NAME -> {
+                        updateUserInfo(adjustedData, NAME)
                     }
-                    getString(R.string.mail) -> {
+                    _MAIL -> {
                         updateUserAuthentication(
-                            text,
-                            user!!.email!!,
-                            text,
-                            user!!.password!!,
-                            MAIL
+                            newEmail = adjustedData,
+                            oldPassword = oldPassword!!,
+                            infoType = MAIL
+
                         )
                     }
-                    getString(R.string.password) -> {
+                    _PASSWORD -> {
+                        // TODO: 5/21/2021  ("figure way to get password")
                         updateUserAuthentication(
-                            text,
-                            user!!.email!!,
-                            text,
-                            user!!.password!!,
-                            PASSWORD
+                            newPassword = adjustedData,
+                            oldPassword = oldPassword!!,
+                            infoType = PASSWORD
+
                         )
                     }
-                    getString(R.string.bio) -> {
-                        updateUserInfo(text,BIO)
+                    _BIO -> {
+                        updateUserInfo(adjustedData, BIO)
                     }
                 }
             }
@@ -102,8 +108,8 @@ class UpdateUserInfoActivity : AppCompatActivity() {
                 }
             }
             else -> {
-                val text = binding.chooseCity.editText?.text.toString()
-                updateUserInfo(text,CITY)
+                val adjustedData = binding.chooseCity.editText?.text.toString()
+                updateUserInfo(adjustedData, CITY)
             }
         }
     }
@@ -141,7 +147,7 @@ class UpdateUserInfoActivity : AppCompatActivity() {
             NAME -> {
                 viewModel.updateUserName(adjustedData)
             }
-           CITY -> {
+            CITY -> {
                 viewModel.updateUserCity(adjustedData)
             }
             else -> {
@@ -152,16 +158,15 @@ class UpdateUserInfoActivity : AppCompatActivity() {
     }
 
     private fun updateUserAuthentication(
-        newEmail: String,
-        oldEmail: String,
-        newPassword: String,
+        newEmail: String = "",
+        newPassword: String = "",
         oldPassword: String,
         infoType: InfoType
     ) {
         if (infoType == MAIL) {
-            viewModel.updateUserEmail(newEmail, oldEmail, oldPassword)
+            viewModel.updateUserEmail(newEmail, oldPassword)
         } else {
-            viewModel.updateUserPassword(oldEmail, newPassword, oldPassword)
+            viewModel.updateUserPassword(newPassword, oldPassword)
         }
     }
 
@@ -172,12 +177,18 @@ class UpdateUserInfoActivity : AppCompatActivity() {
     private fun validateSelectOnlyThreeSports(): Boolean {
         return when {
             getSelectedSports()?.size!! > 3 -> {
-                displayWarningToast(getString(R.string.warning_toast_title), "Please Select Only 3 Sports")
+                displayWarningToast(
+                    getString(R.string.warning_toast_title),
+                    "Please Select Only 3 Sports"
+                )
                 false
 
             }
             getSelectedSports()!!.isEmpty() -> {
-                displayWarningToast(getString(R.string.warning_toast_title), "Please Select Your favourites Sports")
+                displayWarningToast(
+                    getString(R.string.warning_toast_title),
+                    "Please Select Your favourites Sports"
+                )
                 false
             }
             else -> true
@@ -190,6 +201,29 @@ class UpdateUserInfoActivity : AppCompatActivity() {
             .filter { ((it as Chip).isChecked) }
             .map { (it as Chip).text.toString() }
             .toMutableList()
+    }
+
+    companion object {
+        // TODO: 5/21/2021 refactor to class
+        private const val EDITABLE_USER_OLD_VALUE = "userOldValue"
+        private const val EDITABLE_USER_HINT_ITEM = "userInfoItem"
+        private const val EDITABLE_USER_OLD_PASSWORD_ITEM = "userOldPasswordItem"
+        private const val EDITABLE_USER_INFO_TYPE = "userInfoType"
+        fun start(
+            activity: Activity?,
+            oldValue: String="",
+            oldPassword: String = "",
+            hint: String = "",
+            infoType: String = ""
+        ) {
+            val intent = Intent(activity, UpdateUserInfoActivity::class.java)
+            intent.putExtra(EDITABLE_USER_OLD_VALUE, oldValue)
+            intent.putExtra(EDITABLE_USER_HINT_ITEM, hint)
+            intent.putExtra(EDITABLE_USER_OLD_PASSWORD_ITEM, oldPassword)
+            intent.putExtra(EDITABLE_USER_INFO_TYPE, infoType)
+
+            activity?.startActivity(intent)
+        }
     }
 
 }
