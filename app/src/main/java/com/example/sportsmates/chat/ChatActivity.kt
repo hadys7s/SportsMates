@@ -1,9 +1,7 @@
 package com.example.sportsmates.chat
 
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sportsmates.R
@@ -11,7 +9,7 @@ import com.example.sportsmates.chat.adapters.UsersAdapter
 import com.example.sportsmates.chat.model.MessageModel
 import com.example.sportsmates.databinding.ActivityChatBinding
 import com.example.sportsmates.ext.changeStatusBarColor
-import com.example.sportsmates.ext.openActivityWithTransitionAnimation
+import com.example.sportsmates.ext.withTransitionAnimation
 import com.example.sportsmates.ext.stopShimmer
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -45,7 +43,7 @@ class ChatActivity : AppCompatActivity() {
             MessagesActivity.start(
                 this,
                 messageModel,
-                openActivityWithTransitionAnimation(imageView)
+                withTransitionAnimation(imageView)
             )
         }
     }

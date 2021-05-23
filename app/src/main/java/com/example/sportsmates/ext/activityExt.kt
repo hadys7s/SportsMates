@@ -139,7 +139,7 @@ fun Activity.changeStatusBarColor(color:Int){
     window.statusBarColor= ContextCompat.getColor(this,color)
 }
 
-fun Activity.openActivityWithTransitionAnimation(
+fun Activity.withTransitionAnimation(
     targetImage: ImageView
 ) : Bundle?{
     return ActivityOptionsCompat.makeSceneTransitionAnimation(this, targetImage, "img")

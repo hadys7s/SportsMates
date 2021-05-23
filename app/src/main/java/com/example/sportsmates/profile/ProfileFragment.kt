@@ -11,7 +11,8 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.sportsmates.databinding.ProfileFragmentBinding
 import com.example.sportsmates.editProfile.EditProfileActivity
-import com.example.sportsmates.ext.openActivityWithTransitionAnimation
+import com.example.sportsmates.ext.openActivity
+import com.example.sportsmates.ext.withTransitionAnimation
 import com.example.sportsmates.ext.openTopActivity
 import com.example.sportsmates.ext.stopShimmer
 import com.example.sportsmates.signUp.SignUpActivity
@@ -41,7 +42,6 @@ class ProfileFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        fetchArguments()
         attachEventObservers()
         attachCLickListeners()
     }
@@ -49,6 +49,11 @@ class ProfileFragment : Fragment() {
     private fun fetchArguments() {
         viewModel.fetchUserData()
         viewModel.getUserImage()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        fetchArguments()
     }
 
 
@@ -68,7 +73,7 @@ class ProfileFragment : Fragment() {
 
     private fun attachCLickListeners() {
         binding.editProfileButton.setOnClickListener {
-            openTopActivity(activity,EditProfileActivity())
+            openActivity(EditProfileActivity(),withTransitionAnimation(binding.profileImage))
         }
 
         binding.logoutButton.setOnClickListener {
@@ -90,6 +95,7 @@ class ProfileFragment : Fragment() {
         //   binding.profilePhoneNumber.text = userInfo?.phoneNumber
         binding.profileEmail.text = userInfo?.email
         binding.profileAddress.text = userInfo?.city
+        binding.ProfileAboutMeDescription.text=userInfo?.about
         //     binding.ProfileAboutMeDescription.text = userInfo?.phoneNumber
         binding.sports1.text = userInfo?.sportsList?.get(0)
         if (userInfo?.sportsList?.size!! > 1) {

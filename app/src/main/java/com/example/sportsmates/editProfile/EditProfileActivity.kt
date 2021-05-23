@@ -18,9 +18,13 @@ import com.example.sportsmates.ext.*
 import com.example.sportsmates.home.MainActivity
 import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.signUp.fragments.SignUpEmailFragment
+import com.example.sportsmates.utils.Constants.EDIT
+import com.example.sportsmates.utils.Constants.HINT
+import com.example.sportsmates.utils.Constants.USER
 import com.example.sportsmates.utils.InfoType
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import org.koin.android.ext.android.get
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.lang.Exception
 
@@ -35,19 +39,23 @@ class EditProfileActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         changeStatusBarColor(R.color.main_green)
-        fetchArguments()
         attachObservers()
+        loadImage()
         attachClickListeners()
         onUploadedButtonSelected()
 
     }
-
+    override fun onResume() {
+        super.onResume()
+        fetchArguments()
+    }
 
     private fun fetchArguments() {
         viewModel.fetchUserData()
+    }
+    private fun loadImage(){
         viewModel.getUserImage()
     }
-
     private fun attachObservers() {
         viewModel.userData.observe(this, Observer {
             bindUserData(it)
@@ -57,11 +65,11 @@ class EditProfileActivity : AppCompatActivity() {
             setImage(it)
         })
         viewModel.uploadImageSuccess.observe(this, Observer {
-            displaySuccessToast("Success",it)
+            displaySuccessToast(getString(R.string.success_toast_title),it)
             stopShimmer(binding.shimmerViewContainer)
         })
         viewModel.uploadImageFailed.observe(this, Observer {
-            displayErrorToast("Error",it)
+            displayErrorToast(getString(R.string.error_toast_title),it)
             stopShimmer(binding.shimmerViewContainer)
         })
     }
@@ -74,19 +82,15 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun bindUserData(userData: User?) {
-        binding.name.setText(userData!!.name, TextView.BufferType.EDITABLE)
-        binding.mail.setText(userData.email, TextView.BufferType.EDITABLE)
-        binding.city.setText(userData.city, TextView.BufferType.EDITABLE)
-        binding.password.setText(userData.password, TextView.BufferType.EDITABLE)
+        binding.nameTextField.setText(userData!!.name, TextView.BufferType.EDITABLE)
+        binding.mailTextField.setText(userData.email, TextView.BufferType.EDITABLE)
+        binding.cityTextField.setText(userData.city, TextView.BufferType.EDITABLE)
+        binding.passwordTextField.setText(userData.password, TextView.BufferType.EDITABLE)
+        binding.bioTextField.setText(userData.about,TextView.BufferType.EDITABLE)
         val sports = userData.sportsList!!.joinToString(
             " , "
         )
-        binding.sports.setText(sports, TextView.BufferType.EDITABLE)
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        openTopActivity(this, MainActivity())
+        binding.sportsTextField.setText(sports, TextView.BufferType.EDITABLE)
     }
 
     private fun attachClickListeners() {
@@ -94,49 +98,43 @@ class EditProfileActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        binding.name.setOnClickListener {
-            openUpdateActivityAndSendText(binding.nameBox, binding.name, InfoType.NAME)
+        binding.nameTextField.setOnClickListener {
+            openUpdateActivityAndSendText(binding.nameBox, binding.nameTextField, InfoType.NAME)
         }
-        binding.mail.setOnClickListener {
-            openUpdateActivityAndSendText(binding.mailBox, binding.mail, InfoType.MAIL)
+        binding.mailTextField.setOnClickListener {
+            openUpdateActivityAndSendText(binding.mailBox, binding.mailTextField, InfoType.MAIL)
         }
-        binding.city.setOnClickListener {
-            openUpdateActivityAndSendText(binding.cityBox, binding.city, InfoType.CITY)
+        binding.cityTextField.setOnClickListener {
+            openUpdateActivityAndSendText(binding.cityBox, binding.cityTextField, InfoType.CITY)
         }
-        binding.password.setOnClickListener {
-            openUpdateActivityAndSendText(binding.passwordBox, binding.password, InfoType.PASSWORD)
+        binding.passwordTextField.setOnClickListener {
+            openUpdateActivityAndSendText(binding.passwordBox, binding.passwordTextField, InfoType.PASSWORD)
         }
-        binding.bio.setOnClickListener {
-            openUpdateActivityAndSendText(binding.bioBox, binding.bio, InfoType.BIO)
+        binding.bioTextField.setOnClickListener {
+            openUpdateActivityAndSendText(binding.bioBox, binding.bioTextField, InfoType.BIO)
         }
-        binding.sports.setOnClickListener {
-            openUpdateActivityAndSendText(binding.sportsBox, binding.sports, InfoType.SPORTS)
+        binding.sportsTextField.setOnClickListener {
+            openUpdateActivityAndSendText(binding.sportsBox, binding.sportsTextField, InfoType.SPORTS)
         }
     }
 
     private fun openUpdateActivityAndSendText(
-        textInputLayout: TextInputLayout,
-        text: TextInputEditText,
+        hint: TextInputLayout,
+        oldData: TextInputEditText,
         infoType: InfoType
     ) {
-        val intent = Intent(this, UpdateUserInfoActivity::class.java).apply {
             when (infoType) {
                 InfoType.SPORTS -> {
-                    putExtra("Sports", text.text.toString())
-                    putExtra("user",user)
+                    UpdateUserInfoActivity.start(this,infoType = InfoType.SPORTS.toString())
                 }
                 InfoType.CITY -> {
-                    putExtra("City", text.text.toString())
-                    putExtra("user",user)
+                    UpdateUserInfoActivity.start(this,infoType = InfoType.CITY.toString())
                 }
                 else -> {
-                    putExtra("Edit", text.text.toString())
-                    putExtra("Hint", textInputLayout.hint.toString())
-                    putExtra("user",user)
+                    UpdateUserInfoActivity.start(this,oldValue = oldData.text.toString(),oldPassword = user?.password!!,hint = hint.hint.toString())
                 }
             }
-        }
-        startActivity(intent)
+
     }
 
     private fun onUploadedButtonSelected() {
@@ -188,7 +186,7 @@ class EditProfileActivity : AppCompatActivity() {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     selectImage(SignUpEmailFragment.PICK_IMAGE_REQUEST)
                 } else {
-                    displayInfoToast("info", "Permission Denied")
+                    displayInfoToast(getString(R.string.info_toast_title), getString(R.string.permissin_denied))
                 }
             }
         }

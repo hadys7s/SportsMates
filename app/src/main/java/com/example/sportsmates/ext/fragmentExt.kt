@@ -154,9 +154,13 @@ fun Fragment.displayInfoToast(title: String?, message: String) {
     )
 }
 
-fun Fragment.openActivityWithTransitionAnimation(
+fun Fragment.withTransitionAnimation(
     targetImage: ImageView
 ): Bundle? {
     return ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, targetImage, "img")
         .toBundle()
+}
+fun Fragment.openActivity(targetActivity: Activity,bundle: Bundle?=null){
+    val intent=Intent(activity!!,targetActivity::class.java)
+    startActivity(intent,bundle)
 }
