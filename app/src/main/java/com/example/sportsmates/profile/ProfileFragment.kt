@@ -42,7 +42,6 @@ class ProfileFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        fetchArguments()
         attachEventObservers()
         attachCLickListeners()
     }
@@ -50,6 +49,11 @@ class ProfileFragment : Fragment() {
     private fun fetchArguments() {
         viewModel.fetchUserData()
         viewModel.getUserImage()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        fetchArguments()
     }
 
 
