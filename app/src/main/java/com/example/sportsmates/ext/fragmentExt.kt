@@ -111,13 +111,13 @@ fun Fragment.setStepper(state1: Int, state2: Int, state3: Int, stepView: Horizon
 }
 
 
-fun Fragment.openTopActivity(activity: FragmentActivity?, targetActivity: Activity) {
+fun Fragment.openTopActivity(activity: FragmentActivity?, targetActivity: Activity,bundle: Bundle?=null) {
     val targetActivity = Intent(
         activity,
         targetActivity::class.java
     )
     targetActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-    startActivity(targetActivity)
+    startActivity(targetActivity,bundle)
 }
 
 fun Fragment.displayErrorToast(title: String?, message: String) {
@@ -154,9 +154,13 @@ fun Fragment.displayInfoToast(title: String?, message: String) {
     )
 }
 
-fun Fragment.openActivityWithTransitionAnimation(
+fun Fragment.withTransitionAnimation(
     targetImage: ImageView
 ): Bundle? {
     return ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, targetImage, "img")
         .toBundle()
+}
+fun Fragment.openActivity(targetActivity: Activity,bundle: Bundle?=null){
+    val intent=Intent(activity!!,targetActivity::class.java)
+    startActivity(intent,bundle)
 }

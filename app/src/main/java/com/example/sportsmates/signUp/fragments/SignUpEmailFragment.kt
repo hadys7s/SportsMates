@@ -209,8 +209,8 @@ class SignUpEmailFragment : Fragment() {
 
     companion object {
 
-        private const val PICK_IMAGE_REQUEST = 22
-        private const val PERMISSION_CODE = 1001
+         const val PICK_IMAGE_REQUEST = 22
+         const val PERMISSION_CODE = 1001
         fun newInstance() =
             SignUpEmailFragment().apply {
                 arguments = Bundle().apply {

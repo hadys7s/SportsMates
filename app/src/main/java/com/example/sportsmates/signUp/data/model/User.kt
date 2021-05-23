@@ -11,7 +11,7 @@ data class User(
     var name: String? = "",
     var password: String? = "",
     var email: String? = "",
-    val phoneNumber: String? = "",
+    val about: String? = "",
     var age: String? = "",
     var gender: String? = "",
     var city: String? = "",
@@ -37,7 +37,7 @@ data class User(
         parcel.writeString(name)
         parcel.writeString(password)
         parcel.writeString(email)
-        parcel.writeString(phoneNumber)
+        parcel.writeString(about)
         parcel.writeString(age)
         parcel.writeString(gender)
         parcel.writeString(city)
