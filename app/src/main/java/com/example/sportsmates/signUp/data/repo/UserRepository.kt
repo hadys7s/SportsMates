@@ -165,6 +165,7 @@ class UserRepository(
             .addOnSuccessListener { dataSnapshot ->
                 dataSnapshot.child("name").ref.setValue(name)
                 updateInfoSuccess.postValue("Name Updated Successfully")
+                userpref.name=name
             }.addOnFailureListener {
                 updateInfoFailuer.postValue(it.toString())
             }
@@ -185,6 +186,7 @@ class UserRepository(
             .addOnSuccessListener { dataSnapshot ->
                 dataSnapshot.child("city").ref.setValue(city)
                 updateInfoSuccess.postValue("City Updated Successfully")
+                userpref.city=city
             }.addOnFailureListener {
                 updateInfoFailuer.postValue(it.toString())
             }

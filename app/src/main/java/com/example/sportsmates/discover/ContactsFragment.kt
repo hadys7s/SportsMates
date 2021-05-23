@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sportsmates.chat.MessagesActivity
 import com.example.sportsmates.databinding.DiscoverFragmentBinding
 import com.example.sportsmates.ext.displayWarningToast
-import com.example.sportsmates.ext.openActivityWithTransitionAnimation
+import com.example.sportsmates.ext.withTransitionAnimation
 import com.example.sportsmates.ext.stopShimmer
 import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.signUp.data.model.toMessageModel
@@ -74,9 +74,9 @@ class ContactsFragment : Fragment() {
         targetActivity: TargetActivity
     ) {
         if (targetActivity == TargetActivity.CONTACTS_DETAILS) {
-            ContactsDetails.start(activity, user, openActivityWithTransitionAnimation(targetImage))
+            ContactsDetails.start(activity, user, withTransitionAnimation(targetImage))
         } else {
-            MessagesActivity.start(activity, user.toMessageModel(), openActivityWithTransitionAnimation(targetImage))
+            MessagesActivity.start(activity, user.toMessageModel(), withTransitionAnimation(targetImage))
         }
 
     }

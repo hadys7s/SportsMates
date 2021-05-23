@@ -93,11 +93,6 @@ class EditProfileActivity : AppCompatActivity() {
         binding.sportsTextField.setText(sports, TextView.BufferType.EDITABLE)
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        openTopActivity(this, MainActivity())
-    }
-
     private fun attachClickListeners() {
         binding.backBtn.setOnClickListener {
             onBackPressed()
