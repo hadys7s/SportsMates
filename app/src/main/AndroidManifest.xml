@@ -34,12 +34,12 @@
         <activity
             android:name=".coach.CoachDetailsActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
-        <activity android:name=".editProfile.UpdateUserInfoActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
+        <activity
+            android:name=".editProfile.UpdateUserInfoActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
             android:name=".editProfile.EditProfileActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
-            />
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity android:name=".home.MainActivity" />
         <activity
             android:name=".signUp.SignUpActivity"

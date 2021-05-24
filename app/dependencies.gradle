@@ -31,6 +31,7 @@ ext {
 
     def imageSliderVersion = '1.4.0'
     def fireBaseUiVersion = '7.0.0'
+    def dialogFlow = '2.1.4'
 
 
     appDependencies = [
@@ -61,7 +62,6 @@ ext {
             fireBaseUi           : "com.firebaseui:firebase-ui-storage:${fireBaseUiVersion}",
             imageSlider          : "com.github.smarteist:autoimageslider:${imageSliderVersion}",
             firebaseDatabase     : "com.google.firebase:firebase-database-ktx",
-
-
+            dialogFLow           : "io.kommunicate.sdk:kommunicateui:${dialogFlow}"
     ]
 }
