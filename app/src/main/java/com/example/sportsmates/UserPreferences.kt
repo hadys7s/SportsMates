@@ -35,6 +35,9 @@ class UserPreferences(context: Context) {
     fun clear() {
         userPreference.edit().clear().apply()
     }
+    fun removeItem(key:String){
+        userPreference.edit().remove(key).apply()
+    }
 
     companion object {
         const val USER_PREFERENCE_NAME = "user_preferences"

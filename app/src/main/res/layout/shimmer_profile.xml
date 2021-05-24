@@ -76,14 +76,7 @@
         app:layout_constraintTop_toBottomOf="@id/ProfileAboutMeDescriptionShimmer">
 
         <!-- Chips can be declared here, or added dynamically. -->
-        <com.google.android.material.chip.Chip
-            android:id="@+id/sportsShimmer1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/grey"
-            android:clickable="false"
-            android:fontFamily="@font/roboto_regular"
-            tools:text="Football" />
+
 
         <com.google.android.material.chip.Chip
             android:id="@+id/sportsShimmer2"

@@ -12,12 +12,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.SportsMates">
-        <activity android:name=".chat.MessagesActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
 
-           />
-        <activity android:name=".chat.ChatActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
+        <activity
+            android:name=".chat.MessagesActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+        <activity
+            android:name=".chat.ChatActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
             android:name=".home.events.EventDetailActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
@@ -32,6 +33,12 @@
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
             android:name=".coach.CoachDetailsActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+        <activity
+            android:name=".editProfile.UpdateUserInfoActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+        <activity
+            android:name=".editProfile.EditProfileActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity android:name=".home.MainActivity" />
         <activity
