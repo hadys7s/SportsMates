@@ -46,4 +46,5 @@
     <string name="warning_toast_title">Warning</string>
     <string name="info_toast_title">Info</string>
     <string name="payment">Payment</string>
+    <string name="chatbot_name">NutroX</string>
 </resources>

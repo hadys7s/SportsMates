@@ -1,9 +1,9 @@
 package com.example.sportsmates.home.news.data.repository
 
-import com.example.sportsmates.networking.ApiHelper
+import com.example.sportsmates.networking.NewsApiHelper
 
 
-class NewsRepository(private val apiHelper: ApiHelper) {
+class NewsRepository(private val apiHelper: NewsApiHelper) {
 
     suspend fun getRecommendedNews(
         listOfSports: List<String>?

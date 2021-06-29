@@ -10,7 +10,7 @@ import com.example.sportsmates.ext.getCurrentUserID
 import com.google.firebase.database.*
 
 class ChatViewModel(private val userPreferences: UserPreferences) : ViewModel() {
-    var retriveChatSuceess = MutableLiveData<List<Chat>?>()
+    var retriveChatSuceess = MutableLiveData<ArrayList<Chat>?>()
     var retriveChatErorr = MutableLiveData<String?>()
     var listOfChat = MutableLiveData<MutableList<MessageModel>?>()
     val reference: DatabaseReference = FirebaseDatabase.getInstance().reference
@@ -119,7 +119,7 @@ class ChatViewModel(private val userPreferences: UserPreferences) : ViewModel() 
     }
 
     fun readMessage(receiverId: String?) {
-        val listOfChat: MutableList<Chat>? = mutableListOf()
+        val listOfChat: ArrayList<Chat>? = arrayListOf()
         val reference: DatabaseReference? =
             FirebaseDatabase.getInstance().getReference("Chat").child(calculateChatId(receiverId))
         reference!!.addValueEventListener(object : ValueEventListener {
