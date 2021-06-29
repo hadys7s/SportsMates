@@ -1,17 +1,23 @@
 package com.example.sportsmates.chat.adapters
 import android.content.Context
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.sportsmates.chat.model.Chat
 import com.example.sportsmates.databinding.ChatItemLeftBinding
 import com.example.sportsmates.databinding.ChatItemRightBinding
+import com.example.sportsmates.ext.getCurrentUserID
 import com.example.sportsmates.ext.inflater
 import com.example.sportsmates.utils.Constants.MESSAGE_TYPE_LEFT
 import com.example.sportsmates.utils.Constants.MESSAGE_TYPE_RIGHT
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
-class ChatAdapter(private val listOfChat: List<Chat>?, private val context: Context?) :
+class ChatAdapter(
+    private val listOfChat: ArrayList<Chat>? = arrayListOf(),
+    private val context: Context
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var firebaseUser: FirebaseUser? = null
@@ -19,8 +25,15 @@ class ChatAdapter(private val listOfChat: List<Chat>?, private val context: Cont
     inner class ViewHolder1(private val binding: ChatItemLeftBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(chat: Chat) {
+            binding.foodImage.isVisible = false
             binding.tvMessage.text = chat.message
             binding.tvTime.text = chat.time
+            if (!chat.imageUrl.isNullOrBlank()) {
+                binding.foodImage.isVisible = true
+                Glide.with(context)
+                    .load(chat.imageUrl)
+                    .into(binding.foodImage)
+            }
         }
     }
 
@@ -40,15 +53,24 @@ class ChatAdapter(private val listOfChat: List<Chat>?, private val context: Cont
         }
     }
 
+    fun addQuery(foodQuery: String) {
+        listOfChat?.add(Chat("", getCurrentUserID(), "", foodQuery))
+        notifyDataSetChanged()
+    }
+
+    fun addResponse(foodQuery: String, foodImageUrl: String) {
+        listOfChat?.add(Chat("", "5", "", foodQuery, imageUrl = foodImageUrl))
+        notifyDataSetChanged()
+    }
+
     override fun getItemCount(): Int {
         return listOfChat!!.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder.itemViewType== MESSAGE_TYPE_LEFT) {
+        if (holder.itemViewType == MESSAGE_TYPE_LEFT) {
             listOfChat?.get(position)?.let { (holder as ViewHolder1).bind(it) }
-        }else
-        {
+        } else {
             listOfChat?.get(position)?.let { (holder as ViewHolder2).bind(it) }
         }
     }

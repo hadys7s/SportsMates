@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SportsMates">
         <activity
+            android:name=".chatbot.ChatBotActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+        <activity
             android:name=".booking.BookingActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity

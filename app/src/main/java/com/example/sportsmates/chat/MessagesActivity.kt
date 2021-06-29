@@ -53,7 +53,7 @@ class MessagesActivity : AppCompatActivity() {
         })
     }
 
-    private fun setMessage(listOfChat: List<Chat>?) {
+    private fun setMessage(listOfChat: ArrayList<Chat>?) {
         adapter = ChatAdapter(listOfChat, this)
         binding.messageList.adapter = adapter
     }

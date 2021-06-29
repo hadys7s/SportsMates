@@ -37,7 +37,6 @@ class BookingActivity : AppCompatActivity() {
         setContentView(view)
         changeStatusBarColor(R.color.main_green)
         attachOnCLickListener()
-        checkIfUserBookAnEvent()
         attachObservers()
     }
 
@@ -50,14 +49,6 @@ class BookingActivity : AppCompatActivity() {
             textInputLayout.error = null
             textInputLayout.isErrorEnabled = false
             true
-        }
-    }
-    private fun checkIfUserBookAnEvent(){
-        if (intent.hasExtra(EVENT_ITEM)){
-            binding.timeTv.visibility=View.GONE
-            binding.groubContainer.visibility=View.GONE
-            binding.edDate2.visibility=View.GONE
-            binding.dateTv.visibility=View.GONE
         }
     }
 
@@ -136,6 +127,7 @@ class BookingActivity : AppCompatActivity() {
     private fun sendEmailWithArguments() {
         val couch: CoachUiModel? = intent.getParcelableExtra((COUCH_ITEM))
         val place: PlaceUiModel? = intent.getParcelableExtra((PLACE_ITEM))
+        val event: Event? = intent.getParcelableExtra((EVENT_ITEM))
         val time = getSelectedTime()?.joinToString("")
         when {
             place != null -> {
@@ -147,7 +139,6 @@ class BookingActivity : AppCompatActivity() {
                 viewModel.sendEmailToCouch(couch.email!!, time,binding.edDate2.text.toString())
             }
             else -> {
-
             }
         }
 
