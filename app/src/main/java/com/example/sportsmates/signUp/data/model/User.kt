@@ -60,7 +60,7 @@ data class User(
     }
 }
 
-fun User.toMessageModel(): MessageModel {
+fun User.toMessageUiModel(): MessageModel {
     return MessageModel(
         userId = this.id,
         userName = this.name,

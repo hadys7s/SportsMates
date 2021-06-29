@@ -56,14 +56,6 @@ class SignUpUserInfoFragment : Fragment() {
 
         }
     }
-
-    private fun validation(): Boolean {
-        return (validateUserInfoFieldIsEmpty(binding.chooseCity) && validateUserInfoFieldIsEmpty(
-            binding.edAge
-        ) && validateUserInfoFieldIsEmpty(binding.chooseGender))
-    }
-
-
     private fun forwardUserInfo(): User? {
         val user: User? = arguments?.getParcelable(USER_DATA)
 
@@ -71,6 +63,12 @@ class SignUpUserInfoFragment : Fragment() {
         user?.age = binding.edAge.editText?.text.toString()
         user?.gender = binding.chooseGender.editText?.text.toString()
         return user
+    }
+
+    private fun validation(): Boolean {
+        return (validateUserInfoFieldIsEmpty(binding.chooseCity) && validateUserInfoFieldIsEmpty(
+            binding.edAge
+        ) && validateUserInfoFieldIsEmpty(binding.chooseGender))
     }
 
     private fun validateUserInfoFieldIsEmpty(textInputLayout: TextInputLayout): Boolean {
