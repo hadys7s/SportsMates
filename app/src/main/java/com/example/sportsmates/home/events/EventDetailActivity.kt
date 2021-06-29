@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.example.sportsmates.booking.BookingActivity
 import com.example.sportsmates.databinding.ActivityEventDetailBinding
 import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
 
@@ -44,6 +45,13 @@ class EventDetailActivity : AppCompatActivity() {
         binding.backBtn.setOnClickListener {
             onBackPressed()
         }
+        binding.attendBtn.setOnClickListener {
+           startBookingActivity()
+        }
+    }
+    private fun startBookingActivity(){
+        val event:Event?=intent.getParcelableExtra(EVENT_ITEM)
+        BookingActivity.start(this,eventItem = event )
     }
 
     companion object {
