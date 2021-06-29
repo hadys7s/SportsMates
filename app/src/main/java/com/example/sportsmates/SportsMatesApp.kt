@@ -2,6 +2,7 @@ package com.example.sportsmates
 
 import android.app.Application
 import com.example.sportsmates.di.NewsModule
+import com.example.sportsmates.di.NutroModule
 import com.example.sportsmates.di.SignUpModule
 import io.kommunicate.Kommunicate
 import org.koin.android.ext.koin.androidContext
@@ -14,7 +15,7 @@ class SportsMatesApp : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@SportsMatesApp)
-            modules(listOf(SignUpModule, NewsModule))
+            modules(listOf(SignUpModule, NewsModule,NutroModule))
         }
         Kommunicate.init(this, APP_ID);
 

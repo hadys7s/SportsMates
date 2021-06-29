@@ -10,10 +10,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.sportsmates.R
 import com.example.sportsmates.chat.ChatActivity
+import com.example.sportsmates.chatbot.ChatBotActivity
 import com.example.sportsmates.coach.CoachFragment
 import com.example.sportsmates.databinding.ActivityMainBinding
 import com.example.sportsmates.discover.ContactsFragment
 import com.example.sportsmates.ext.getCurrentUserID
+import com.example.sportsmates.ext.openTopActivity
 import com.example.sportsmates.ext.replaceFragment
 import com.example.sportsmates.place.PlaceFragment
 import com.example.sportsmates.profile.ProfileFragment
@@ -24,7 +26,6 @@ import io.kommunicate.users.KMUser
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
     var userUid: String? = null
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -36,7 +37,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.chat->{val intent=Intent(this,ChatActivity::class.java)
+            R.id.chat->{
+                val intent=Intent(this,ChatActivity::class.java)
                 startActivity(intent)
             }
         }
@@ -50,7 +52,8 @@ class MainActivity : AppCompatActivity() {
         addfragment(HomeFragment.newInstance())
         bottomNavigationController()
         binding.chatBot.setOnClickListener {
-            openChatBotConnection()
+            val intent=Intent(this,ChatBotActivity::class.java)
+            startActivity(intent)
         }
     }
 
