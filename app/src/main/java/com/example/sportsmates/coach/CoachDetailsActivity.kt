@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
+import com.example.sportsmates.booking.BookingActivity
 import com.example.sportsmates.databinding.ActivityCoashDetailsBinding
 import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
@@ -68,6 +69,14 @@ class CoachDetailsActivity : AppCompatActivity() {
         binding.backBtn.setOnClickListener {
             onBackPressed()
         }
+        binding.bookBtn.setOnClickListener {
+            startBookingActivity()
+        }
+    }
+
+    private fun startBookingActivity(){
+        val coach: CoachUiModel? = intent.getParcelableExtra((COACH_ITEM))
+        BookingActivity.start(this,couchItem = coach)
     }
 
     companion object {

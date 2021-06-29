@@ -23,13 +23,13 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import java.lang.Exception
 
 class SignUpEmailFragment : Fragment() {
-
+    private val viewModel: SignUpViewModel by viewModel()
     private lateinit var filePath: Uri
+    private var validateImage: Boolean = false
     private lateinit var dialog: AlertDialog
     private var _binding: SignUpEmailPasswordFragmentBinding? = null
     private val binding get() = _binding!!
-    private var validateImage: Boolean = false
-    private val viewModel: SignUpViewModel by viewModel()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,7 +53,7 @@ class SignUpEmailFragment : Fragment() {
         binding.nextButton.setOnClickListener {
             if (validateAllFields()) {
                 if (!validateImage) {
-                    displayWarningToast("Warning ","Select a Photo !")
+                    displayWarningToast("Warning ", "Select a Photo !")
                 } else {
                     viewModel.onNextEmailButtonCLicked(forwardUserInfo(), filePath)
                     showLoading()
@@ -71,11 +71,11 @@ class SignUpEmailFragment : Fragment() {
         })
         viewModel.signUpAuthFailed.observe(this, Observer { errMsg ->
             hideLoading()
-            displayErrorToast("Error ",errMsg)
+            displayErrorToast("Error ", errMsg)
         })
         viewModel.uploadImageFailed.observe(this, Observer { errMsg ->
             hideLoading()
-            displayErrorToast("Error ",errMsg)
+            displayErrorToast("Error ", errMsg)
         })
 
     }
@@ -97,7 +97,7 @@ class SignUpEmailFragment : Fragment() {
         val confirmPassword = binding.edConfirmPassword.editText?.text.toString()
         val password = binding.edPassword.editText?.text.toString()
         return if (!confirmPassword.contentEquals(password)) {
-            displayWarningToast("Warning ","Password don't match")
+            displayWarningToast("Warning ", "Password don't match")
             false
 
         } else {
@@ -132,12 +132,6 @@ class SignUpEmailFragment : Fragment() {
         return user
     }
 
-    private fun onUploadedButtonSelected() {
-        binding.uploadPhotoButton.setOnClickListener {
-            handleStoragePermission({ selectImage(PICK_IMAGE_REQUEST) }, PERMISSION_CODE)
-        }
-    }
-
 
     private fun bindProfilePicture() {
         val inputStream = context?.contentResolver?.openInputStream(filePath)
@@ -169,6 +163,11 @@ class SignUpEmailFragment : Fragment() {
         }
     }
 
+    private fun onUploadedButtonSelected() {
+        binding.uploadPhotoButton.setOnClickListener {
+            handleStoragePermission({ selectImage(PICK_IMAGE_REQUEST) }, PERMISSION_CODE)
+        }
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -180,7 +179,7 @@ class SignUpEmailFragment : Fragment() {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     selectImage(PICK_IMAGE_REQUEST)
                 } else {
-                    displayInfoToast("info","Permission Denied")
+                    displayInfoToast("info", "Permission Denied")
                 }
             }
         }
@@ -209,8 +208,8 @@ class SignUpEmailFragment : Fragment() {
 
     companion object {
 
-         const val PICK_IMAGE_REQUEST = 22
-         const val PERMISSION_CODE = 1001
+        const val PICK_IMAGE_REQUEST = 22
+        const val PERMISSION_CODE = 1001
         fun newInstance() =
             SignUpEmailFragment().apply {
                 arguments = Bundle().apply {

@@ -46,7 +46,7 @@ class SignUpSportsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setStepper(1, 1, -1, binding.stepper)
-        doneButton()
+         doneButton()
         attachEventObservers()
 
     }
