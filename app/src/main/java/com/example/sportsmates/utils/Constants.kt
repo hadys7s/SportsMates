@@ -17,6 +17,8 @@ object Constants {
     const val _MAIL="Mail"
     const val _BIO="Bio"
     const val _PASSWORD="Password"
+    const val APP_EMAIL="sportsmates02@gmail.com"
+    const val APP_PASSWORD="sportsmates111222"
     const val USER="User"
     const val HINT="Hint"
     const val EDIT="Edit"
@@ -33,4 +35,10 @@ enum class InfoType{
     MAIL,
     PASSWORD,
     BIO
+}
+enum class AppPlaceHolders{
+    USER,
+    COUCH,
+    PLACE,
+    EVENTS
 }

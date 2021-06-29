@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
+import com.example.sportsmates.booking.BookingActivity
 import com.example.sportsmates.coach.SliderAdapterExample
 import com.example.sportsmates.databinding.ActivityPlaceDetailsBinding
 import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
@@ -16,7 +17,7 @@ class PlaceDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlaceDetailsBinding
 
     private lateinit var sliderAdapter: SliderAdapterExample
-
+    private var _place:PlaceUiModel?=null
     private val viewModel: PLaceViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,8 +69,15 @@ class PlaceDetailsActivity : AppCompatActivity() {
 
     private fun attachCLickListeners() {
         binding.backBtn.setOnClickListener {
-            onBackPressed()
+           onBackPressed()
         }
+        binding.bookButton.setOnClickListener {
+            startBookingActivity()
+        }
+    }
+    private fun startBookingActivity(){
+        val place: PlaceUiModel? = intent.getParcelableExtra((PLACE_ITEM))
+        BookingActivity.start(this,placeItem =place )
     }
 
     companion object {

@@ -16,6 +16,9 @@
             android:name=".chatbot.ChatBotActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
+            android:name=".booking.BookingActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+        <activity
             android:name=".chat.MessagesActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity

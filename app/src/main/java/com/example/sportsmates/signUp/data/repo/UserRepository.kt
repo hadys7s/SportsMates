@@ -26,9 +26,9 @@ class UserRepository(
     var signUpAuthFailed = MutableLiveData<String>()
     var uploadImageFailed = MutableLiveData<String>()
     var uploadImageSucess = MutableLiveData<String>()
-    var retriveImage = MutableLiveData<Uri>()
     var signUpSuccess = SingleLiveEvent<Any>()
     var signUpFailed = MutableLiveData<String>()
+    var retriveImage = MutableLiveData<Uri>()
     var loginFailed = MutableLiveData<String>()
     var loginSuccess = SingleLiveEvent<Any>()
     var userData = MutableLiveData<User?>()
@@ -102,6 +102,7 @@ class UserRepository(
                     val user = task.result?.getValue(User::class.java)
                     userData.postValue(user!!)
                     userpref.name = user.name
+                    userpref.email=user.email
                 } else {
                     Log.d(TAG, "getUser:Failed", task.exception)
 

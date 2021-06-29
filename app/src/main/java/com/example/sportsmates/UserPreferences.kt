@@ -15,6 +15,13 @@ class UserPreferences(context: Context) {
                 putString(USER_NAME, value)
             }
         }
+    var email: String?
+        get() = userPreference.getString(USER_EMAIL, null)
+        set(value) {
+            userPreference.edit {
+                putString(USER_EMAIL, value)
+            }
+        }
 
     var image: String?
         get() = userPreference.getString(USER_IMAGE, null)
@@ -32,6 +39,7 @@ class UserPreferences(context: Context) {
             }
         }
 
+
     fun clear() {
         userPreference.edit().clear().apply()
     }
@@ -44,5 +52,6 @@ class UserPreferences(context: Context) {
         private const val USER_NAME: String = "USER_NAME"
         private const val USER_IMAGE: String = "USER_IMAGE"
         private const val USER_CITY: String = "CURRENT_USER_FIRST_NAME"
+        private const val USER_EMAIL: String = "USER_EMAIL"
     }
 }

@@ -14,7 +14,7 @@ import com.example.sportsmates.ext.displayWarningToast
 import com.example.sportsmates.ext.withTransitionAnimation
 import com.example.sportsmates.ext.stopShimmer
 import com.example.sportsmates.signUp.data.model.User
-import com.example.sportsmates.signUp.data.model.toMessageModel
+import com.example.sportsmates.signUp.data.model.toMessageUiModel
 import com.example.sportsmates.utils.TargetActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -76,7 +76,7 @@ class ContactsFragment : Fragment() {
         if (targetActivity == TargetActivity.CONTACTS_DETAILS) {
             ContactsDetails.start(activity, user, withTransitionAnimation(targetImage))
         } else {
-            MessagesActivity.start(activity, user.toMessageModel(), withTransitionAnimation(targetImage))
+            MessagesActivity.start(activity, user.toMessageUiModel(), withTransitionAnimation(targetImage))
         }
 
     }
