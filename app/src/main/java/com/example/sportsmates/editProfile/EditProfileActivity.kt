@@ -64,8 +64,8 @@ class EditProfileActivity : AppCompatActivity() {
         viewModel.userImage.observe(this, Observer {
             setImage(it)
         })
-        viewModel.uploadImageSuccess.observe(this, Observer {
-            displaySuccessToast(getString(R.string.success_toast_title),it)
+        viewModel.uploadImageSuccess.observe(this, Observer {msg->
+            displaySuccessToast(getString(R.string.success_toast_title),msg)
             stopShimmer(binding.shimmerViewContainer)
         })
         viewModel.uploadImageFailed.observe(this, Observer {
@@ -80,7 +80,6 @@ class EditProfileActivity : AppCompatActivity() {
             .circleCrop()
             .into(binding.uploadedPic)
     }
-
     private fun bindUserData(userData: User?) {
         binding.nameTextField.setText(userData!!.name, TextView.BufferType.EDITABLE)
         binding.mailTextField.setText(userData.email, TextView.BufferType.EDITABLE)

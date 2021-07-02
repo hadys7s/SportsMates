@@ -14,7 +14,7 @@ import com.example.sportsmates.ext.stopShimmer
 import com.example.sportsmates.home.news.presentation.activity.NewsDetailsActivity
 import com.example.sportsmates.home.news.presentation.adapter.SmallNewsAdapter
 import com.example.sportsmates.home.news.presentation.adapter.TallNewsAdapter
-import com.example.sportsmates.home.news.presentation.model.NewsItemUIModel
+import com.example.sportsmates.home.news.presentation.uiModel.NewsItemUIModel
 import com.example.sportsmates.home.news.presentation.viewmodel.NewsViewModel
 import com.example.sportsmates.networking.Status
 import org.koin.android.viewmodel.ext.android.viewModel

@@ -115,7 +115,6 @@ class MainActivity : AppCompatActivity() {
     private fun openChatBotConnection() {
         val user = KMUser()
         user.userId = getCurrentUserID()
-
         KmConversationBuilder(this)
             .setKmUser(user)
             .launchConversation(object : KmCallback {
