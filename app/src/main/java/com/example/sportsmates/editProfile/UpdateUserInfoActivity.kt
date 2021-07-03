@@ -19,7 +19,6 @@ import com.example.sportsmates.coach.CoachDetailsActivity
 import com.example.sportsmates.coach.CoachUiModel
 import com.example.sportsmates.databinding.ActivityUpdateUserInfoBinding
 import com.example.sportsmates.ext.*
-import com.example.sportsmates.utils.Constants.USER
 import com.example.sportsmates.utils.Constants._BIO
 import com.example.sportsmates.utils.Constants._MAIL
 import com.example.sportsmates.utils.Constants._NAME

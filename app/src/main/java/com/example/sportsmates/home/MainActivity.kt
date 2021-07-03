@@ -52,8 +52,7 @@ class MainActivity : AppCompatActivity() {
         addfragment(HomeFragment.newInstance())
         bottomNavigationController()
         binding.chatBot.setOnClickListener {
-            val intent=Intent(this,ChatBotActivity::class.java)
-            startActivity(intent)
+            openChatBotConnection()
         }
     }
 
@@ -115,7 +114,6 @@ class MainActivity : AppCompatActivity() {
     private fun openChatBotConnection() {
         val user = KMUser()
         user.userId = getCurrentUserID()
-
         KmConversationBuilder(this)
             .setKmUser(user)
             .launchConversation(object : KmCallback {

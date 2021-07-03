@@ -1,4 +1,4 @@
-package com.example.sportsmates.home.news.presentation.model
+package com.example.sportsmates.home.news.presentation.uiModel
 
 import android.os.Parcel
 import android.os.Parcelable

@@ -139,6 +139,7 @@ class BookingActivity : AppCompatActivity() {
                 viewModel.sendEmailToCouch(couch.email!!, time,binding.edDate2.text.toString())
             }
             else -> {
+
             }
         }
 

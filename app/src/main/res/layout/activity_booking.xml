@@ -53,9 +53,9 @@
         android:id="@+id/master_card_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginStart="@dimen/dimen_32"
         android:layout_marginTop="@dimen/dimen_8"
+        android:layout_marginBottom="@dimen/dimen_8"
         android:fontFamily="@font/roboto_regular"
         android:text="Master card"
         android:textColor="@color/black"
@@ -74,7 +74,7 @@
         app:boxStrokeColor="@color/main_green"
         app:hintTextColor="@color/main_green"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/ed_date"
         app:layout_constraintTop_toBottomOf="@+id/master_card_tv"
         app:startIconDrawable="@drawable/ic_baseline_payment_24"
         app:startIconTint="@color/main_green">
@@ -82,92 +82,87 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_12"
             android:background="@drawable/edit_text_background"
             android:hint="xxxx xxxx xxxx xxxx"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/card_expierd_tv"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:fontFamily="@font/roboto_regular"
+        android:text="Card Expired "
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/card_expierd"
+        app:layout_constraintEnd_toEndOf="@+id/card_expierd"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/card_expierd"
+        app:layout_constraintTop_toBottomOf="@id/ed_master_card" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/card_expierd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="@dimen/dimen_8"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ed_master_card">
+        android:layout_marginEnd="21dp"
+        app:boxStrokeColor="@color/main_green"
+        app:hintTextColor="@color/main_green"
+        app:layout_constraintEnd_toStartOf="@+id/cvv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_expierd_tv">
 
-        <TextView
-            android:id="@+id/card_expierd_tv"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/dimen_32"
-            android:layout_marginTop="@dimen/dimen_8"
-            android:fontFamily="@font/roboto_regular"
-            android:text="Card Expired "
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/card_expierd"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="@id/container" />
+            android:background="@drawable/edit_text_background"
+            android:hint="MM/YY"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/card_expierd"
-            android:layout_width="156dp"
+    <TextView
+        android:id="@+id/cvv_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="CVV"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/cvv"
+        app:layout_constraintEnd_toEndOf="@+id/cvv"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/cvv"
+        app:layout_constraintTop_toBottomOf="@+id/ed_master_card"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/cvv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        app:boxStrokeColor="@color/main_green"
+        app:hintTextColor="@color/main_green"
+        app:layout_constraintBottom_toTopOf="@+id/confirm_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/card_expierd"
+        app:layout_constraintTop_toBottomOf="@id/ed_master_card"
+        app:layout_constraintTop_toTopOf="@id/card_expierd"
+        app:layout_constraintVertical_bias="0.0">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="@dimen/dimen_8"
-            android:layout_marginEnd="21dp"
-            app:boxStrokeColor="@color/main_green"
-            app:hintTextColor="@color/main_green"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/cvv"
-            app:layout_constraintTop_toBottomOf="@id/card_expierd_tv">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edit_text_background"
-                android:inputType="text"
-                android:hint="MM/YY" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/cvv_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/dimen_8"
-            android:fontFamily="@font/roboto_regular"
-            android:text="CVV"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/cvv"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="@id/cvv"
-            app:layout_constraintTop_toBottomOf="@id/container" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/cvv"
-            android:layout_width="156dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_8"
-            android:layout_marginEnd="32dp"
-            app:boxStrokeColor="@color/main_green"
-            app:hintTextColor="@color/main_green"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cvv_tv">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edit_text_background"
-                android:inputType="text"
-                android:hint="xxx" />
-        </com.google.android.material.textfield.TextInputLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:background="@drawable/edit_text_background"
+            android:hint="xxx"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/date_tv"
@@ -182,8 +177,8 @@
         android:textColor="@color/black"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="@id/ed_date"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/groub_container" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -193,9 +188,9 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="@dimen/dimen_8"
         android:layout_marginEnd="32dp"
+        android:hint="Tap to Select Date"
         app:boxStrokeColor="@color/main_green"
         app:hintTextColor="@color/main_green"
-        android:hint="Tap to Select Date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date_tv">
@@ -204,10 +199,11 @@
             android:id="@+id/ed_date2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusable="false"
             android:background="@drawable/edit_text_background"
+            android:focusable="false"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
+
     <TextView
         android:id="@+id/time_tv"
         android:layout_width="wrap_content"
@@ -225,19 +221,22 @@
 
     <LinearLayout
         android:id="@+id/groub_container"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@id/guideline5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/time_tv">
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/time_group"
             android:layout_width="wrap_content"
-            app:selectionRequired="true"
             android:layout_height="wrap_content"
-            app:lineSpacing="2dp">
+            app:lineSpacing="2dp"
+            app:selectionRequired="true">
+
             <com.google.android.material.chip.Chip
                 android:id="@+id/first"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
@@ -248,6 +247,7 @@
                 android:textStyle="bold"
 
                 />
+
             <com.google.android.material.chip.Chip
                 android:id="@+id/second"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
@@ -297,14 +297,14 @@
                 android:textStyle="bold" />
         </com.google.android.material.chip.ChipGroup>
     </LinearLayout>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/confirm_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="@dimen/dimen_64"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="@dimen/dimen_64"
         android:backgroundTint="@color/main_green"
         android:padding="16dp"
         android:text="Confirm Booking"
@@ -312,7 +312,14 @@
         app:cornerRadius="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/container"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/card_expierd"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.93" />
 </androidx.constraintlayout.widget.ConstraintLayout>
