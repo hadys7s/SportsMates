@@ -52,8 +52,7 @@ class MainActivity : AppCompatActivity() {
         addfragment(HomeFragment.newInstance())
         bottomNavigationController()
         binding.chatBot.setOnClickListener {
-            val intent=Intent(this,ChatBotActivity::class.java)
-            startActivity(intent)
+            openChatBotConnection()
         }
     }
 
