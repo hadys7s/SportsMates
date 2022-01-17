@@ -11,7 +11,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
@@ -23,7 +25,8 @@ class EventViewModel : ViewModel() {
     init {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val events = getRelatedEvents(getUserSportsList())
+                val listOfSports: Deferred<List<String>?> = async { getUserSportsList() }
+                val events = getRelatedEvents(listOfSports.await())
                 if (!events.isNullOrEmpty()) {
                     events.forEach { event ->
                         event.img = reteriveUserPhoto(event.eventId)
@@ -36,13 +39,12 @@ class EventViewModel : ViewModel() {
     }
 
     private suspend fun getRelatedEvents(
-        listOfSports: MutableList<String>?
+        listOfSports: List<String>?
     ): List<Event>? {
         FirebaseDatabase.getInstance().getReference("Event").get().addOnSuccessListener { data ->
-            val children = data.children
-            children.forEach { it ->
-                var event: Event? = it.getValue(Event::class.java)
-                //  listOfSCoaches = listOfSports?.filter { it in coach?.sportName!! }
+            val events = data.children
+            events.forEach { it ->
+                val event: Event? = it.getValue(Event::class.java)
                 if (listOfSports!!.contains(event?.sport)) {
                     listOfEvents?.add(event!!)
                 }
@@ -58,16 +60,15 @@ class EventViewModel : ViewModel() {
         return listOfEvents
     }
 
-    private suspend fun getUserSportsList(): MutableList<String>? {
-        var listOfSports: MutableList<String>? = mutableListOf()
+    private suspend fun getUserSportsList(): List<String>? {
+        var listOfSports: List<String>? = listOf()
         FirebaseDatabase.getInstance().getReference("Users")
             .child(Firebase.auth.currentUser.uid)
             .get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(ContentValues.TAG, "getUser:Success")
                     val user: User? = task.result?.getValue(User::class.java)
-                    listOfSports = user?.sportsList?.toMutableList()
-
+                    listOfSports = user?.sportsList
                 } else {
                     Log.d(ContentValues.TAG, "getUser:Failed", task.exception)
                 }

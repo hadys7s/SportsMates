@@ -11,15 +11,16 @@ import kotlinx.coroutines.Dispatchers
 class ChatBotViewModel(private val nutroRepository: NutroRepository) : ViewModel() {
 
     fun getNutroInfo(food: String) = liveData(Dispatchers.IO) {
-        emit(Resource.loading(data = null))
+
+        emit(Resource.Loading)
         try {
             emit(
-                Resource.success(
+                Resource.Success(
                     data = nutroRepository.getNutroInfo(food).foods.map { it.toUiModel() }
                 )
             )
         } catch (exception: Exception) {
-            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
+            emit(Resource.Error(exception))
         }
     }
 

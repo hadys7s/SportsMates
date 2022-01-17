@@ -4,12 +4,9 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.lifecycle.Observer
 import com.example.sportsmates.R
@@ -101,6 +98,7 @@ class BookingActivity : AppCompatActivity() {
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, _month)
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            calendar.set(Calendar.AM_PM, dayOfMonth)
             binding.edDate2.setText("$dayOfMonth/ $_month / $year ")
         }
         DatePickerDialog(
@@ -127,7 +125,6 @@ class BookingActivity : AppCompatActivity() {
     private fun sendEmailWithArguments() {
         val couch: CoachUiModel? = intent.getParcelableExtra((COUCH_ITEM))
         val place: PlaceUiModel? = intent.getParcelableExtra((PLACE_ITEM))
-        val event: Event? = intent.getParcelableExtra((EVENT_ITEM))
         val time = getSelectedTime()?.joinToString("")
         when {
             place != null -> {
@@ -144,12 +141,12 @@ class BookingActivity : AppCompatActivity() {
 
     }
 
-    fun attachOnCLickListener() {
+    private fun attachOnCLickListener() {
         binding.confirmBtn.setOnClickListener {
             if (validateAllFields()) {
                 if (validateSelectOnlyOneTime()) {
-                    sendEmailWithArguments()
                     showLoading()
+                    sendEmailWithArguments()
                 }
             } else {
                 displayErrorToast("Error", "Your Master Card Number Or Cvv is Wrong Ty Again !")
@@ -163,7 +160,7 @@ class BookingActivity : AppCompatActivity() {
         }
     }
 
-    fun attachObservers() {
+   private fun attachObservers() {
         viewModel.sendingMessageSuccess.observe(this, Observer {
             displaySuccessToast("Success", it)
             hideLoading()

@@ -22,6 +22,6 @@ class SportsMatesApp : Application() {
     }
 
     companion object {
-        const val APP_ID = "2dfecefa88cf709d50e8e1341efb528d1"
+        const val APP_ID = "2d04cbdbfe8a9a6659cd604efd5c5a3fe"
     }
 }

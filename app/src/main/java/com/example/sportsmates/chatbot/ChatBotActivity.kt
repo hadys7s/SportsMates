@@ -9,7 +9,7 @@ import com.example.sportsmates.chat.adapters.ChatAdapter
 import com.example.sportsmates.chatbot.model.FoodItemUIModel
 import com.example.sportsmates.databinding.ActivityMessagesBinding
 import com.example.sportsmates.ext.changeStatusBarColor
-import com.example.sportsmates.networking.Status
+import com.example.sportsmates.networking.Resource
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class ChatBotActivity : AppCompatActivity() {
@@ -67,20 +67,17 @@ class ChatBotActivity : AppCompatActivity() {
     }
 
     private fun sendQuery(query: String) {
-        viewModel.getNutroInfo(query).observe(this, Observer {
-            it?.let { resource ->
-                when (resource.status) {
-                    Status.SUCCESS -> {
-                        resource.data?.let { nutro ->
-                            setMessage(mapToUiModel(nutro)[0], nutro[0].image)
-                        }
-                    }
-                    Status.ERROR -> {
-                        setMessage("Sorry I couldn't recognize the food")
-                    }
-                    Status.LOADING -> {
+        viewModel.getNutroInfo(query).observe(this, Observer { nutroInfo ->
+            when (nutroInfo) {
+                is Resource.Success -> {
+                    setMessage(mapToUiModel(nutroInfo.data)[0], nutroInfo.data[0].image)
 
-                    }
+                }
+                is Resource.Error -> {
+                    setMessage(nutroInfo.exception.message.toString())
+                }
+                is Resource.Loading -> {
+
                 }
             }
         })

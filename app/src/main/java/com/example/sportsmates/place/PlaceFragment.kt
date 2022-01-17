@@ -21,7 +21,7 @@ class PlaceFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentPlaceBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -34,10 +34,9 @@ class PlaceFragment : Fragment() {
     }
 
     private fun attachObservers() {
-        viewModel._listOfSPlacesEvent.observe(this, Observer {
+        viewModel.listOfSPlacesEvent.observe(this, Observer {
             stopShimmer(binding.shimmerViewContainer)
             setPlaces(it)
-
         })
     }
 
@@ -49,7 +48,7 @@ class PlaceFragment : Fragment() {
     }
 
 
-    private fun setPlaces(placesList: List<Place>?) {
+    private fun setPlaces(placesList: List<Place?>) {
         placeAdapter = PlaceAdapter(placesList, activity)
         binding.placesList.adapter = placeAdapter
         placeAdapter.onItemClick = {
