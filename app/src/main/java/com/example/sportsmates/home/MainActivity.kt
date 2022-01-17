@@ -10,12 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.sportsmates.R
 import com.example.sportsmates.chat.ChatActivity
-import com.example.sportsmates.chatbot.ChatBotActivity
 import com.example.sportsmates.coach.CoachFragment
 import com.example.sportsmates.databinding.ActivityMainBinding
 import com.example.sportsmates.discover.ContactsFragment
 import com.example.sportsmates.ext.getCurrentUserID
-import com.example.sportsmates.ext.openTopActivity
 import com.example.sportsmates.ext.replaceFragment
 import com.example.sportsmates.place.PlaceFragment
 import com.example.sportsmates.profile.ProfileFragment
@@ -49,13 +47,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
         addfragment(HomeFragment.newInstance())
         bottomNavigationController()
         binding.chatBot.setOnClickListener {
             openChatBotConnection()
         }
     }
-
 
     private fun bottomNavigationController() {
         binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
@@ -102,10 +100,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 else -> false
             }
-        }
-
-        binding.bottomNavigation.setOnNavigationItemReselectedListener() {
-
         }
 
 

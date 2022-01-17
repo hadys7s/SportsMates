@@ -9,14 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sportsmates.databinding.NewsFragmentBinding
-import com.example.sportsmates.ext.withTransitionAnimation
 import com.example.sportsmates.ext.stopShimmer
+import com.example.sportsmates.ext.withTransitionAnimation
 import com.example.sportsmates.home.news.presentation.activity.NewsDetailsActivity
 import com.example.sportsmates.home.news.presentation.adapter.SmallNewsAdapter
 import com.example.sportsmates.home.news.presentation.adapter.TallNewsAdapter
 import com.example.sportsmates.home.news.presentation.uiModel.NewsItemUIModel
 import com.example.sportsmates.home.news.presentation.viewmodel.NewsViewModel
-import com.example.sportsmates.networking.Status
+import com.example.sportsmates.networking.Resource
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class NewsFragment : Fragment() {
@@ -29,7 +29,7 @@ class NewsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = NewsFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -41,37 +41,33 @@ class NewsFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModel.getTrendingNews().observe(this, Observer {
-            it?.let { resource ->
-                when (resource.status) {
-                    Status.SUCCESS -> {
-                        stopShimmer(binding.shimmerTrendingLayout)
-                        resource.data?.let { news -> setTrendingNews(news) }
-                    }
-                    Status.ERROR -> {
-                        Log.v("News", it.message.toString())
-                    }
-                    Status.LOADING -> {
+        viewModel.getTrendingNews().observe(this, Observer { news ->
+            when (news) {
+                is Resource.Success -> {
+                    stopShimmer(binding.shimmerTrendingLayout)
+                    setTrendingNews(news.data)
+                }
+                is Resource.Error -> {
+                    Log.v("News", news.exception.message.toString())
+                }
+                is Resource.Loading -> {
 
-                    }
                 }
             }
         })
 
 
-        viewModel.getRecommendedNews().observe(this, Observer {
-            it?.let { resource ->
-                when (resource.status) {
-                    Status.SUCCESS -> {
-                        stopShimmer(binding.shimmerForYouLayout)
-                        resource.data?.let { news -> setForYouNews(news) }
-                    }
-                    Status.ERROR -> {
-                        Log.v("News", it.message.toString())
-                    }
-                    Status.LOADING -> {
+        viewModel.getRecommendedNews().observe(this, Observer { news ->
+            when (news) {
+                is Resource.Success -> {
+                    stopShimmer(binding.shimmerForYouLayout)
+                    setForYouNews(news.data)
+                }
+                is Resource.Error -> {
+                    Log.v("News", news.exception.message.toString())
+                }
+                is Resource.Loading -> {
 
-                    }
                 }
             }
         })

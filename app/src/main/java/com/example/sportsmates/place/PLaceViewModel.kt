@@ -12,49 +12,50 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-class PLaceViewModel() : ViewModel() {
+class PLaceViewModel : ViewModel() {
 
-    private var listOfSPlaces: MutableList<Place>? = mutableListOf()
-    val _listOfSPlacesEvent = MutableLiveData<List<Place>?>()
-    var _listOfPlacesImagesEvent = MutableLiveData<MutableList<StorageReference>?>()
+    private val _listOfSPlacesEvent = MutableLiveData<List<Place?>>()
+    val listOfSPlacesEvent: MutableLiveData<List<Place?>> get() = _listOfSPlacesEvent
+
+    private val _listOfPlacesImagesEvent = MutableLiveData<MutableList<StorageReference>>()
+    val listOfPlacesImagesEvent: MutableLiveData<MutableList<StorageReference>> get() = _listOfPlacesImagesEvent
 
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
             val places = getRelatedCoaches()
-            places?.forEach { place ->
-                place.imageList = retrievePhoto(place.placeId)
+            places.forEach { place ->
+                place?.imageList = retrievePhoto(place?.placeId)
             }
             _listOfSPlacesEvent.postValue(places)
         }
     }
 
 
-    private suspend fun getRelatedCoaches(): List<Place>? {
+    private suspend fun getRelatedCoaches(): List<Place?> {
+        val listOfSPlaces: MutableList<Place?> = mutableListOf()
         FirebaseDatabase.getInstance().getReference("Place").get().addOnSuccessListener { data ->
             val children = data.children
             children.forEach { it ->
-                var place: Place? = it.getValue(Place::class.java)
-                    listOfSPlaces?.add(place!!)
+                val place: Place? = it.getValue(Place::class.java)
+                listOfSPlaces.add(place)
             }
-
-
         }.await()
         return listOfSPlaces
     }
 
     suspend fun retrievePhoto(placeId: String?): MutableList<StorageReference>? {
-        var _listOfPlacesimages: MutableList<StorageReference>? = mutableListOf()
+        var listOfPlacesImages: MutableList<StorageReference>? = mutableListOf()
 
         val listReference =
             FirebaseStorage.getInstance().reference.child("/place/$placeId")
 
         listReference.listAll().addOnSuccessListener { listResult ->
             Log.d(ContentValues.TAG, listResult.items.toString())
-            _listOfPlacesimages = listResult.items
+            listOfPlacesImages = listResult.items
         }.await()
 
-        return _listOfPlacesimages
+        return listOfPlacesImages
 
 
     }

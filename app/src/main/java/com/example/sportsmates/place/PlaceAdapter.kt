@@ -7,7 +7,7 @@ import com.example.sportsmates.coach.GlideApp
 import com.example.sportsmates.databinding.CoachListItemBinding
 import com.example.sportsmates.ext.inflater
 
-class PlaceAdapter(private val placeList: List<Place>?, private val context: FragmentActivity?) :
+class PlaceAdapter(private val placeList: List<Place?>?, private val context: FragmentActivity?) :
     RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
     var onItemClick: ((Place) -> Unit)? = null
 

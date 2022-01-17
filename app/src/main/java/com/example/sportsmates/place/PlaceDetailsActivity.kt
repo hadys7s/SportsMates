@@ -30,8 +30,6 @@ class PlaceDetailsActivity : AppCompatActivity() {
         attachCLickListeners()
         fetchArguments()
         observeCoachImages()
-
-
     }
 
     private fun observeCoachImages(coachId: String?) {
@@ -62,7 +60,7 @@ class PlaceDetailsActivity : AppCompatActivity() {
     }
 
     private fun observeCoachImages() {
-        viewModel._listOfPlacesImagesEvent.observe(this, Observer { imageList ->
+        viewModel.listOfPlacesImagesEvent.observe(this, Observer { imageList ->
             sliderAdapter.renewItems(imageList)
         })
     }
@@ -77,7 +75,7 @@ class PlaceDetailsActivity : AppCompatActivity() {
     }
     private fun startBookingActivity(){
         val place: PlaceUiModel? = intent.getParcelableExtra((PLACE_ITEM))
-        BookingActivity.start(this,placeItem =place )
+        BookingActivity.start(this,placeItem = place )
     }
 
     companion object {

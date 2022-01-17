@@ -1,10 +1,10 @@
 package com.example.sportsmates.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.FragmentHomeBinding
 import com.example.sportsmates.home.events.EventFragment
