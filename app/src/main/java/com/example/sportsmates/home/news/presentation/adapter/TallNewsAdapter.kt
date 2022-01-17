@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.sportsmates.databinding.NewsTallItemBinding
 import com.example.sportsmates.ext.inflater
-import com.example.sportsmates.home.news.presentation.model.NewsItemUIModel
+import com.example.sportsmates.home.news.presentation.uiModel.NewsItemUIModel
 
 class TallNewsAdapter(
     private val newsList: List<NewsItemUIModel>?,

@@ -1,7 +1,7 @@
 package com.example.sportsmates.home.news.data.model
 
 import com.example.sportsmates.ext.convertToAgoFormat
-import com.example.sportsmates.home.news.presentation.model.NewsItemUIModel
+import com.example.sportsmates.home.news.presentation.uiModel.NewsItemUIModel
 import com.google.gson.annotations.SerializedName
 
 data class NewsItem(

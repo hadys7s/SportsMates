@@ -29,9 +29,7 @@ class CoachViewModel() : ViewModel() {
                 coach.imageList = retrievePhoto(coach.coachId)
             }
             _listOfSCoachesEvent.postValue(coaches)
-
         }
-
     }
 
 
@@ -47,8 +45,6 @@ class CoachViewModel() : ViewModel() {
                     listOfSCoaches?.add(coach!!)
                 }
             }
-
-
         }.await()
         return listOfSCoaches
     }

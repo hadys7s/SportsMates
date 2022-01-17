@@ -15,12 +15,8 @@ import com.bumptech.glide.Glide
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.ActivityEditProfile2Binding
 import com.example.sportsmates.ext.*
-import com.example.sportsmates.home.MainActivity
 import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.signUp.fragments.SignUpEmailFragment
-import com.example.sportsmates.utils.Constants.EDIT
-import com.example.sportsmates.utils.Constants.HINT
-import com.example.sportsmates.utils.Constants.USER
 import com.example.sportsmates.utils.InfoType
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -64,8 +60,8 @@ class EditProfileActivity : AppCompatActivity() {
         viewModel.userImage.observe(this, Observer {
             setImage(it)
         })
-        viewModel.uploadImageSuccess.observe(this, Observer {
-            displaySuccessToast(getString(R.string.success_toast_title),it)
+        viewModel.uploadImageSuccess.observe(this, Observer {msg->
+            displaySuccessToast(getString(R.string.success_toast_title),msg)
             stopShimmer(binding.shimmerViewContainer)
         })
         viewModel.uploadImageFailed.observe(this, Observer {
@@ -80,7 +76,6 @@ class EditProfileActivity : AppCompatActivity() {
             .circleCrop()
             .into(binding.uploadedPic)
     }
-
     private fun bindUserData(userData: User?) {
         binding.nameTextField.setText(userData!!.name, TextView.BufferType.EDITABLE)
         binding.mailTextField.setText(userData.email, TextView.BufferType.EDITABLE)

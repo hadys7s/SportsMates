@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.sportsmates.databinding.SmallNewsItemBinding
 import com.example.sportsmates.ext.inflater
-import com.example.sportsmates.home.news.presentation.model.NewsItemUIModel
+import com.example.sportsmates.home.news.presentation.uiModel.NewsItemUIModel
 
 class SmallNewsAdapter(
     private val newsList: List<NewsItemUIModel>?,

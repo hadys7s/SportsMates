@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.sportsmates.databinding.ActivityNewsDetailsBinding
 import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
-import com.example.sportsmates.home.news.presentation.model.NewsItemUIModel
+import com.example.sportsmates.home.news.presentation.uiModel.NewsItemUIModel
 
 class NewsDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewsDetailsBinding
