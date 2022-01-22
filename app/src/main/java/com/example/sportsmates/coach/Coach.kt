@@ -1,7 +1,6 @@
 package com.example.sportsmates.coach
 
 import com.google.firebase.storage.StorageReference
-import java.io.Serializable
 
 data class Coach(
     val name: String? = "",
@@ -12,8 +11,7 @@ data class Coach(
     val pricePerHour: String? = "",
     val address: String? = "",
     var imageList: List<StorageReference>? = listOf()
-
-) : Serializable
+)
 
 fun Coach.toUiModel(): CoachUiModel {
     return CoachUiModel(

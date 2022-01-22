@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.sportsmates.home.news.data.model.toUiModel
 import com.example.sportsmates.home.news.data.repository.NewsRepository
-import com.example.sportsmates.home.news.presentation.model.NewsItemUIModel
+import com.example.sportsmates.home.news.presentation.uiModel.NewsItemUIModel
 import com.example.sportsmates.networking.Resource
 import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.signUp.data.repo.UserRepository

@@ -22,7 +22,7 @@ class CoachFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = CoachFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -34,7 +34,7 @@ class CoachFragment : Fragment() {
     }
 
     private fun attachObservers() {
-        viewModel._listOfSCoachesEvent.observe(this, Observer {
+        viewModel.listOfSCoachesEvent.observe(this, Observer {
             stopShimmer(binding.shimmerViewContainer)
             setCoaches(it)
         })

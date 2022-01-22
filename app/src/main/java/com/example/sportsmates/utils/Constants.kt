@@ -8,24 +8,25 @@ object Constants {
     const val NUTRO_APP_ID_KEY_NAME: String = "x-app-id"
     const val NUTRO_APP_ID_KEY_VALUE: String = "73c21e2a"
     const val NEWS_BASE_URL = "https://newsapi.org/v2/"
-     const val NUTRO_BASE_URL = "https://trackapi.nutritionix.com/v2/"
+    const val NUTRO_BASE_URL = "https://trackapi.nutritionix.com/v2/"
     const val MESSAGE_TYPE_LEFT = 0
     const val MESSAGE_TYPE_RIGHT = 1
-    const val _NAME="Name"
-    const val _SPORT="Sports"
-    const val _CITY="City"
-    const val _MAIL="Mail"
-    const val _BIO="Bio"
-    const val _PASSWORD="Password"
-    const val APP_EMAIL="sportsmates02@gmail.com"
-    const val APP_PASSWORD="sportsmates111222"
+    const val _NAME = "Name"
+    const val _SPORT = "Sports"
+    const val _CITY = "City"
+    const val _MAIL = "Mail"
+    const val _BIO = "Bio"
+    const val _PASSWORD = "Password"
+    const val APP_EMAIL = "sportsmates02@gmail.com"
+    const val APP_PASSWORD = "sportsmates111222"
 }
 
 enum class TargetActivity {
     CONTACTS_DETAILS,
     MESSAGE_ACTIVITY
 }
-enum class InfoType{
+
+enum class InfoType {
     SPORTS,
     CITY,
     NAME,

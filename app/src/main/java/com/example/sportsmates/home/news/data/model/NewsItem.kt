@@ -20,7 +20,7 @@ fun NewsItem.toUiModel(): NewsItemUIModel {
         website = source?.name.orEmpty(),
         title = this.title.orEmpty(),
         imageUrl = this.urlToImage.orEmpty(),
-        content = this.description.orEmpty(),
+        content = this.content.orEmpty(),
         publishedAt = "." + this.publishedAt?.convertToAgoFormat().toString()
     )
 }

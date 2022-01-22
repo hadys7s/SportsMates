@@ -1,7 +1,6 @@
 package com.example.sportsmates.place
 
 import com.google.firebase.storage.StorageReference
-import java.io.Serializable
 
 data class Place(
     val name: String? = "",
@@ -14,8 +13,7 @@ data class Place(
     val address: String? = "",
     val placeType: String? = "",
     var imageList: List<StorageReference>? = listOf()
-
-) : Serializable
+)
 
 fun Place.toUiModel(): PlaceUiModel {
     return PlaceUiModel(

@@ -2,8 +2,6 @@ package com.example.sportsmates.editProfile
 
 import android.app.Activity
 import android.content.Intent
-import com.example.sportsmates.editProfile.EditProfileActivity
-import com.example.sportsmates.editProfile.EditProfileViewModel
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -12,11 +10,8 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import androidx.core.view.children
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import com.example.sportsmates.R
-import com.example.sportsmates.coach.CoachDetailsActivity
-import com.example.sportsmates.coach.CoachUiModel
 import com.example.sportsmates.databinding.ActivityUpdateUserInfoBinding
 import com.example.sportsmates.ext.*
 import com.example.sportsmates.utils.Constants._BIO
@@ -26,7 +21,6 @@ import com.example.sportsmates.utils.Constants._PASSWORD
 import com.example.sportsmates.utils.InfoType
 import com.example.sportsmates.utils.InfoType.*
 import com.google.android.material.chip.Chip
-import org.koin.android.ext.android.get
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class UpdateUserInfoActivity : AppCompatActivity() {

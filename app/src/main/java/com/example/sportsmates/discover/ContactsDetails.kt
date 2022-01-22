@@ -14,7 +14,6 @@ import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
 import com.example.sportsmates.ext.withTransitionAnimation
 import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.signUp.data.model.toMessageUiModel
-import com.example.sportsmates.utils.TargetActivity
 
 class ContactsDetails : AppCompatActivity() {
     private lateinit var binding: ActivityContactsDetailBinding
