@@ -24,9 +24,11 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 
 class BookingActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityBookingBinding
     private val viewModel: BookingViewModel by viewModel()
     private lateinit var dialog: AlertDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBookingBinding.inflate(layoutInflater)
@@ -60,11 +62,11 @@ class BookingActivity : AppCompatActivity() {
     }
 
     private fun validateAllFields(): Boolean {
-        return validateUserInfoFiledisEmpty(binding.edDate) &&validateUserInfoFiledisEmpty(binding.edMasterCard) && validateUserInfoFiledisEmpty(
+        return validateUserInfoFiledisEmpty(binding.edDate) && validateUserInfoFiledisEmpty(binding.edMasterCard) && validateUserInfoFiledisEmpty(
             binding.cardExpierd
         ) && validateUserInfoFiledisEmpty(
             binding.cvv
-        )&& validateMasterCardNumberIsCorrect() &&
+        ) && validateMasterCardNumberIsCorrect() &&
                 validateCvvIsCorecct()
     }
 
@@ -109,6 +111,7 @@ class BookingActivity : AppCompatActivity() {
             calendar.get(Calendar.DAY_OF_MONTH)
         ).show()
     }
+
     private fun showLoading() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         val inflater: LayoutInflater = layoutInflater
@@ -118,6 +121,7 @@ class BookingActivity : AppCompatActivity() {
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
     }
+
     private fun hideLoading() {
         dialog.dismiss()
     }
@@ -128,12 +132,12 @@ class BookingActivity : AppCompatActivity() {
         val time = getSelectedTime()?.joinToString("")
         when {
             place != null -> {
-                viewModel.sendEmailToUser(place.name!!, time!!,binding.edDate2.text.toString())
-                viewModel.sendEmailToPlace(place.email!!, time,binding.edDate2.text.toString())
+                viewModel.sendEmailToUser(place.name!!, time!!, binding.edDate2.text.toString())
+                viewModel.sendEmailToPlace(place.email!!, time, binding.edDate2.text.toString())
             }
             couch != null -> {
-                viewModel.sendEmailToUser(couch.name!!, time!!,binding.edDate2.text.toString())
-                viewModel.sendEmailToCouch(couch.email!!, time,binding.edDate2.text.toString())
+                viewModel.sendEmailToUser(couch.name!!, time!!, binding.edDate2.text.toString())
+                viewModel.sendEmailToCouch(couch.email!!, time, binding.edDate2.text.toString())
             }
             else -> {
 
@@ -161,7 +165,7 @@ class BookingActivity : AppCompatActivity() {
         }
     }
 
-   private fun attachObservers() {
+    private fun attachObservers() {
         viewModel.sendingMessageSuccess.observe(this, Observer {
             displaySuccessToast("Success", it)
             hideLoading()

@@ -60,7 +60,7 @@ class CoachDetailsActivity : AppCompatActivity() {
     }
 
     private fun observeCoachImages() {
-        viewModel._listOfSCoachesimagesEvent.observe(this, Observer { imageList ->
+        viewModel.listOfSCoachesImagesEvent.observe(this, Observer { imageList ->
             sliderAdapter.renewItems(imageList)
         })
     }
