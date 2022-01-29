@@ -24,12 +24,15 @@ import www.sanju.motiontoast.MotionToast
 fun AppCompatActivity.replaceFragment(
     fragment: Fragment,
     tag: String? = null,
+    state: Bundle? = null,
     @IdRes containerViewId: Int
 ) {
-    this.supportFragmentManager
-        .beginTransaction()
-        .replace(containerViewId, fragment, tag)
-        .commit()
+    if (state == null) {
+        this.supportFragmentManager
+            .beginTransaction()
+            .replace(containerViewId, fragment, tag)
+            .commit()
+    }
 }
 
 fun AppCompatActivity.openTopActivity(
