@@ -1,4 +1,4 @@
-package com.example.sportsmates.home.news.presentation.adapter
+package com.example.sportsmates.home.presentation.adapter
 
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -7,20 +7,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.sportsmates.databinding.SmallNewsItemBinding
 import com.example.sportsmates.ext.inflater
-import com.example.sportsmates.home.news.presentation.uiModel.NewsItemUIModel
+import com.example.sportsmates.home.domain.entities.NewsItem
 
 class SmallNewsAdapter(
-    private val newsList: List<NewsItemUIModel>?,
+    private val newsList: List<NewsItem>?,
     private val context: FragmentActivity?
 ) :
     RecyclerView.Adapter<SmallNewsAdapter.ViewHolder>() {
-    var onItemClick: ((NewsItemUIModel,ImageView) -> Unit)? = null
+    var onItemClick: ((NewsItem, ImageView) -> Unit)? = null
 
 
     inner class ViewHolder(private val binding: SmallNewsItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(newsItem: NewsItemUIModel) {
+        fun bind(newsItem: NewsItem) {
             binding.newTitle.text = newsItem.title
             Glide.with(context!!)
                 .load(newsItem.imageUrl)

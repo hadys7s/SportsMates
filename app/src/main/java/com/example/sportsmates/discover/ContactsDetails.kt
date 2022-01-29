@@ -40,11 +40,11 @@ class ContactsDetails : AppCompatActivity() {
         binding.userDetails.text=user?.about
         binding.sports1.text = user?.sportsList?.get(0)
         if (user?.sportsList?.size!! > 1) {
-            binding.sports2.text = user.sportsList?.get(1)
+            binding.sports2.text = user.sportsList[1]
             binding.sports2.isVisible = true
 
-            if (user.sportsList?.size!! > 2) {
-                binding.sports3.text = user.sportsList?.get(2)
+            if (user.sportsList.size > 2) {
+                binding.sports3.text = user.sportsList[2]
                 binding.sports3.isVisible = true
 
             }

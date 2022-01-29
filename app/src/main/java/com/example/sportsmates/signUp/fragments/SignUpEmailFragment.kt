@@ -1,6 +1,6 @@
 package com.example.sportsmates.signUp.fragments
 
-import android.app.Activity.*
+import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -20,7 +20,6 @@ import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.lang.Exception
 
 class SignUpEmailFragment : Fragment() {
     private val viewModel: SignUpViewModel by viewModel()
@@ -137,7 +136,7 @@ class SignUpEmailFragment : Fragment() {
         val inputStream = context?.contentResolver?.openInputStream(filePath)
         val selectedImage = BitmapFactory.decodeStream(inputStream)
         validateImage = true
-        Glide.with(activity!!)
+        Glide.with(requireActivity())
             .load(selectedImage)
             .circleCrop()
             .into(binding.uploadedPic)
@@ -152,11 +151,7 @@ class SignUpEmailFragment : Fragment() {
 
             try {
                 bindProfilePicture()
-                //viewModel.cacheProfilePicture(filePath)
-                // viewModel.onNextEmailButtonCLicked(forwardUserInfo(), filePath)
                 binding.nextButton.isEnabled = true
-
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -187,8 +182,8 @@ class SignUpEmailFragment : Fragment() {
     }
 
     private fun showLoading() {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
-        val inflater: LayoutInflater = activity!!.layoutInflater
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
+        val inflater: LayoutInflater = requireActivity().layoutInflater
         builder.setView(inflater.inflate(R.layout.progress_dialog, null))
         builder.setCancelable(false)
         dialog = builder.create()

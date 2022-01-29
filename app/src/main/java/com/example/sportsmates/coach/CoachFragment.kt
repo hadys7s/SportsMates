@@ -48,8 +48,8 @@ class CoachFragment : Fragment() {
     }
 
 
-    private fun setCoaches(newsList: List<Coach>?) {
-        coachAdapter = CoachAdapter(newsList, activity)
+    private fun setCoaches(coachesList: List<Coach>) {
+        coachAdapter = CoachAdapter(coachesList, requireActivity())
         binding.coachList.adapter = coachAdapter
         coachAdapter.onItemClick = {
             CoachDetailsActivity.start(activity, it.toUiModel())

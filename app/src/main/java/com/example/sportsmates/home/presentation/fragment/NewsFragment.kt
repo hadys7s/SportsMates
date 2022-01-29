@@ -1,4 +1,4 @@
-package com.example.sportsmates.home.news.presentation.fragment
+package com.example.sportsmates.home.presentation.fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sportsmates.databinding.NewsFragmentBinding
 import com.example.sportsmates.ext.stopShimmer
 import com.example.sportsmates.ext.withTransitionAnimation
-import com.example.sportsmates.home.news.presentation.activity.NewsDetailsActivity
-import com.example.sportsmates.home.news.presentation.adapter.SmallNewsAdapter
-import com.example.sportsmates.home.news.presentation.adapter.TallNewsAdapter
-import com.example.sportsmates.home.news.presentation.uiModel.NewsItemUIModel
-import com.example.sportsmates.home.news.presentation.viewmodel.NewsViewModel
+import com.example.sportsmates.home.presentation.activity.NewsDetailsActivity
+import com.example.sportsmates.home.presentation.adapter.SmallNewsAdapter
+import com.example.sportsmates.home.presentation.adapter.TallNewsAdapter
+import com.example.sportsmates.home.domain.entities.NewsItem
+import com.example.sportsmates.home.presentation.viewmodel.NewsViewModel
 import com.example.sportsmates.networking.Resource
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -84,7 +84,7 @@ class NewsFragment : Fragment() {
         }
     }
 
-    private fun setTrendingNews(newsList: List<NewsItemUIModel>?) {
+    private fun setTrendingNews(newsList: List<NewsItem>?) {
         smallNewsAdapter = SmallNewsAdapter(newsList, activity)
         binding.trendingNewsList.adapter = smallNewsAdapter
         smallNewsAdapter.onItemClick = { news, targetImage ->
@@ -93,8 +93,8 @@ class NewsFragment : Fragment() {
     }
 
 
-    private fun setForYouNews(newsList: List<NewsItemUIModel>?) {
-        tallNewsAdapter = TallNewsAdapter(newsList, activity)
+    private fun setForYouNews(newsList: List<NewsItem>?) {
+        tallNewsAdapter = TallNewsAdapter(newsList, requireActivity())
         binding.forYouNewsList.adapter = tallNewsAdapter
         tallNewsAdapter.onItemClick = { news, targetImage ->
             NewsDetailsActivity.start(activity, news, withTransitionAnimation(targetImage))

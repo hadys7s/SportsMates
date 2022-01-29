@@ -122,35 +122,35 @@ fun Fragment.openTopActivity(activity: FragmentActivity?, targetActivity: Activi
 
 fun Fragment.displayErrorToast(title: String?, message: String) {
     MotionToast.darkToast(
-        activity!!,
+        requireActivity(),
         title,
         message,
         MotionToast.TOAST_ERROR,
         MotionToast.GRAVITY_BOTTOM,
         MotionToast.LONG_DURATION,
-        ResourcesCompat.getFont(activity!!, R.font.helvetica_regular)
+        ResourcesCompat.getFont(requireActivity(), R.font.helvetica_regular)
     )
 }
 fun Fragment.displayWarningToast(title: String?, message: String) {
     MotionToast.darkToast(
-        activity!!,
+        requireActivity(),
         title,
         message,
         MotionToast.TOAST_WARNING,
         MotionToast.GRAVITY_BOTTOM,
         MotionToast.LONG_DURATION,
-        ResourcesCompat.getFont(activity!!, R.font.helvetica_regular)
+        ResourcesCompat.getFont(requireActivity(), R.font.helvetica_regular)
     )
 }
 fun Fragment.displayInfoToast(title: String?, message: String) {
     MotionToast.darkToast(
-        activity!!,
+        requireActivity(),
         title,
         message,
         MotionToast.TOAST_INFO,
         MotionToast.GRAVITY_BOTTOM,
         MotionToast.LONG_DURATION,
-        ResourcesCompat.getFont(activity!!, R.font.helvetica_regular)
+        ResourcesCompat.getFont(requireActivity(), R.font.helvetica_regular)
     )
 }
 
@@ -161,6 +161,6 @@ fun Fragment.withTransitionAnimation(
         .toBundle()
 }
 fun Fragment.openActivity(targetActivity: Activity,bundle: Bundle?=null){
-    val intent=Intent(activity!!,targetActivity::class.java)
+    val intent=Intent(requireActivity(),targetActivity::class.java)
     startActivity(intent,bundle)
 }

@@ -20,7 +20,7 @@ class BookingViewModel(private val userPreferences: UserPreferences) : ViewModel
     val sendingMessageSuccess = MutableLiveData<String>()
 
     fun sendEmailToUser(
-        name: String,
+        name: String?,
         time: String,
         date: String
     ) {
@@ -58,7 +58,7 @@ class BookingViewModel(private val userPreferences: UserPreferences) : ViewModel
     }
 
     fun sendEmailToCouch(
-        reciverEmail: String,
+        reciverEmail: String?,
         time: String,
         date: String
     ) {
@@ -96,7 +96,7 @@ class BookingViewModel(private val userPreferences: UserPreferences) : ViewModel
     }
 
     fun sendEmailToPlace(
-        reciverEmail: String,
+        reciverEmail: String?,
         time: String,
         date: String
     ) {

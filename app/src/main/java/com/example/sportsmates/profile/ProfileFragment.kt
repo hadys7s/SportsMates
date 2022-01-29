@@ -78,31 +78,28 @@ class ProfileFragment : Fragment() {
 
         binding.logoutButton.setOnClickListener {
             viewModel.logout()
-            openTopActivity(activity, SignUpActivity())
+            openTopActivity(requireActivity(), SignUpActivity())
         }
     }
 
     private fun setUserImage(uri: Uri) {
-        Glide.with(activity!!)
+        Glide.with(requireActivity())
             .load(uri)
             .circleCrop()
             .into(binding.profileImage)
     }
 
-    private fun bindUserData(userInfo: User?) {
+    private fun bindUserData(userInfo: User) {
         binding.profileName.text = userInfo?.name
-        // binding.profileImage = userInfo.name
-        //   binding.profilePhoneNumber.text = userInfo?.phoneNumber
         binding.profileEmail.text = userInfo?.email
         binding.profileAddress.text = userInfo?.city
         binding.ProfileAboutMeDescription.text=userInfo?.about
-        //     binding.ProfileAboutMeDescription.text = userInfo?.phoneNumber
         binding.sports1.text = userInfo?.sportsList?.get(0)
-        if (userInfo?.sportsList?.size!! > 1) {
+        if (userInfo?.sportsList?.size > 1) {
             binding.sports2.text = userInfo?.sportsList?.get(1)
             binding.sports2.isVisible = true
 
-            if (userInfo?.sportsList?.size!! > 2) {
+            if (userInfo.sportsList.size > 2) {
                 binding.sports3.text = userInfo?.sportsList?.get(2)
                 binding.sports3.isVisible = true
             }

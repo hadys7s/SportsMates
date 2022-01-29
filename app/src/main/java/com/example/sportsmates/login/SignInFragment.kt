@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.sportsmates.R
@@ -14,12 +12,11 @@ import com.example.sportsmates.databinding.SignInFragmentBinding
 import com.example.sportsmates.ext.displayErrorToast
 import com.example.sportsmates.ext.openTopActivity
 import com.example.sportsmates.ext.pushFragment
-import com.example.sportsmates.home.MainActivity
+import com.example.sportsmates.home.presentation.activity.MainActivity
 import com.example.sportsmates.login.SignInViewModel
 import com.example.sportsmates.signUp.fragments.SignUpEmailFragment
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.viewmodel.ext.android.viewModel
-import www.sanju.motiontoast.MotionToast
 
 class SignInFragment : Fragment() {
     private val viewModel: SignInViewModel by viewModel()
@@ -97,7 +94,7 @@ class SignInFragment : Fragment() {
 
     private fun showLoading() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
-        val inflater: LayoutInflater = activity!!.layoutInflater
+        val inflater: LayoutInflater = requireActivity().layoutInflater
         builder.setView(inflater.inflate(R.layout.progress_dialog, null))
         builder.setCancelable(false)
         dialog = builder.create()

@@ -2,7 +2,6 @@ package com.example.sportsmates.coach
 
 import android.content.Context
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Registry
@@ -14,7 +13,7 @@ import com.firebase.ui.storage.images.FirebaseImageLoader
 import com.google.firebase.storage.StorageReference
 import java.io.InputStream
 
-class CoachAdapter(private val CoachList: List<Coach>?, private val context: FragmentActivity?) :
+class CoachAdapter(private val coachesList: List<Coach>, private val context: Context) :
     RecyclerView.Adapter<CoachAdapter.ViewHolder>() {
     var onItemClick: ((Coach) -> Unit)? = null
 
@@ -27,7 +26,7 @@ class CoachAdapter(private val CoachList: List<Coach>?, private val context: Fra
             binding.partnerSport.text = coachItem.sportName
             binding.partnerAddress.text = coachItem.address
             binding.pricePerHour.text = coachItem.pricePerHour + "/hour"
-            GlideApp.with(context!!)
+            GlideApp.with(context)
                 .load(coachItem.imageList?.get(0))
                 .into(binding.partnerImage)
             itemView.setOnClickListener { onItemClick?.invoke(coachItem) }
@@ -38,10 +37,10 @@ class CoachAdapter(private val CoachList: List<Coach>?, private val context: Fra
         return ViewHolder(CoachListItemBinding.inflate(parent.context.inflater, parent, false))
     }
 
-    override fun getItemCount(): Int = CoachList!!.size
+    override fun getItemCount(): Int = coachesList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        CoachList?.get(position)?.let { holder.bind(it) }
+        coachesList[position].let { holder.bind(it) }
     }
 
 

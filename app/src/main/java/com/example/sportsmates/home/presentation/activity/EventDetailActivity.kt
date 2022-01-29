@@ -1,4 +1,4 @@
-package com.example.sportsmates.home.events
+package com.example.sportsmates.home.presentation.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.sportsmates.booking.BookingActivity
 import com.example.sportsmates.databinding.ActivityEventDetailBinding
 import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
+import com.example.sportsmates.home.data.datamodels.EventDataItem
 
 
 class EventDetailActivity : AppCompatActivity() {
@@ -23,20 +24,20 @@ class EventDetailActivity : AppCompatActivity() {
         fetchEventData()
     }
 
-    private fun fetchEventData(){
-        val event:Event?=intent.getParcelableExtra(EVENT_ITEM)
-        bindData(event)
+    private fun fetchEventData() {
+        val eventDataItem: EventDataItem? = intent.getParcelableExtra(EVENT_ITEM)
+        bindData(eventDataItem)
     }
 
-    private fun bindData(event:Event?){
-        binding.eventName.text=event!!.name
-        binding.details.text=event!!.description
-        binding.openValue.text=event!!.start
-        binding.closeValue.text=event!!.finish
-        binding.ticketPrice.text=event!!.ticketPrice
-        binding.location.text=event!!.place
+    private fun bindData(eventDataItem: EventDataItem?) {
+        binding.eventName.text = eventDataItem?.name
+        binding.details.text = eventDataItem?.description
+        binding.openValue.text = eventDataItem?.start
+        binding.closeValue.text = eventDataItem?.finish
+        binding.ticketPrice.text = eventDataItem?.ticketPrice
+        binding.location.text = eventDataItem?.place
         Glide.with(this)
-            .load(event.img)
+            .load(eventDataItem?.img)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(binding.eventImg)
     }
@@ -49,17 +50,17 @@ class EventDetailActivity : AppCompatActivity() {
            startBookingActivity()
         }
     }
-    private fun startBookingActivity(){
-        val event:Event?=intent.getParcelableExtra(EVENT_ITEM)
-        BookingActivity.start(this,eventItem = event )
+    private fun startBookingActivity() {
+        val eventDataItem: EventDataItem? = intent.getParcelableExtra(EVENT_ITEM)
+        BookingActivity.start(this, eventDataItemItem = eventDataItem)
     }
 
     companion object {
         private const val EVENT_ITEM = "eventItem"
-        fun start(activity: FragmentActivity?, eventItem: Event, option: Bundle?) {
+        fun start(activity: FragmentActivity?, eventDataItemItem: EventDataItem, option: Bundle?) {
             val intent = Intent(activity, EventDetailActivity::class.java)
-            intent.putExtra(EVENT_ITEM, eventItem)
-            activity?.startActivity(intent,option)
+            intent.putExtra(EVENT_ITEM, eventDataItemItem)
+            activity?.startActivity(intent, option)
         }
     }
 }

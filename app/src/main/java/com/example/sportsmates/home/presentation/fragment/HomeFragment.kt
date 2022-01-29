@@ -1,4 +1,4 @@
-package com.example.sportsmates.home
+package com.example.sportsmates.home.presentation.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.FragmentHomeBinding
-import com.example.sportsmates.home.events.EventFragment
-import com.example.sportsmates.home.news.presentation.fragment.NewsFragment
+import com.example.sportsmates.home.presentation.adapter.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeFragment : Fragment() {

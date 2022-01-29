@@ -1,6 +1,6 @@
-package com.example.sportsmates.home.news.data.endpoint
+package com.example.sportsmates.home.data.endpoints
 
-import com.example.sportsmates.home.news.data.model.NewsListResponse
+import com.example.sportsmates.home.data.datamodels.NewsListResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

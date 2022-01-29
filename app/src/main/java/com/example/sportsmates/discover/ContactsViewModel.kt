@@ -12,26 +12,25 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-class ContactsViewModel() : ViewModel() {
+class ContactsViewModel : ViewModel() {
     private var _listOfUsers: MutableList<User>? = mutableListOf()
     private var _listOfUsersInTheSameCity: MutableList<User>? = mutableListOf()
-    var retriveUsersSuccess = MutableLiveData<List<User>?>()
+    var retriveUsersSuccess = MutableLiveData<List<User>>()
     var retriveUsersError = MutableLiveData<String>()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 filterUserByCity()
-                val users = getRelatedUsers(getUserSportsList())!!
+                val users = getRelatedUsers(getUserSportsList())
                 if (!users.isNullOrEmpty()) {
                     users.forEach { user ->
                         user.userImage = retriveUserPhoto(user)
                     }
-                    retriveUsersSuccess.postValue(users)
+                    retriveUsersSuccess.postValue(users!!)
                 }
             } catch (e: Exception) {
             }
@@ -42,10 +41,9 @@ class ContactsViewModel() : ViewModel() {
 
     private fun getRelatedUsers(listOfSports: List<String>?): MutableList<User>? {
         _listOfUsersInTheSameCity?.forEach { user ->
-            var otherUserSportsList: MutableList<String>? = mutableListOf()
-            otherUserSportsList = user!!.sportsList?.toMutableList()
+            val otherUserSportsList = user.sportsList.toList()
             for (sport in listOfSports!!) {
-                if (otherUserSportsList!!.contains(sport)) {
+                if (otherUserSportsList.contains(sport)) {
                     _listOfUsers!!.add(user)
                 }
                 break

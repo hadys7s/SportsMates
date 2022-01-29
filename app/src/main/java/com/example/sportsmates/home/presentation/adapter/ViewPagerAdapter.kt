@@ -1,4 +1,4 @@
-package com.example.sportsmates.home
+package com.example.sportsmates.home.presentation.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

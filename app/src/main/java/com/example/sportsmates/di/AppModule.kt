@@ -6,7 +6,7 @@ import com.example.sportsmates.chat.ChatViewModel
 import com.example.sportsmates.coach.CoachViewModel
 import com.example.sportsmates.discover.ContactsViewModel
 import com.example.sportsmates.editProfile.EditProfileViewModel
-import com.example.sportsmates.home.events.EventViewModel
+import com.example.sportsmates.home.presentation.viewmodel.EventsViewModel
 import com.example.sportsmates.login.SignInViewModel
 import com.example.sportsmates.place.PLaceViewModel
 import com.example.sportsmates.profile.ProfileViewModel
@@ -29,7 +29,7 @@ val SignUpModule = module {
     viewModel { CoachViewModel() }
     viewModel { PLaceViewModel() }
     viewModel { ContactsViewModel() }
-    viewModel { EventViewModel() }
+    viewModel { EventsViewModel() }
     viewModel { ChatViewModel(get()) }
     viewModel { BookingViewModel(get()) }
     single { FirebaseAuth.getInstance() }

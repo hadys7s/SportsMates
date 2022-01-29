@@ -1,4 +1,4 @@
-package com.example.sportsmates.home.events
+package com.example.sportsmates.home.presentation.viewmodel
 
 import android.content.ContentValues
 import android.net.Uri
@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.sportsmates.home.data.datamodels.EventDataItem
 import com.example.sportsmates.signUp.data.model.User
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
@@ -17,9 +18,9 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-class EventViewModel : ViewModel() {
-    private var listOfEvents: MutableList<Event>? = mutableListOf()
-    var retriveEventSucess = MutableLiveData<List<Event>?>()
+class EventsViewModel : ViewModel() {
+    private var listOfEventDataItems: MutableList<EventDataItem>? = mutableListOf()
+    var retriveEventSucess = MutableLiveData<List<EventDataItem>?>()
     var retriveEventError = MutableLiveData<String>()
 
     init {
@@ -40,16 +41,16 @@ class EventViewModel : ViewModel() {
 
     private suspend fun getRelatedEvents(
         listOfSports: List<String>?
-    ): List<Event>? {
+    ): List<EventDataItem>? {
         FirebaseDatabase.getInstance().getReference("Event").get().addOnSuccessListener { data ->
             val events = data.children
             events.forEach { it ->
-                val event: Event? = it.getValue(Event::class.java)
-                if (listOfSports!!.contains(event?.sport)) {
-                    listOfEvents?.add(event!!)
+                val eventDataItem: EventDataItem? = it.getValue(EventDataItem::class.java)
+                if (listOfSports!!.contains(eventDataItem?.sport)) {
+                    listOfEventDataItems?.add(eventDataItem!!)
                 }
             }
-            if (listOfEvents.isNullOrEmpty()) {
+            if (listOfEventDataItems.isNullOrEmpty()) {
                 retriveEventError.postValue("There is No Event For The Sport You Are interested in ")
             }
 
@@ -57,7 +58,7 @@ class EventViewModel : ViewModel() {
         }.addOnFailureListener {
             retriveEventError.postValue(it.toString())
         }.await()
-        return listOfEvents
+        return listOfEventDataItems
     }
 
     private suspend fun getUserSportsList(): List<String>? {

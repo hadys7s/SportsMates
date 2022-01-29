@@ -2,7 +2,7 @@ package com.example.sportsmates.networking
 
 import com.example.sportsmates.chatbot.endpoint.NutroEndPoint
 import com.example.sportsmates.chatbot.model.Nutro
-import com.example.sportsmates.home.news.data.endpoint.NewsEndpoint
+import com.example.sportsmates.home.data.endpoints.NewsEndpoint
 import com.example.sportsmates.utils.Constants
 import com.example.sportsmates.utils.Constants.NEWS_BASE_URL
 import com.example.sportsmates.utils.Constants.NUTRO_BASE_URL
@@ -43,7 +43,6 @@ class NutroApiHelper(private val apiService: NutroEndPoint) {
 
 
 object RetrofitBuilder {
-
 
     fun NewsapiClient(): OkHttpClient {
         val logging = HttpLoggingInterceptor()

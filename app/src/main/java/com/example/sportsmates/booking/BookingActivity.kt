@@ -16,7 +16,7 @@ import com.example.sportsmates.ext.changeStatusBarColor
 import com.example.sportsmates.ext.displayErrorToast
 import com.example.sportsmates.ext.displaySuccessToast
 import com.example.sportsmates.ext.displayWarningToast
-import com.example.sportsmates.home.events.Event
+import com.example.sportsmates.home.data.datamodels.EventDataItem
 import com.example.sportsmates.place.PlaceUiModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.textfield.TextInputLayout
@@ -72,12 +72,12 @@ class BookingActivity : AppCompatActivity() {
 
     private fun validateSelectOnlyOneTime(): Boolean {
         return when {
-            getSelectedTime()?.size!! > 1 -> {
+            getSelectedTime().size > 1 -> {
                 displayWarningToast("Warning", "Please Select Only 1 Time")
                 false
 
             }
-            getSelectedTime()!!.isEmpty() -> {
+            getSelectedTime().isEmpty() -> {
                 displayWarningToast("Warning", "Please Select Time ")
                 false
             }
@@ -86,7 +86,7 @@ class BookingActivity : AppCompatActivity() {
 
     }
 
-    private fun getSelectedTime(): MutableList<String>? {
+    private fun getSelectedTime(): MutableList<String>{
         return binding.timeGroup.children
             .filter { ((it as Chip).isChecked) }
             .map { (it as Chip).text.toString() }
@@ -129,15 +129,15 @@ class BookingActivity : AppCompatActivity() {
     private fun sendEmailWithArguments() {
         val couch: CoachUiModel? = intent.getParcelableExtra((COUCH_ITEM))
         val place: PlaceUiModel? = intent.getParcelableExtra((PLACE_ITEM))
-        val time = getSelectedTime()?.joinToString("")
+        val time = getSelectedTime().joinToString("")
         when {
             place != null -> {
-                viewModel.sendEmailToUser(place.name!!, time!!, binding.edDate2.text.toString())
-                viewModel.sendEmailToPlace(place.email!!, time, binding.edDate2.text.toString())
+                viewModel.sendEmailToUser(place.name, time, binding.edDate2.text.toString())
+                viewModel.sendEmailToPlace(place.email, time, binding.edDate2.text.toString())
             }
             couch != null -> {
-                viewModel.sendEmailToUser(couch.name!!, time!!, binding.edDate2.text.toString())
-                viewModel.sendEmailToCouch(couch.email!!, time, binding.edDate2.text.toString())
+                viewModel.sendEmailToUser(couch.name, time, binding.edDate2.text.toString())
+                viewModel.sendEmailToCouch(couch.email, time, binding.edDate2.text.toString())
             }
             else -> {
 
@@ -184,12 +184,12 @@ class BookingActivity : AppCompatActivity() {
             activity: Activity?,
             placeItem: PlaceUiModel? = null,
             couchItem: CoachUiModel? = null,
-            eventItem: Event? = null
+            eventDataItemItem: EventDataItem? = null
         ) {
             val intent = Intent(activity, BookingActivity::class.java)
             intent.putExtra(PLACE_ITEM, placeItem)
             intent.putExtra(COUCH_ITEM, couchItem)
-            intent.putExtra(EVENT_ITEM, eventItem)
+            intent.putExtra(EVENT_ITEM, eventDataItemItem)
             activity?.startActivity(intent)
         }
     }

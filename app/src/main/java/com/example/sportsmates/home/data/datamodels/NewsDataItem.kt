@@ -1,10 +1,10 @@
-package com.example.sportsmates.home.news.data.model
+package com.example.sportsmates.home.data.datamodels
 
 import com.example.sportsmates.ext.convertToAgoFormat
-import com.example.sportsmates.home.news.presentation.uiModel.NewsItemUIModel
+import com.example.sportsmates.home.domain.entities.NewsItem
 import com.google.gson.annotations.SerializedName
 
-data class NewsItem(
+data class NewsDataItem(
     @SerializedName("source") val source: Source?,
     @SerializedName("author") val author: String?,
     @SerializedName("title") val title: String?,
@@ -15,8 +15,8 @@ data class NewsItem(
     @SerializedName("content") val content: String?
 )
 
-fun NewsItem.toUiModel(): NewsItemUIModel {
-    return NewsItemUIModel(
+fun NewsDataItem.toDomainModel(): NewsItem {
+    return NewsItem(
         website = source?.name.orEmpty(),
         title = this.title.orEmpty(),
         imageUrl = this.urlToImage.orEmpty(),

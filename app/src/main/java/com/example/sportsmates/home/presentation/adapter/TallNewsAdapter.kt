@@ -1,5 +1,6 @@
-package com.example.sportsmates.home.news.presentation.adapter
+package com.example.sportsmates.home.presentation.adapter
 
+import android.content.Context
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.FragmentActivity
@@ -8,22 +9,22 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.sportsmates.databinding.NewsTallItemBinding
 import com.example.sportsmates.ext.inflater
-import com.example.sportsmates.home.news.presentation.uiModel.NewsItemUIModel
+import com.example.sportsmates.home.domain.entities.NewsItem
 
 class TallNewsAdapter(
-    private val newsList: List<NewsItemUIModel>?,
-    private val context: FragmentActivity?
+    private val newsList: List<NewsItem>?,
+    private val context: Context
 ) :
     RecyclerView.Adapter<TallNewsAdapter.ViewHolder>() {
-    var onItemClick: ((NewsItemUIModel,ImageView) -> Unit)? = null
+    var onItemClick: ((NewsItem, ImageView) -> Unit)? = null
 
 
     inner class ViewHolder(private val binding: NewsTallItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(newsItem: NewsItemUIModel) {
+        fun bind(newsItem: NewsItem) {
             binding.title.text = newsItem.title
-            Glide.with(context!!)
+            Glide.with(context)
                 .load(newsItem.imageUrl)
                 .transform(RoundedCorners(20))
                 .into(binding.newsTallImage)

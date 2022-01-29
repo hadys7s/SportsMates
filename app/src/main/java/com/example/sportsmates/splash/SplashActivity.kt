@@ -2,12 +2,11 @@ package com.example.sportsmates.splash
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import com.example.sportsmates.R
 import com.example.sportsmates.ext.openTopActivity
 import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
-import com.example.sportsmates.home.MainActivity
+import com.example.sportsmates.home.presentation.activity.MainActivity
 import com.example.sportsmates.signUp.SignUpActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*

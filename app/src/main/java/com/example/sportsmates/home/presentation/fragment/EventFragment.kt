@@ -1,4 +1,4 @@
-package com.example.sportsmates.home.events
+package com.example.sportsmates.home.presentation.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,10 +11,14 @@ import com.example.sportsmates.databinding.FragmentEventBinding
 import com.example.sportsmates.ext.displayWarningToast
 import com.example.sportsmates.ext.withTransitionAnimation
 import com.example.sportsmates.ext.stopShimmer
+import com.example.sportsmates.home.data.datamodels.EventDataItem
+import com.example.sportsmates.home.presentation.adapter.EventAdapter
+import com.example.sportsmates.home.presentation.viewmodel.EventsViewModel
+import com.example.sportsmates.home.presentation.activity.EventDetailActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class EventFragment : Fragment() {
-    private val viewModel: EventViewModel by viewModel()
+    private val viewModel: EventsViewModel by viewModel()
     private var _binding: FragmentEventBinding? = null
     private val binding get() = _binding!!
     private lateinit var eventAdapter: EventAdapter
@@ -50,11 +54,11 @@ class EventFragment : Fragment() {
         }
     }
 
-    private fun setUsers(eventList: List<Event>?) {
-        eventAdapter = EventAdapter(eventList, activity)
+    private fun setUsers(eventDataItemList: List<EventDataItem>?) {
+        eventAdapter = EventAdapter(eventDataItemList, requireActivity())
         binding.eventList.adapter = eventAdapter
         eventAdapter.onItemClick = { event, targetImage ->
-            EventDetailActivity.start(activity, event, withTransitionAnimation(targetImage))
+            EventDetailActivity.start(requireActivity(), event, withTransitionAnimation(targetImage))
         }
     }
 

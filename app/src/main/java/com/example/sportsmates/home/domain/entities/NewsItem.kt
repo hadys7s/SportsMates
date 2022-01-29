@@ -1,10 +1,10 @@
-package com.example.sportsmates.home.news.presentation.uiModel
+package com.example.sportsmates.home.domain.entities
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class NewsItemUIModel(
+class NewsItem(
     val website: String?,
     val title: String?,
     val imageUrl: String?,

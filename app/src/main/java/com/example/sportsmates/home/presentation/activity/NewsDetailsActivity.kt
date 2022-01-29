@@ -1,4 +1,4 @@
-package com.example.sportsmates.home.news.presentation.activity
+package com.example.sportsmates.home.presentation.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.sportsmates.databinding.ActivityNewsDetailsBinding
 import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
-import com.example.sportsmates.home.news.presentation.uiModel.NewsItemUIModel
+import com.example.sportsmates.home.domain.entities.NewsItem
 
 class NewsDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewsDetailsBinding
@@ -24,11 +24,11 @@ class NewsDetailsActivity : AppCompatActivity() {
     }
 
     private fun fetchArguments() {
-        val newsItem: NewsItemUIModel? = intent.getParcelableExtra((NEWS_ITEM))
+        val newsItem: NewsItem? = intent.getParcelableExtra((NEWS_ITEM))
         bindData(newsItem)
     }
 
-    private fun bindData(newsItem: NewsItemUIModel?) {
+    private fun bindData(newsItem: NewsItem?) {
         binding.newsTitle.text = newsItem?.title
         Glide.with(this)
             .load(newsItem?.imageUrl)
@@ -48,7 +48,7 @@ class NewsDetailsActivity : AppCompatActivity() {
 
     companion object {
         private const val NEWS_ITEM = "newsItem"
-        fun start(activity: FragmentActivity?, newsItem: NewsItemUIModel, options: Bundle?) {
+        fun start(activity: FragmentActivity?, newsItem: NewsItem, options: Bundle?) {
             val intent = Intent(activity, NewsDetailsActivity::class.java)
             intent.putExtra(NEWS_ITEM, newsItem)
             activity?.startActivity(intent,options)

@@ -15,7 +15,7 @@ data class User(
     var age: String? = "",
     var gender: String? = "",
     var city: String? = "",
-    var sportsList: List<String>? = listOf(),
+    var sportsList: List<String> = listOf(),
     var userImage: Uri? = null
 ) : Parcelable
 

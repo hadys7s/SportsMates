@@ -8,7 +8,7 @@ import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.signUp.data.repo.UserRepository
 
 class EditProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
-    var userData = MutableLiveData<User?>()
+    var userData = MutableLiveData<User>()
     var userImage = MutableLiveData<Uri>()
     var updateInfoFailuer = MutableLiveData<String>()
     var updateInfoSuccess = MutableLiveData<String>()

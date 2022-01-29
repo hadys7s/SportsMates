@@ -1,5 +1,6 @@
 package com.example.sportsmates.discover
 
+import android.content.Context
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -11,7 +12,7 @@ import com.example.sportsmates.databinding.ContactsListItemBinding
 import com.example.sportsmates.ext.inflater
 import com.example.sportsmates.signUp.data.model.User
 
-class ContactsAdapter(private val userList: List<User>?, private val context: FragmentActivity?) :
+class ContactsAdapter(private val userList: List<User>, private val context: Context) :
     RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
     var onItemClick: ((User,ImageView) -> Unit)? = null
     var onBtnClick:((User,ImageView)->Unit)?=null
@@ -21,7 +22,7 @@ class ContactsAdapter(private val userList: List<User>?, private val context: Fr
             binding.userName.text = userItem.name
             binding.useraAddress.text = userItem.city
             binding.userAge.text = userItem.age + " " + "years"
-            Glide.with(context!!)
+            Glide.with(context)
                 .load(userItem.userImage)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.userImage)
@@ -35,10 +36,10 @@ class ContactsAdapter(private val userList: List<User>?, private val context: Fr
         return ViewHolder(ContactsListItemBinding.inflate(parent.context.inflater, parent, false))
     }
 
-    override fun getItemCount(): Int = userList!!.size
+    override fun getItemCount(): Int = userList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        userList?.get(position)?.let { holder.bind(it) }
+        userList.get(position).let { holder.bind(it) }
     }
 
 }
