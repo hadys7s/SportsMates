@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        addFragment(HomeFragment.newInstance())
+        replaceFragment(HomeFragment.newInstance(), containerViewId = R.id.main_container_view)
         bottomNavigationController()
         binding.chatBot.setOnClickListener {
             openChatBotConnection()

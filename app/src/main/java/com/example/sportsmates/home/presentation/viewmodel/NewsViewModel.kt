@@ -1,38 +1,59 @@
 package com.example.sportsmates.home.presentation.viewmodel
 
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
+import com.example.sportsmates.ext.Events
 import com.example.sportsmates.home.domain.entities.NewsItem
 import com.example.sportsmates.home.domain.usecases.NewsUseCase
 import com.example.sportsmates.networking.Resource
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+
 
 class NewsViewModel(
     private val newsUseCase: NewsUseCase
 ) : ViewModel() {
+    private val _recommendedNewsState = MutableSharedFlow<Resource<List<NewsItem>>>()
+    val recommendedNewsState get() = _recommendedNewsState.asSharedFlow()
+    private val _trendingNewsState = MutableSharedFlow<Resource<List<NewsItem>>>()
+    val trendingNewsState get() = _trendingNewsState.asSharedFlow()
 
-    fun getRecommendedNews(): LiveData<Resource<List<NewsItem>>> = liveData(Dispatchers.IO) {
-        emit(Resource.Loading)
-        try {
-            emit(
-                Resource.Success(
-                    data = newsUseCase.getRecommendedNewsBasedOnUserSports()
-                )
-            )
-        } catch (exception: Exception) {
-            emit(Resource.Error(exception))
+
+    fun onViewCreated(){
+        getRecommendedNews()
+        getTrendingNews()
+    }
+    fun getRecommendedNews() =
+        viewModelScope.launch() {
+            try {
+                _recommendedNewsState.emit(Resource.Success(data = newsUseCase.getRecommendedNewsBasedOnUserSports()))
+            } catch (exception: Exception) {
+                _recommendedNewsState.emit(Resource.Error(exception))
+            }
+
+        }
+
+
+    fun getTrendingNews() =
+        viewModelScope.launch {
+            try {
+                _trendingNewsState.emit(Resource.Success(data = newsUseCase.getSportsTrendingNews()))
+            } catch (exception: Exception) {
+                _trendingNewsState.emit(Resource.Error(exception))
+            }
+        }
+
+    fun handleErrors() = viewModelScope.launch {
+        Events.event.collectLatest {
+
         }
     }
 
-
-    fun getTrendingNews(): LiveData<Resource<List<NewsItem>>> = liveData(Dispatchers.IO) {
-        emit(Resource.Loading)
-        try {
-            emit(Resource.Success(data = newsUseCase.getSportsTrendingNews()))
-        } catch (exception: Exception) {
-            emit(Resource.Error(exception))
-        }
+    override fun onCleared() {
+        super.onCleared()
+        Log.d("RAfaa", "ss")
     }
 
 }

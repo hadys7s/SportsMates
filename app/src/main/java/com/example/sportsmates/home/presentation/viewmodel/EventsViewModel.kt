@@ -24,10 +24,13 @@ class EventsViewModel : ViewModel() {
     var retriveEventError = MutableLiveData<String>()
 
     init {
+        getEvents()
+    }
+
+    private fun getEvents() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val listOfSports: Deferred<List<String>?> = async { getUserSportsList() }
-                val events = getRelatedEvents(listOfSports.await())
+                val events = getRelatedEvents(getUserSportsList() )
                 if (!events.isNullOrEmpty()) {
                     events.forEach { event ->
                         event.img = reteriveUserPhoto(event.eventId)
@@ -74,7 +77,6 @@ class EventsViewModel : ViewModel() {
                     Log.d(ContentValues.TAG, "getUser:Failed", task.exception)
                 }
             }.await()
-
         return listOfSports
     }
 

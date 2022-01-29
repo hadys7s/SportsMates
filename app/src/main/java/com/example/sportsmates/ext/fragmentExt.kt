@@ -13,9 +13,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import com.baoyachi.stepview.HorizontalStepView
 import com.baoyachi.stepview.bean.StepBean
 import com.example.sportsmates.R
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import www.sanju.motiontoast.MotionToast
 
 fun Fragment.replaceFragment(
@@ -60,6 +63,11 @@ fun Fragment.handleStoragePermission(
             onSelectImageCallback()
 
         }
+    }
+}
+ fun <T> Fragment.stateCollector(flow: Flow<T>, collect: suspend (T) -> Unit) {
+    this.lifecycleScope.launchWhenStarted {
+        flow.collect(collect)
     }
 }
 
@@ -111,13 +119,17 @@ fun Fragment.setStepper(state1: Int, state2: Int, state3: Int, stepView: Horizon
 }
 
 
-fun Fragment.openTopActivity(activity: FragmentActivity?, targetActivity: Activity,bundle: Bundle?=null) {
+fun Fragment.openTopActivity(
+    activity: FragmentActivity?,
+    targetActivity: Activity,
+    bundle: Bundle? = null
+) {
     val targetActivity = Intent(
         activity,
         targetActivity::class.java
     )
     targetActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-    startActivity(targetActivity,bundle)
+    startActivity(targetActivity, bundle)
 }
 
 fun Fragment.displayErrorToast(title: String?, message: String) {
@@ -131,6 +143,7 @@ fun Fragment.displayErrorToast(title: String?, message: String) {
         ResourcesCompat.getFont(requireActivity(), R.font.helvetica_regular)
     )
 }
+
 fun Fragment.displayWarningToast(title: String?, message: String) {
     MotionToast.darkToast(
         requireActivity(),
@@ -142,6 +155,7 @@ fun Fragment.displayWarningToast(title: String?, message: String) {
         ResourcesCompat.getFont(requireActivity(), R.font.helvetica_regular)
     )
 }
+
 fun Fragment.displayInfoToast(title: String?, message: String) {
     MotionToast.darkToast(
         requireActivity(),
@@ -160,7 +174,8 @@ fun Fragment.withTransitionAnimation(
     return ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, targetImage, "img")
         .toBundle()
 }
-fun Fragment.openActivity(targetActivity: Activity,bundle: Bundle?=null){
-    val intent=Intent(requireActivity(),targetActivity::class.java)
-    startActivity(intent,bundle)
+
+fun Fragment.openActivity(targetActivity: Activity, bundle: Bundle? = null) {
+    val intent = Intent(requireActivity(), targetActivity::class.java)
+    startActivity(intent, bundle)
 }
