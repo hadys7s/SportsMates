@@ -15,11 +15,10 @@ import kotlinx.coroutines.launch
 class NewsViewModel(
     private val newsUseCase: NewsUseCase
 ) : ViewModel() {
-    private val _recommendedNewsState = MutableSharedFlow<Resource<List<NewsItem>>>()
-    val recommendedNewsState get() = _recommendedNewsState.asSharedFlow()
-    private val _trendingNewsState = MutableSharedFlow<Resource<List<NewsItem>>>()
-    val trendingNewsState get() = _trendingNewsState.asSharedFlow()
-
+    private val _recommendedNewsState = MutableStateFlow<Resource<List<NewsItem>>>(Resource.Loading)
+    val recommendedNewsState get() = _recommendedNewsState.asStateFlow()
+    private val _trendingNewsState = MutableStateFlow<Resource<List<NewsItem>>>(Resource.Loading)
+    val trendingNewsState get() = _trendingNewsState.asStateFlow()
 
     fun onViewCreated(){
         getRecommendedNews()

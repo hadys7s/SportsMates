@@ -29,28 +29,34 @@ class MainActivity : AppCompatActivity() {
     var userUid: String? = null
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater:MenuInflater=menuInflater
-        inflater.inflate(R.menu.chat_icon_menu,menu)
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.chat_icon_menu, menu)
         return true
     }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.chat->{
-                val intent=Intent(this,ChatActivity::class.java)
+        when (item.itemId) {
+            R.id.chat -> {
+                val intent = Intent(this, ChatActivity::class.java)
                 startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-        replaceFragment(HomeFragment.newInstance(), containerViewId = R.id.main_container_view)
+        replaceFragment(
+            HomeFragment.newInstance(),
+            containerViewId = R.id.main_container_view,
+            state = savedInstanceState
+        )
+
         bottomNavigationController()
         binding.chatBot.setOnClickListener {
             openChatBotConnection()
@@ -108,7 +114,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openChatBotConnection() {
-        val intent=Intent(this,ChatBotActivity::class.java)
+        val intent = Intent(this, ChatBotActivity::class.java)
         startActivity(intent)
     }
 

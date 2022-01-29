@@ -16,27 +16,31 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-           attachViewPager()
+        attachViewPager()
     }
-    private fun attachViewPager(){
-        val fragments:ArrayList<Fragment>?= arrayListOf(
+
+    private fun attachViewPager() {
+        val fragments: ArrayList<Fragment>? = arrayListOf(
             NewsFragment.newInstance(),
             EventFragment.newInstance()
         )
-        val adapter= activity?.let { ViewPagerAdapter(fragments!!, it) }
-        binding.viewPager.adapter=adapter
-        TabLayoutMediator(binding.tabs,binding.viewPager){tab ,position->
-            when(position){
-                0->{tab.text=getString(R.string.tab_layout_news)
+        val adapter = activity?.let { ViewPagerAdapter(fragments!!, it) }
+        binding.viewPager.adapter = adapter
+        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
+            when (position) {
+                0 -> {
+                    tab.text = getString(R.string.tab_layout_news)
                 }
-                1->{tab.text=getString(R.string.tab_layout_event)}
+                1 -> {
+                    tab.text = getString(R.string.tab_layout_event)
+                }
             }
         }.attach()
         binding.viewPager.isUserInputEnabled = false
