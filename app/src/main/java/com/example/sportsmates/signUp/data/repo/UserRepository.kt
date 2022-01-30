@@ -255,15 +255,15 @@ class UserRepository(
         }
     }
 
-    suspend fun getUserSportsList(): List<String>? {
-        var sportsList: List<String>? = listOf()
+    suspend fun getUserSportsList(): List<String> {
+        var sportsList: List<String> = listOf()
         FirebaseDatabase.getInstance().getReference("Users")
             .child(Firebase.auth.currentUser.uid)
             .get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(ContentValues.TAG, "getUser:Success")
                     val user: User? = task.result?.getValue(User::class.java)
-                    sportsList = user?.sportsList?.toList()
+                    sportsList = user?.sportsList?.toList() ?: emptyList()
                 } else {
                     Log.d(ContentValues.TAG, "getUser:Failed", task.exception)
                 }

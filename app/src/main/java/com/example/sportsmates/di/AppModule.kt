@@ -6,6 +6,9 @@ import com.example.sportsmates.chat.ChatViewModel
 import com.example.sportsmates.coach.CoachViewModel
 import com.example.sportsmates.discover.ContactsViewModel
 import com.example.sportsmates.editProfile.EditProfileViewModel
+import com.example.sportsmates.home.data.repositories.EventsRepositoryImpl
+import com.example.sportsmates.home.domain.datainterfaces.EventsRepository
+import com.example.sportsmates.home.domain.usecases.EventsUseCase
 import com.example.sportsmates.home.presentation.viewmodel.EventsViewModel
 import com.example.sportsmates.login.SignInViewModel
 import com.example.sportsmates.place.PLaceViewModel
@@ -29,7 +32,9 @@ val SignUpModule = module {
     viewModel { CoachViewModel() }
     viewModel { PLaceViewModel() }
     viewModel { ContactsViewModel() }
-    viewModel { EventsViewModel() }
+    factory<EventsRepository> { EventsRepositoryImpl() }
+    single { EventsUseCase(get(), get()) }
+    viewModel { EventsViewModel(get()) }
     viewModel { ChatViewModel(get()) }
     viewModel { BookingViewModel(get()) }
     single { FirebaseAuth.getInstance() }

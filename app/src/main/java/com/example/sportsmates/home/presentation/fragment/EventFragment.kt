@@ -37,8 +37,7 @@ class EventFragment : Fragment() {
     }
 
     private fun attachEventObservers() {
-        viewModel.retriveEventSucess
-            .observe(this, Observer {
+        viewModel.listOfEventDataItems.observe(this, Observer {
                 stopShimmer(binding.shimmerViewContainer)
                 setUsers(it)
             })
@@ -54,7 +53,7 @@ class EventFragment : Fragment() {
         }
     }
 
-    private fun setUsers(eventDataItemList: List<EventDataItem>?) {
+    private fun setUsers(eventDataItemList: List<EventDataItem?>) {
         eventAdapter = EventAdapter(eventDataItemList, requireActivity())
         binding.eventList.adapter = eventAdapter
         eventAdapter.onItemClick = { event, targetImage ->
