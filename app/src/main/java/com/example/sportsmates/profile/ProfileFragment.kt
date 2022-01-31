@@ -27,7 +27,6 @@ class ProfileFragment : Fragment() {
 
     private var _binding: ProfileFragmentBinding? = null
 
-
     private val binding get() = _binding!!
 
 
@@ -35,7 +34,7 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = ProfileFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -59,7 +58,6 @@ class ProfileFragment : Fragment() {
 
     private fun attachEventObservers() {
         viewModel.userData.observe(this, Observer { userData ->
-            //  Toast.makeText(activity, userData?.name, Toast.LENGTH_LONG).show()
             stopShimmer(binding.shimmerViewContainer)
             bindUserData(userData)
 
@@ -90,17 +88,17 @@ class ProfileFragment : Fragment() {
     }
 
     private fun bindUserData(userInfo: User) {
-        binding.profileName.text = userInfo?.name
-        binding.profileEmail.text = userInfo?.email
-        binding.profileAddress.text = userInfo?.city
-        binding.ProfileAboutMeDescription.text=userInfo?.about
-        binding.sports1.text = userInfo?.sportsList?.get(0)
-        if (userInfo?.sportsList?.size > 1) {
-            binding.sports2.text = userInfo?.sportsList?.get(1)
+        binding.profileName.text = userInfo.name
+        binding.profileEmail.text = userInfo.email
+        binding.profileAddress.text = userInfo.city
+        binding.ProfileAboutMeDescription.text=userInfo.about
+        binding.sports1.text = userInfo.sportsList.get(0)
+        if (userInfo.sportsList.size > 1) {
+            binding.sports2.text = userInfo.sportsList[1]
             binding.sports2.isVisible = true
 
             if (userInfo.sportsList.size > 2) {
-                binding.sports3.text = userInfo?.sportsList?.get(2)
+                binding.sports3.text = userInfo.sportsList[2]
                 binding.sports3.isVisible = true
             }
         }
@@ -113,13 +111,6 @@ class ProfileFragment : Fragment() {
     }
 
     companion object {
-        private const val USER_ID = "userId"
-
-        fun newInstance(userID: String?) =
-            ProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(USER_ID, userID)
-                }
-            }
+        fun newInstance() = ProfileFragment()
     }
 }

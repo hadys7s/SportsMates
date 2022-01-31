@@ -5,16 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sportsmates.databinding.FragmentEventBinding
 import com.example.sportsmates.ext.displayWarningToast
-import com.example.sportsmates.ext.withTransitionAnimation
+import com.example.sportsmates.ext.stateCollector
 import com.example.sportsmates.ext.stopShimmer
+import com.example.sportsmates.ext.withTransitionAnimation
 import com.example.sportsmates.home.data.datamodels.EventDataItem
+import com.example.sportsmates.home.presentation.activity.EventDetailActivity
 import com.example.sportsmates.home.presentation.adapter.EventAdapter
 import com.example.sportsmates.home.presentation.viewmodel.EventsViewModel
-import com.example.sportsmates.home.presentation.activity.EventDetailActivity
+import com.example.sportsmates.networking.Resource
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class EventFragment : Fragment() {
@@ -25,7 +26,7 @@ class EventFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentEventBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -37,14 +38,20 @@ class EventFragment : Fragment() {
     }
 
     private fun attachEventObservers() {
-        viewModel.listOfEventDataItems.observe(this, Observer {
-                stopShimmer(binding.shimmerViewContainer)
-                setUsers(it)
-            })
-        viewModel.retriveEventError.observe(this, Observer {
-            stopShimmer(binding.shimmerViewContainer)
-            displayWarningToast("Warning", it)
-        })
+        stateCollector(viewModel.listOfEventDataItems) { state ->
+            when (state) {
+                is Resource.Success -> {
+                    stopShimmer(binding.shimmerViewContainer)
+                    setUsers(state.data)
+                }
+                is Resource.Error -> {
+                    stopShimmer(binding.shimmerViewContainer)
+                    displayWarningToast("Warning", state.exception.message.toString())
+                }
+                Resource.Loading -> {
+                }
+            }
+        }
     }
 
     private fun setupList() {

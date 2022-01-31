@@ -1,16 +1,19 @@
 package com.example.sportsmates.home.presentation.viewmodel
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sportsmates.home.data.datamodels.EventDataItem
 import com.example.sportsmates.home.domain.usecases.EventsUseCase
+import com.example.sportsmates.networking.Resource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class EventsViewModel(val eventsUseCase: EventsUseCase) : ViewModel() {
-    val listOfEventDataItems = MutableLiveData<List<EventDataItem?>>()
-    val retriveEventError = MutableLiveData<String>()
+class EventsViewModel(private val eventsUseCase: EventsUseCase) : ViewModel() {
+    private val _listOfEventDataItems =
+        MutableStateFlow<Resource<List<EventDataItem?>>>(Resource.Loading)
+    val listOfEventDataItems get() = _listOfEventDataItems.asStateFlow()
 
     init {
         getEvents()
@@ -19,10 +22,9 @@ class EventsViewModel(val eventsUseCase: EventsUseCase) : ViewModel() {
     private fun getEvents() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val events = eventsUseCase.getRelatedEvents()
-                listOfEventDataItems.postValue(events)
+                _listOfEventDataItems.emit(Resource.Success(data = eventsUseCase.getRelatedEvents()))
             } catch (ex: Exception) {
-                retriveEventError.postValue(ex.message.toString())
+                _listOfEventDataItems.emit(Resource.Error(exception = ex))
             }
         }
     }

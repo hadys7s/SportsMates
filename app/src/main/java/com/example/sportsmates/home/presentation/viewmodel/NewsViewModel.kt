@@ -24,7 +24,7 @@ class NewsViewModel(
         getRecommendedNews()
         getTrendingNews()
     }
-    fun getRecommendedNews() =
+   private fun getRecommendedNews() =
         viewModelScope.launch() {
             try {
                 _recommendedNewsState.emit(Resource.Success(data = newsUseCase.getRecommendedNewsBasedOnUserSports()))
@@ -35,7 +35,7 @@ class NewsViewModel(
         }
 
 
-    fun getTrendingNews() =
+   private fun getTrendingNews() =
         viewModelScope.launch {
             try {
                 _trendingNewsState.emit(Resource.Success(data = newsUseCase.getSportsTrendingNews()))
