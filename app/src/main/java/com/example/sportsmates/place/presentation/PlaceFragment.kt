@@ -1,14 +1,17 @@
-package com.example.sportsmates.place
+package com.example.sportsmates.place.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sportsmates.databinding.FragmentPlaceBinding
+import com.example.sportsmates.ext.stateCollector
 import com.example.sportsmates.ext.stopShimmer
+import com.example.sportsmates.networking.Resource
+import com.example.sportsmates.place.data.Place
+import com.example.sportsmates.place.data.toUiModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class PlaceFragment : Fragment() {
@@ -34,10 +37,21 @@ class PlaceFragment : Fragment() {
     }
 
     private fun attachObservers() {
-        viewModel.listOfSPlacesEvent.observe(this, Observer {
-            stopShimmer(binding.shimmerViewContainer)
-            setPlaces(it)
-        })
+        stateCollector(viewModel.listOfSPlacesEvent)
+        { state ->
+            when (state) {
+                is Resource.Success -> {
+                    stopShimmer(binding.shimmerViewContainer)
+                    setPlaces(state.data)
+                }
+                is Resource.Error -> {
+
+                }
+                Resource.Loading -> {
+
+                }
+            }
+        }
     }
 
 

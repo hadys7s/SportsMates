@@ -34,7 +34,7 @@
             android:name=".discover.ContactsDetails"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
-            android:name=".place.PlaceDetailsActivity"
+            android:name=".place.presentation.PlaceDetailsActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
             android:name=".coach.CoachDetailsActivity"

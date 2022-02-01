@@ -1,14 +1,16 @@
-package com.example.sportsmates.place
+package com.example.sportsmates.place.presentation
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.example.sportsmates.booking.BookingActivity
 import com.example.sportsmates.coach.SliderAdapterExample
 import com.example.sportsmates.databinding.ActivityPlaceDetailsBinding
 import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
+import com.example.sportsmates.ext.stateCollector
+import com.example.sportsmates.networking.Resource
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -17,7 +19,7 @@ class PlaceDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlaceDetailsBinding
 
     private lateinit var sliderAdapter: SliderAdapterExample
-    private var _place:PlaceUiModel?=null
+    private var _place: PlaceUiModel? = null
     private val viewModel: PLaceViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +35,9 @@ class PlaceDetailsActivity : AppCompatActivity() {
     }
 
     private fun observeCoachImages(coachId: String?) {
-        viewModel.retrievePhotoDetails(coachId)
+        lifecycleScope.launchWhenResumed {
+            viewModel.getPlacesListOfImages(coachId)
+        }
     }
 
     private fun setupSlider() {
@@ -60,9 +64,21 @@ class PlaceDetailsActivity : AppCompatActivity() {
     }
 
     private fun observeCoachImages() {
-        viewModel.listOfPlacesImagesEvent.observe(this, Observer { imageList ->
-            sliderAdapter.renewItems(imageList)
-        })
+        stateCollector(viewModel.listOfPlacesImagesEvent)
+        { state ->
+            when (state) {
+                is Resource.Success -> {
+                    sliderAdapter.renewItems(state.data)
+
+                }
+                is Resource.Error -> {
+
+                }
+                Resource.Loading -> {
+
+                }
+            }
+        }
     }
 
     private fun attachCLickListeners() {

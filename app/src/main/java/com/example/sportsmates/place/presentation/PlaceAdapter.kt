@@ -1,12 +1,12 @@
-package com.example.sportsmates.place
+package com.example.sportsmates.place.presentation
 
 import android.content.Context
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sportsmates.coach.GlideApp
 import com.example.sportsmates.databinding.CoachListItemBinding
 import com.example.sportsmates.ext.inflater
+import com.example.sportsmates.place.data.Place
 
 class PlaceAdapter(private val placeList: List<Place?>, private val context: Context) :
     RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
@@ -21,7 +21,7 @@ class PlaceAdapter(private val placeList: List<Place?>, private val context: Con
             binding.partnerAddress.text = placeItem.address
             binding.pricePerHour.text = placeItem.pricePerHour + "/hour"
             GlideApp.with(context)
-                .load(placeItem.imageList?.get(0))
+                .load(placeItem.mainImage)
                 .into(binding.partnerImage)
             itemView.setOnClickListener { onItemClick?.invoke(placeItem) }
         }

@@ -11,7 +11,10 @@ import com.example.sportsmates.home.domain.datainterfaces.EventsRepository
 import com.example.sportsmates.home.domain.usecases.EventsUseCase
 import com.example.sportsmates.home.presentation.viewmodel.EventsViewModel
 import com.example.sportsmates.login.SignInViewModel
-import com.example.sportsmates.place.PLaceViewModel
+import com.example.sportsmates.place.data.PlacesRepositoryImpl
+import com.example.sportsmates.place.domain.PlacesRepository
+import com.example.sportsmates.place.domain.PlacesUseCase
+import com.example.sportsmates.place.presentation.PLaceViewModel
 import com.example.sportsmates.profile.ProfileViewModel
 import com.example.sportsmates.signUp.data.repo.UserRepository
 import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
@@ -30,7 +33,9 @@ val SignUpModule = module {
     viewModel { EditProfileViewModel(get()) }
     viewModel { SplashViewModel(get()) }
     viewModel { CoachViewModel() }
-    viewModel { PLaceViewModel() }
+    factory<PlacesRepository> { PlacesRepositoryImpl() }
+    single { PlacesUseCase(get(), get()) }
+    viewModel { PLaceViewModel(get()) }
     viewModel { ContactsViewModel() }
     factory<EventsRepository> { EventsRepositoryImpl() }
     single { EventsUseCase(get(), get()) }

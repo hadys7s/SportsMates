@@ -14,10 +14,10 @@ import com.smarteist.autoimageslider.SliderViewAdapter
 
 class SliderAdapterExample(val context: Context) :
     SliderViewAdapter<SliderAdapterExample.SliderAdapterVH>() {
-    private var mSliderItems: List<StorageReference> = ArrayList()
+    private var mSliderItems: List<StorageReference?> = ArrayList()
 
-    fun renewItems(sliderItems: List<StorageReference>?) {
-        mSliderItems = sliderItems!!
+    fun renewItems(sliderItems: List<StorageReference?>) {
+        mSliderItems = sliderItems
         notifyDataSetChanged()
     }
 
@@ -28,7 +28,7 @@ class SliderAdapterExample(val context: Context) :
     }
 
     override fun onBindViewHolder(viewHolder: SliderAdapterVH, position: Int) {
-        val sliderItem: StorageReference = mSliderItems[position]
+        val sliderItem: StorageReference? = mSliderItems[position]
         viewHolder.textViewDescription.textSize = 16f
         viewHolder.textViewDescription.setTextColor(Color.WHITE)
         GlideApp.with(context)
