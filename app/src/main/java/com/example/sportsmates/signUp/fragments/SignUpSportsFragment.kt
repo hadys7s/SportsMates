@@ -8,14 +8,17 @@ import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.sportsmates.databinding.SignUpSportFargmentBinding
-import com.example.sportsmates.ext.*
-import com.example.sportsmates.home.MainActivity
+import com.example.sportsmates.ext.displayErrorToast
+import com.example.sportsmates.ext.displayWarningToast
+import com.example.sportsmates.ext.openTopActivity
+import com.example.sportsmates.ext.setStepper
+import com.example.sportsmates.home.presentation.activity.MainActivity
 import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class SignUpSportsFragment : Fragment() {
@@ -28,7 +31,7 @@ class SignUpSportsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = SignUpSportFargmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -52,7 +55,7 @@ class SignUpSportsFragment : Fragment() {
     }
 
     fun attachEventObservers() {
-        viewModel.signUpSuccess.observe(this, Observer {
+        viewModel.signUpSuccess.observe(this,  {
             // redirect login
             openTopActivity(activity, MainActivity())
 
@@ -67,13 +70,13 @@ class SignUpSportsFragment : Fragment() {
 
     private fun validateSelectOnlyThreeSports(): Boolean {
         return when {
-            getSelectedSports()?.size!! > 3 -> {
-                displayWarningToast("Warning","Please Select Only 3 Sports")
+            getSelectedSports().size > 3 -> {
+                displayWarningToast("Warning", "Please Select Only 3 Sports")
                 false
 
             }
-            getSelectedSports()!!.isEmpty() -> {
-                displayWarningToast("Warning","Please Select Your favourites Sports")
+            getSelectedSports().isEmpty() -> {
+                displayWarningToast("Warning", "Please Select Your favourites Sports")
                 false
             }
             else -> true
@@ -81,7 +84,7 @@ class SignUpSportsFragment : Fragment() {
 
     }
 
-    private fun getSelectedSports(): MutableList<String>? {
+    private fun getSelectedSports(): MutableList<String> {
         return binding.sportsGroup.children
             .filter { ((it as Chip).isChecked) }
             .map { (it as Chip).text.toString() }
@@ -89,7 +92,7 @@ class SignUpSportsFragment : Fragment() {
     }
 
     private fun signUpUserInfo(): User? {
-        var user: User? = arguments?.getParcelable(USER_DATA)
+        val user: User? = arguments?.getParcelable(USER_DATA)
         user?.sportsList = getSelectedSports()
         user?.id=Firebase.auth.currentUser.uid
         return user

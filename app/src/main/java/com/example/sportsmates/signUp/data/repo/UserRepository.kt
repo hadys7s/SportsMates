@@ -1,10 +1,10 @@
 package com.example.sportsmates.signUp.data.repo
 
+import android.content.ContentValues
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.sportsmates.UserPreferences
-import com.example.sportsmates.ext.getCurrentUserID
 import com.example.sportsmates.signUp.data.model.User
 import com.example.sportsmates.utils.SingleLiveEvent
 import com.google.firebase.auth.AuthCredential
@@ -15,6 +15,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.tasks.await
 
 
 class UserRepository(
@@ -31,7 +32,7 @@ class UserRepository(
     var retriveImage = MutableLiveData<Uri>()
     var loginFailed = MutableLiveData<String>()
     var loginSuccess = SingleLiveEvent<Any>()
-    var userData = MutableLiveData<User?>()
+    var userData = MutableLiveData<User>()
     var updateInfoSuccess = MutableLiveData<String>()
     var updateInfoFailuer = MutableLiveData<String>()
 
@@ -100,9 +101,9 @@ class UserRepository(
                 if (task.isSuccessful) {
                     Log.d(TAG, "getUser:Success")
                     val user = task.result?.getValue(User::class.java)
-                    userData.postValue(user!!)
-                    userpref.name = user.name
-                    userpref.email=user.email
+                    userData.postValue(user ?: User())
+                    userpref.name = user?.name
+                    userpref.email = user?.email
                 } else {
                     Log.d(TAG, "getUser:Failed", task.exception)
 
@@ -219,7 +220,7 @@ class UserRepository(
     ){
         val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
         val credential: AuthCredential = EmailAuthProvider.getCredential(user!!.email, oldPassword)
-        user!!.reauthenticate(credential).addOnCompleteListener { task ->
+        user.reauthenticate(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 user.updateEmail(newEmail).addOnCompleteListener {
                     if (it.isSuccessful){
@@ -238,13 +239,13 @@ class UserRepository(
         oldPassword: String
     ){
         val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
-        val credential: AuthCredential = EmailAuthProvider.getCredential(user!!.email, oldPassword)
-        user!!.reauthenticate(credential).addOnCompleteListener { task ->
+        val credential: AuthCredential = EmailAuthProvider.getCredential(user?.email, oldPassword)
+        user?.reauthenticate(credential)?.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 user.updatePassword(newPassword).addOnCompleteListener {
-                    if (it.isSuccessful){
+                    if (it.isSuccessful) {
                         updateUserPassword(newPassword)
-                    }else{
+                    } else {
                         updateInfoFailuer.postValue(it.exception.toString())
                     }
                 }
@@ -252,6 +253,23 @@ class UserRepository(
                 updateInfoFailuer.postValue(task.exception.toString())
             }
         }
+    }
+
+    suspend fun getUserSportsList(): List<String> {
+        var sportsList: List<String> = listOf()
+        FirebaseDatabase.getInstance().getReference("Users")
+            .child(Firebase.auth.currentUser.uid)
+            .get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(ContentValues.TAG, "getUser:Success")
+                    val user: User? = task.result?.getValue(User::class.java)
+                    sportsList = user?.sportsList?.toList() ?: emptyList()
+                } else {
+                    Log.d(ContentValues.TAG, "getUser:Failed", task.exception)
+                }
+            }.await()
+        return sportsList
+
     }
 
     companion object {

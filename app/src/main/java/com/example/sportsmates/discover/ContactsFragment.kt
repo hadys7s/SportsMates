@@ -27,7 +27,7 @@ class ContactsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = DiscoverFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -57,8 +57,8 @@ class ContactsFragment : Fragment() {
         }
     }
 
-    private fun setUsers(usersList: List<User>?) {
-        contactsAdapter = ContactsAdapter(usersList, activity)
+    private fun setUsers(usersList: List<User>) {
+        contactsAdapter = ContactsAdapter(usersList, requireActivity())
         binding.contactsList.adapter = contactsAdapter
         contactsAdapter.onItemClick = { user, targetImage ->
             openActivity(user, targetImage,TargetActivity.CONTACTS_DETAILS)

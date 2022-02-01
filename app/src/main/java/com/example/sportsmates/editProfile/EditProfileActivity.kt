@@ -5,11 +5,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import androidx.exifinterface.media.ExifInterface
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.sportsmates.R
@@ -20,9 +19,7 @@ import com.example.sportsmates.signUp.fragments.SignUpEmailFragment
 import com.example.sportsmates.utils.InfoType
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import org.koin.android.ext.android.get
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.lang.Exception
 
 class EditProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditProfile2Binding
@@ -77,12 +74,12 @@ class EditProfileActivity : AppCompatActivity() {
             .into(binding.uploadedPic)
     }
     private fun bindUserData(userData: User?) {
-        binding.nameTextField.setText(userData!!.name, TextView.BufferType.EDITABLE)
-        binding.mailTextField.setText(userData.email, TextView.BufferType.EDITABLE)
-        binding.cityTextField.setText(userData.city, TextView.BufferType.EDITABLE)
-        binding.passwordTextField.setText(userData.password, TextView.BufferType.EDITABLE)
-        binding.bioTextField.setText(userData.about,TextView.BufferType.EDITABLE)
-        val sports = userData.sportsList!!.joinToString(
+        binding.nameTextField.setText(userData?.name, TextView.BufferType.EDITABLE)
+        binding.mailTextField.setText(userData?.email, TextView.BufferType.EDITABLE)
+        binding.cityTextField.setText(userData?.city, TextView.BufferType.EDITABLE)
+        binding.passwordTextField.setText(userData?.password, TextView.BufferType.EDITABLE)
+        binding.bioTextField.setText(userData?.about, TextView.BufferType.EDITABLE)
+        val sports = userData?.sportsList?.joinToString(
             " , "
         )
         binding.sportsTextField.setText(sports, TextView.BufferType.EDITABLE)

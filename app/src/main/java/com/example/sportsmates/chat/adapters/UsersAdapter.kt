@@ -10,7 +10,7 @@ import com.example.sportsmates.chat.model.MessageModel
 import com.example.sportsmates.databinding.ChatUsersListItemBinding
 import com.example.sportsmates.ext.inflater
 
-class UsersAdapter(private val userList: List<MessageModel>?, private val context: Context?) :
+class UsersAdapter(private val userList: List<MessageModel?>?, private val context: Context) :
     RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
     var onItemClick: ((MessageModel, ImageView) -> Unit)? = null
 
@@ -20,7 +20,7 @@ class UsersAdapter(private val userList: List<MessageModel>?, private val contex
             binding.userName.text = messageItem.userName
             binding.lastImage.text = messageItem.message
             binding.time.text=messageItem.time
-            Glide.with(context!!)
+            Glide.with(context)
                 .load(messageItem.userImage)
                 .circleCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())

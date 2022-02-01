@@ -4,10 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/eiffel/AndroidStudioProjects/NewsFeed/sportsmates/app/src/main/res/layout/activity_news_details.xml" value="0.10740740740740741" />
+        <entry key="app/src/main/res/layout/sign_up_sport_fargment.xml" value="0.3076576576576577" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

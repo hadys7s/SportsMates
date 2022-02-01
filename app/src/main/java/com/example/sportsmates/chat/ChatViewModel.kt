@@ -10,25 +10,25 @@ import com.example.sportsmates.ext.getCurrentUserID
 import com.google.firebase.database.*
 
 class ChatViewModel(private val userPreferences: UserPreferences) : ViewModel() {
-    var retriveChatSuceess = MutableLiveData<ArrayList<Chat>?>()
+    var retriveChatSuceess = MutableLiveData<ArrayList<Chat>>()
     var retriveChatErorr = MutableLiveData<String?>()
-    var listOfChat = MutableLiveData<MutableList<MessageModel>?>()
+    var listOfChat = MutableLiveData<List<MessageModel?>?>()
     val reference: DatabaseReference = FirebaseDatabase.getInstance().reference
 
     fun getUserListOfChat() {
-        val listOfUserChat: MutableList<MessageModel>? = mutableListOf()
-        val reference: DatabaseReference? =
+        val listOfUserChat: MutableList<MessageModel?> = mutableListOf()
+        val reference: DatabaseReference =
             FirebaseDatabase.getInstance().getReference("UserChatList").child(getCurrentUserID())
-        reference!!.addValueEventListener(object : ValueEventListener {
+        reference.addValueEventListener(object : ValueEventListener {
 
             override fun onCancelled(error: DatabaseError) {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                listOfUserChat!!.clear()
+                listOfUserChat.clear()
                 for (data in snapshot.children) {
                     val chatRow = data.getValue(MessageModel::class.java)
-                    listOfUserChat.add(chatRow!!)
+                    listOfUserChat.add(chatRow)
                 }
                 listOfChat.value = listOfUserChat
             }
@@ -40,14 +40,13 @@ class ChatViewModel(private val userPreferences: UserPreferences) : ViewModel() 
     fun sendMessage(
         messageModel: MessageModel
     ) {
-        val reference: DatabaseReference? = FirebaseDatabase.getInstance().reference
-        val hashMap: HashMap<String, String>? = HashMap()
-        hashMap?.put("receiverId", messageModel.userId!!)
-        hashMap?.put("senderId", getCurrentUserID())
-        hashMap?.put("message", messageModel.message!!)
-        hashMap?.put("time", getCurrentTime())
-        reference?.child("Chat")?.child(calculateChatId(messageModel.userId))?.push()
-            ?.setValue(hashMap)
+        val reference: DatabaseReference = FirebaseDatabase.getInstance().reference
+        val hashMap: HashMap<String, String> = HashMap()
+        hashMap["receiverId"] = messageModel.userId!!
+        hashMap["senderId"] = getCurrentUserID()
+        hashMap["message"] = messageModel.message!!
+        hashMap["time"] = getCurrentTime()
+        reference.child("Chat").child(calculateChatId(messageModel.userId)).push().setValue(hashMap)
         updateUserChatList(messageModel)
         updateOtherUserChatList(messageModel)
     }
@@ -66,7 +65,7 @@ class ChatViewModel(private val userPreferences: UserPreferences) : ViewModel() 
                 ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        dataSnapshot.child("message").ref.setValue(messageModel.message!!)
+                        dataSnapshot.child("message").ref.setValue(messageModel.message)
                         dataSnapshot.child("time").ref.setValue(getCurrentTime())
                     } else {
                         reference.child("UserChatList").child(getCurrentUserID())
@@ -119,21 +118,21 @@ class ChatViewModel(private val userPreferences: UserPreferences) : ViewModel() 
     }
 
     fun readMessage(receiverId: String?) {
-        val listOfChat: ArrayList<Chat>? = arrayListOf()
-        val reference: DatabaseReference? =
+        val listOfChat: ArrayList<Chat> = arrayListOf()
+        val reference: DatabaseReference =
             FirebaseDatabase.getInstance().getReference("Chat").child(calculateChatId(receiverId))
-        reference!!.addValueEventListener(object : ValueEventListener {
+        reference.addValueEventListener(object : ValueEventListener {
 
             override fun onCancelled(error: DatabaseError) {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                listOfChat!!.clear()
+                listOfChat.clear()
                 for (data in snapshot.children) {
                     val chat = data.getValue(Chat::class.java)
                     listOfChat.add(chat!!)
                 }
-                retriveChatSuceess.postValue(listOfChat)
+                retriveChatSuceess.value = (listOfChat)
             }
 
         })

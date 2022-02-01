@@ -25,10 +25,10 @@
             android:name=".chat.ChatActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
-            android:name=".home.events.EventDetailActivity"
+            android:name=".home.presentation.activity.EventDetailActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
-            android:name=".home.news.presentation.activity.NewsDetailsActivity"
+            android:name="com.example.sportsmates.home.presentation.activity.NewsDetailsActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
             android:name=".discover.ContactsDetails"
@@ -45,7 +45,7 @@
         <activity
             android:name=".editProfile.EditProfileActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
-        <activity android:name=".home.MainActivity" />
+        <activity android:name=".home.presentation.activity.MainActivity" />
         <activity
             android:name=".signUp.SignUpActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />

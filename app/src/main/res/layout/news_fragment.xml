@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
-    tools:context=".home.news.presentation.fragment.NewsFragment">
+    tools:context=".home.presentation.fragment.NewsFragment">
 
 
     <TextView

@@ -1,5 +1,6 @@
 package com.example.sportsmates.place
 
+import android.content.Context
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -7,7 +8,7 @@ import com.example.sportsmates.coach.GlideApp
 import com.example.sportsmates.databinding.CoachListItemBinding
 import com.example.sportsmates.ext.inflater
 
-class PlaceAdapter(private val placeList: List<Place?>?, private val context: FragmentActivity?) :
+class PlaceAdapter(private val placeList: List<Place?>, private val context: Context) :
     RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
     var onItemClick: ((Place) -> Unit)? = null
 
@@ -19,7 +20,7 @@ class PlaceAdapter(private val placeList: List<Place?>?, private val context: Fr
             binding.partnerSport.text = placeItem.placeType
             binding.partnerAddress.text = placeItem.address
             binding.pricePerHour.text = placeItem.pricePerHour + "/hour"
-            GlideApp.with(context!!)
+            GlideApp.with(context)
                 .load(placeItem.imageList?.get(0))
                 .into(binding.partnerImage)
             itemView.setOnClickListener { onItemClick?.invoke(placeItem) }
@@ -30,10 +31,10 @@ class PlaceAdapter(private val placeList: List<Place?>?, private val context: Fr
         return ViewHolder(CoachListItemBinding.inflate(parent.context.inflater, parent, false))
     }
 
-    override fun getItemCount(): Int = placeList!!.size
+    override fun getItemCount(): Int = placeList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        placeList?.get(position)?.let { holder.bind(it) }
+        placeList[position]?.let { holder.bind(it) }
     }
 
 }

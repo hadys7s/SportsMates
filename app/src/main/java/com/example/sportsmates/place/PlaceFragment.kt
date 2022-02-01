@@ -49,7 +49,7 @@ class PlaceFragment : Fragment() {
 
 
     private fun setPlaces(placesList: List<Place?>) {
-        placeAdapter = PlaceAdapter(placesList, activity)
+        placeAdapter = PlaceAdapter(placesList, requireActivity())
         binding.placesList.adapter = placeAdapter
         placeAdapter.onItemClick = {
             PlaceDetailsActivity.start(activity, it.toUiModel())

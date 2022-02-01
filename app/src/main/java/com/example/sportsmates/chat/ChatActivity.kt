@@ -36,7 +36,7 @@ class ChatActivity : AppCompatActivity() {
             stopShimmer(binding.shimmerViewContainer)
         })
     }
-    private fun setUserChatList(listOfChat: List<MessageModel>?) {
+    private fun setUserChatList(listOfChat: List<MessageModel?>?) {
         userChatListAdapter = UsersAdapter(listOfChat?.reversed(), this)
         binding.chatList.adapter = userChatListAdapter
         userChatListAdapter.onItemClick = { messageModel, imageView ->
