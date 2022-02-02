@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sportsmates.databinding.FragmentPlaceBinding
+import com.example.sportsmates.ext.displayErrorToast
 import com.example.sportsmates.ext.stateCollector
 import com.example.sportsmates.ext.stopShimmer
 import com.example.sportsmates.networking.Resource
@@ -45,7 +46,7 @@ class PlaceFragment : Fragment() {
                     setPlaces(state.data)
                 }
                 is Resource.Error -> {
-
+                    displayErrorToast("Error",state.exception.message.toString())
                 }
                 Resource.Loading -> {
 

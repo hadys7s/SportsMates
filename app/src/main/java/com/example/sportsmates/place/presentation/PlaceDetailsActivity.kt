@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.sportsmates.booking.BookingActivity
 import com.example.sportsmates.coach.SliderAdapterExample
 import com.example.sportsmates.databinding.ActivityPlaceDetailsBinding
+import com.example.sportsmates.ext.displayErrorToast
 import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
 import com.example.sportsmates.ext.stateCollector
 import com.example.sportsmates.networking.Resource
@@ -72,7 +73,7 @@ class PlaceDetailsActivity : AppCompatActivity() {
 
                 }
                 is Resource.Error -> {
-
+                    displayErrorToast("Error",state.exception.message.toString())
                 }
                 Resource.Loading -> {
 
