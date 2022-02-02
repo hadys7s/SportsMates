@@ -14,7 +14,7 @@ import com.example.sportsmates.databinding.ActivityMainBinding
 import com.example.sportsmates.discover.ContactsFragment
 import com.example.sportsmates.ext.replaceFragment
 import com.example.sportsmates.home.presentation.fragment.HomeFragment
-import com.example.sportsmates.place.PlaceFragment
+import com.example.sportsmates.place.presentation.PlaceFragment
 import com.example.sportsmates.profile.ProfileFragment
 
 

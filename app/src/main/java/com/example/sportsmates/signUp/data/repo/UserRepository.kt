@@ -36,6 +36,10 @@ class UserRepository(
     var updateInfoSuccess = MutableLiveData<String>()
     var updateInfoFailuer = MutableLiveData<String>()
 
+    init {
+        fetchUserData()
+    }
+
     fun login(email: String, password: String) {
         userAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
@@ -104,6 +108,7 @@ class UserRepository(
                     userData.postValue(user ?: User())
                     userpref.name = user?.name
                     userpref.email = user?.email
+                    userpref.city = user?.city
                 } else {
                     Log.d(TAG, "getUser:Failed", task.exception)
 

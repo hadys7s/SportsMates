@@ -17,7 +17,10 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.sportsmates.R
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import www.sanju.motiontoast.MotionToast
 
 
@@ -154,4 +157,10 @@ fun Activity.withTransitionAnimation(
 ): Bundle? {
     return ActivityOptionsCompat.makeSceneTransitionAnimation(this, targetImage, "img")
         .toBundle()
+}
+
+fun <T> AppCompatActivity.stateCollector(flow: Flow<T>, collect: suspend (T) -> Unit) {
+    this.lifecycleScope.launchWhenStarted {
+        flow.collect(collect)
+    }
 }

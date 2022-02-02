@@ -1,4 +1,4 @@
-package com.example.sportsmates.place
+package com.example.sportsmates.place.presentation
 
 
 import android.os.Parcelable
@@ -9,6 +9,7 @@ data class PlaceUiModel(
     val name: String? = "",
     val open: String? = "",
     val close: String? = "",
+    val city : String? = "",
     val placeId: String? = "",
     val email: String? = "",
     val about: String? = "",

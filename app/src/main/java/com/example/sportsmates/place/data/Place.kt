@@ -1,5 +1,7 @@
-package com.example.sportsmates.place
+package com.example.sportsmates.place.data
 
+import android.net.Uri
+import com.example.sportsmates.place.presentation.PlaceUiModel
 import com.google.firebase.storage.StorageReference
 
 data class Place(
@@ -9,10 +11,11 @@ data class Place(
     val placeId: String? = "",
     val email: String? = "",
     val about: String? = "",
+    val city: String? = "",
     val pricePerHour: String? = "",
     val address: String? = "",
     val placeType: String? = "",
-    var imageList: List<StorageReference>? = listOf()
+    var mainImage: String? = ""
 )
 
 fun Place.toUiModel(): PlaceUiModel {
@@ -21,6 +24,7 @@ fun Place.toUiModel(): PlaceUiModel {
         open = this.open,
         close = this.close,
         about = this.about,
+        city = this.city,
         pricePerHour = this.pricePerHour,
         address = this.address,
         email = this.email,

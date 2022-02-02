@@ -17,7 +17,7 @@ import com.example.sportsmates.ext.displayErrorToast
 import com.example.sportsmates.ext.displaySuccessToast
 import com.example.sportsmates.ext.displayWarningToast
 import com.example.sportsmates.home.data.datamodels.EventDataItem
-import com.example.sportsmates.place.PlaceUiModel
+import com.example.sportsmates.place.presentation.PlaceUiModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.viewmodel.ext.android.viewModel
