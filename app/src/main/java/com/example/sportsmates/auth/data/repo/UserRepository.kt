@@ -1,11 +1,11 @@
-package com.example.sportsmates.signUp.data.repo
+package com.example.sportsmates.auth.data.repo
 
 import android.content.ContentValues
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.sportsmates.UserPreferences
-import com.example.sportsmates.signUp.data.model.User
+import com.example.sportsmates.auth.data.model.User
 import com.example.sportsmates.utils.SingleLiveEvent
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.EmailAuthProvider

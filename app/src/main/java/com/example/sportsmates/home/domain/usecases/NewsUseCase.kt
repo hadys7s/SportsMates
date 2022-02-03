@@ -2,7 +2,7 @@ package com.example.sportsmates.home.domain.usecases
 
 import com.example.sportsmates.home.domain.datainterfaces.NewsRepository
 import com.example.sportsmates.home.domain.entities.NewsItem
-import com.example.sportsmates.signUp.data.repo.UserRepository
+import com.example.sportsmates.auth.data.repo.UserRepository
 
 class NewsUseCase(
     private val newsRepository: NewsRepository,

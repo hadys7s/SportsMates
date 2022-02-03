@@ -1,4 +1,4 @@
-package com.example.sportsmates.signUp.fragments
+package com.example.sportsmates.auth.presentation.signUp.fragments
 
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
@@ -16,8 +16,8 @@ import com.bumptech.glide.Glide
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.SignUpEmailPasswordFragmentBinding
 import com.example.sportsmates.ext.*
-import com.example.sportsmates.signUp.data.model.User
-import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
+import com.example.sportsmates.auth.data.model.User
+import com.example.sportsmates.auth.presentation.signUp.viewmodel.SignUpViewModel
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.viewmodel.ext.android.viewModel
 

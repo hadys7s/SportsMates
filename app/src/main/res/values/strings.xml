@@ -14,6 +14,7 @@
     <string name="tv_Message">Message</string>
     <string name="tv_edit_profile">Edit Profile</string>
     <string name="permissin_denied">Permission Denied</string>
+    <string name="login">Login</string>
     <string-array name="citys">
         <item>Damietta</item>
         <item>Mansoura</item>

@@ -1,10 +1,10 @@
-package com.example.sportsmates.signUp.viewmodel
+package com.example.sportsmates.auth.presentation.signUp.viewmodel
 
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.sportsmates.signUp.data.model.User
-import com.example.sportsmates.signUp.data.repo.UserRepository
+import com.example.sportsmates.auth.data.model.User
+import com.example.sportsmates.auth.data.repo.UserRepository
 import com.example.sportsmates.utils.SingleLiveEvent
 
 class SignUpViewModel(private val userRepository: UserRepository) :

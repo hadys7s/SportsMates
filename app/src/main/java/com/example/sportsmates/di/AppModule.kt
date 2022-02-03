@@ -10,14 +10,14 @@ import com.example.sportsmates.home.data.repositories.EventsRepositoryImpl
 import com.example.sportsmates.home.domain.datainterfaces.EventsRepository
 import com.example.sportsmates.home.domain.usecases.EventsUseCase
 import com.example.sportsmates.home.presentation.viewmodel.EventsViewModel
-import com.example.sportsmates.login.SignInViewModel
+import com.example.sportsmates.auth.presentation.login.SignInViewModel
 import com.example.sportsmates.place.data.PlacesRepositoryImpl
 import com.example.sportsmates.place.domain.PlacesRepository
 import com.example.sportsmates.place.domain.PlacesUseCase
 import com.example.sportsmates.place.presentation.PLaceViewModel
 import com.example.sportsmates.profile.ProfileViewModel
-import com.example.sportsmates.signUp.data.repo.UserRepository
-import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
+import com.example.sportsmates.auth.data.repo.UserRepository
+import com.example.sportsmates.auth.presentation.signUp.viewmodel.SignUpViewModel
 import com.example.sportsmates.splash.SplashViewModel
 import com.google.firebase.auth.FirebaseAuth
 import org.koin.android.ext.koin.androidContext

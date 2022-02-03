@@ -14,8 +14,8 @@ import com.bumptech.glide.Glide
 import com.example.sportsmates.R
 import com.example.sportsmates.databinding.ActivityEditProfile2Binding
 import com.example.sportsmates.ext.*
-import com.example.sportsmates.signUp.data.model.User
-import com.example.sportsmates.signUp.fragments.SignUpEmailFragment
+import com.example.sportsmates.auth.data.model.User
+import com.example.sportsmates.auth.presentation.signUp.fragments.SignUpEmailFragment
 import com.example.sportsmates.utils.InfoType
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout

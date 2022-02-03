@@ -15,8 +15,8 @@ import com.example.sportsmates.ext.openActivity
 import com.example.sportsmates.ext.withTransitionAnimation
 import com.example.sportsmates.ext.openTopActivity
 import com.example.sportsmates.ext.stopShimmer
-import com.example.sportsmates.signUp.SignUpActivity
-import com.example.sportsmates.signUp.data.model.User
+import com.example.sportsmates.auth.presentation.signUp.SignUpActivity
+import com.example.sportsmates.auth.data.model.User
 
 import org.koin.android.viewmodel.ext.android.viewModel
 

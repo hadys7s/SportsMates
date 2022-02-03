@@ -1,7 +1,7 @@
 package com.example.sportsmates.splash
 
 import androidx.lifecycle.ViewModel
-import com.example.sportsmates.signUp.data.repo.UserRepository
+import com.example.sportsmates.auth.data.repo.UserRepository
 import com.example.sportsmates.utils.SingleLiveEvent
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot

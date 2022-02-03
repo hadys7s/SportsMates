@@ -1,9 +1,9 @@
-package com.example.sportsmates.signUp
+package com.example.sportsmates.auth.presentation.signUp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sportsmates.R
-import com.example.sportsmates.SignUp.SignInFragment
+import com.example.sportsmates.auth.presentation.login.SignInFragment
 import com.example.sportsmates.ext.replaceFragment
 import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
 

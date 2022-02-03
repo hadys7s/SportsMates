@@ -8,8 +8,12 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.Window
 import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
@@ -37,6 +41,8 @@ fun AppCompatActivity.replaceFragment(
             .commit()
     }
 }
+
+
 
 fun AppCompatActivity.openTopActivity(
     context: Context,

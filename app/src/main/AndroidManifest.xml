@@ -47,7 +47,7 @@
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity android:name=".home.presentation.activity.MainActivity" />
         <activity
-            android:name=".signUp.SignUpActivity"
+            android:name=".auth.presentation.signUp.SignUpActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
             android:name=".splash.SplashActivity"

@@ -1,4 +1,4 @@
-package com.example.sportsmates.signUp.fragments
+package com.example.sportsmates.auth.presentation.signUp.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,8 +13,8 @@ import com.example.sportsmates.ext.displayWarningToast
 import com.example.sportsmates.ext.openTopActivity
 import com.example.sportsmates.ext.setStepper
 import com.example.sportsmates.home.presentation.activity.MainActivity
-import com.example.sportsmates.signUp.data.model.User
-import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
+import com.example.sportsmates.auth.data.model.User
+import com.example.sportsmates.auth.presentation.signUp.viewmodel.SignUpViewModel
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase

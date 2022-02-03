@@ -2,15 +2,13 @@ package com.example.sportsmates.discover
 
 import android.content.Context
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.sportsmates.databinding.ContactsListItemBinding
 import com.example.sportsmates.ext.inflater
-import com.example.sportsmates.signUp.data.model.User
+import com.example.sportsmates.auth.data.model.User
 
 class ContactsAdapter(private val userList: List<User>, private val context: Context) :
     RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
