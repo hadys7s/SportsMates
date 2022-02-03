@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"
+        android:title="@string/tab_bar_home_tab_title"/>
+    <item
+        android:id="@+id/places"
+        android:enabled="true"
+        android:icon="@drawable/ic_places"
+        android:title="@string/tab_bar_places_tab_title"/>
+    <item
+        android:id="@+id/discover"
+        android:enabled="true"
+        android:icon="@drawable/ic_discover"
+        android:title="@string/tab_bar_discover_tab_title"/>
+    <item
+        android:id="@+id/coach"
+        android:enabled="true"
+        android:icon="@drawable/ic_coach"
+        android:title="@string/tab_bar_coach_tab_title"/>
+    <item
+        android:id="@+id/profile"
+        android:enabled="true"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/tab_bar_profile_tab_title"/>
+</menu>
