@@ -18,7 +18,7 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
 
 
-class UserRepository(
+class UserRepository1(
     private val userAuth: FirebaseAuth,
     private val userpref: UserPreferences
 ) {
@@ -36,9 +36,6 @@ class UserRepository(
     var updateInfoSuccess = MutableLiveData<String>()
     var updateInfoFailuer = MutableLiveData<String>()
 
-    init {
-        fetchUserData()
-    }
 
     fun login(email: String, password: String) {
         userAuth.signInWithEmailAndPassword(email, password)
@@ -100,7 +97,7 @@ class UserRepository(
 
     fun fetchUserData() {
         FirebaseDatabase.getInstance().getReference("Users")
-            .child(Firebase.auth.currentUser.uid)
+            .child(userAuth.currentUser.uid)
             .get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "getUser:Success")

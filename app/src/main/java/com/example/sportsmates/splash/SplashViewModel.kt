@@ -1,7 +1,7 @@
 package com.example.sportsmates.splash
 
 import androidx.lifecycle.ViewModel
-import com.example.sportsmates.auth.data.repo.UserRepository
+import com.example.sportsmates.auth.data.repo.UserRepository1
 import com.example.sportsmates.utils.SingleLiveEvent
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -10,7 +10,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 
-class SplashViewModel(private val userRepository: UserRepository) : ViewModel() {
+class SplashViewModel(private val userRepository: UserRepository1) : ViewModel() {
     val authenticationNavigationEvent = SingleLiveEvent<Any>()
     val homeNavigationEvent = SingleLiveEvent<Any>()
 

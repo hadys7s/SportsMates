@@ -2,11 +2,11 @@ package com.example.sportsmates.home.domain.usecases
 
 import com.example.sportsmates.home.domain.datainterfaces.NewsRepository
 import com.example.sportsmates.home.domain.entities.NewsItem
-import com.example.sportsmates.auth.data.repo.UserRepository
+import com.example.sportsmates.auth.data.repo.UserRepository1
 
 class NewsUseCase(
     private val newsRepository: NewsRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository1
 ) {
     suspend fun getRecommendedNewsBasedOnUserSports(
     ): List<NewsItem> {

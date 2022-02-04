@@ -3,6 +3,7 @@ import android.view.View
 import android.widget.ProgressBar
 import com.example.sportsmates.R
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.google.gson.Gson
 
 
 fun stopShimmer(shimmer:ShimmerFrameLayout){
@@ -18,4 +19,12 @@ fun View.showLoading() {
 fun View.hideLoading() {
     val progress = this.findViewById<ProgressBar>(R.id.progress_circular)
     progress.visibility = View.GONE
+}
+
+inline fun <reified R> String.fromJson(): R {
+    return Gson().fromJson(this, R::class.java)
+}
+
+inline fun <reified R> R.toJson(): String {
+    return Gson().toJson(this, R::class.java)
 }

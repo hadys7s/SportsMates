@@ -1,19 +1,16 @@
-package com.example.sportsmates.auth.presentation.login
+package com.example.sportsmates.auth.presentation.signIn
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.example.sportsmates.R
 import com.example.sportsmates.auth.presentation.signUp.fragments.SignUpEmailFragment
 import com.example.sportsmates.databinding.SignInFragmentBinding
-import com.example.sportsmates.ext.displayErrorToast
-import com.example.sportsmates.ext.hideLoading
-import com.example.sportsmates.ext.openTopActivity
-import com.example.sportsmates.ext.pushFragment
+import com.example.sportsmates.ext.*
 import com.example.sportsmates.home.presentation.activity.MainActivity
+import com.example.sportsmates.networking.Resource
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -26,7 +23,7 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         attachCLickListeners()
-        attachEventObservers()
+        listenToLoginState()
     }
 
     override fun onCreateView(
@@ -39,16 +36,22 @@ class SignInFragment : Fragment() {
     }
 
 
-    private fun attachEventObservers() {
-        viewModel.loginSuccess.observe(this, Observer { user ->
-            //  redirect home
-            binding.loginButton.myBtn.hideLoading()
-            openTopActivity(activity, MainActivity())
-        })
-        viewModel.loginFailed.observe(this, Observer { errorMessage ->
-            binding.loginButton.myBtn.hideLoading()
-            displayErrorToast("Failed", errorMessage)
-        })
+    private fun listenToLoginState() {
+        stateCollector(viewModel.loginState) {
+            when (it) {
+                is Resource.Loading -> {
+                    binding.loginButton.myBtn.showLoading()
+                }
+                is Resource.Error -> {
+                    binding.loginButton.myBtn.hideLoading()
+                    displayErrorToast("Failed", it.exception.message!!)
+                }
+                is Resource.Success -> {
+                    binding.loginButton.myBtn.hideLoading()
+                    openTopActivity(activity, MainActivity())
+                }
+            }
+        }
     }
 
     private fun attachCLickListeners() {
@@ -58,8 +61,8 @@ class SignInFragment : Fragment() {
         with(binding.loginButton) {
             btnText.text = getString(R.string.login)
             myBtn.setOnClickListener {
-                validation()
-                login()
+                if (validation())
+                    login()
             }
         }
     }
