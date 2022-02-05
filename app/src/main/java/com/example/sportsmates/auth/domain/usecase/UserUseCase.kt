@@ -16,9 +16,9 @@ class UserUseCase(private val userRepository: UserRepository) {
            }
     }
 
-    suspend fun signUp(user:User):Flow<Boolean>?{
+    suspend fun signUp(user:User):Flow<Boolean?>{
         return userRepository.signUp(user)
-            ?.catch {
+            .catch {
                 throw SignUpError(it.message!!)
             }
     }

@@ -27,6 +27,7 @@ class NewsFragment : Fragment() {
     private lateinit var smallNewsAdapter: SmallNewsAdapter
     private lateinit var tallNewsAdapter: TallNewsAdapter
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

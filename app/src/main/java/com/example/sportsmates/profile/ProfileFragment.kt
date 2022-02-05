@@ -7,17 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.example.sportsmates.auth.data.model.User
+import com.example.sportsmates.auth.presentation.signUp.SignUpActivity
 import com.example.sportsmates.databinding.ProfileFragmentBinding
 import com.example.sportsmates.editProfile.EditProfileActivity
-import com.example.sportsmates.ext.openActivity
-import com.example.sportsmates.ext.withTransitionAnimation
-import com.example.sportsmates.ext.openTopActivity
-import com.example.sportsmates.ext.stopShimmer
-import com.example.sportsmates.auth.presentation.signUp.SignUpActivity
-import com.example.sportsmates.auth.data.model.User
-
+import com.example.sportsmates.ext.*
+import com.example.sportsmates.networking.Resource
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -47,7 +43,7 @@ class ProfileFragment : Fragment() {
 
     private fun fetchArguments() {
         viewModel.fetchUserData()
-        viewModel.getUserImage()
+        //viewModel.getUserImage()
     }
 
     override fun onResume() {
@@ -57,21 +53,24 @@ class ProfileFragment : Fragment() {
 
 
     private fun attachEventObservers() {
-        viewModel.userData.observe(this, Observer { userData ->
-            stopShimmer(binding.shimmerViewContainer)
-            bindUserData(userData)
-
-        })
-        viewModel.userImage.observe(this, Observer { imageUri ->
-            stopShimmer(binding.shimmerViewContainer)
-            setUserImage(imageUri)
-
-        })
+        stateCollector(viewModel.userData) {
+            when (it) {
+                is Resource.Error -> {
+                    stopShimmer(binding.shimmerViewContainer)
+                    displayErrorToast("Failed",it.exception.message!!)
+                }
+                is Resource.Success -> {
+                    stopShimmer(binding.shimmerViewContainer)
+                    bindUserData(it.data)
+                    it.data.userImage?.let { it1 -> setUserImage(it1) }
+                }
+            }
+        }
     }
 
     private fun attachCLickListeners() {
         binding.editProfileButton.setOnClickListener {
-            openActivity(EditProfileActivity(),withTransitionAnimation(binding.profileImage))
+            openActivity(EditProfileActivity(), withTransitionAnimation(binding.profileImage))
         }
 
         binding.logoutButton.setOnClickListener {
@@ -91,7 +90,7 @@ class ProfileFragment : Fragment() {
         binding.profileName.text = userInfo.name
         binding.profileEmail.text = userInfo.email
         binding.profileAddress.text = userInfo.city
-        binding.ProfileAboutMeDescription.text=userInfo.about
+        binding.ProfileAboutMeDescription.text = userInfo.about
         binding.sports1.text = userInfo.sportsList.get(0)
         if (userInfo.sportsList.size > 1) {
             binding.sports2.text = userInfo.sportsList[1]

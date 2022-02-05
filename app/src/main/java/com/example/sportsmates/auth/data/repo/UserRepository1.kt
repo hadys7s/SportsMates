@@ -79,22 +79,6 @@ class UserRepository1(
     }
 
 
-    fun addUserToDataBase(user: User?) {
-        FirebaseDatabase.getInstance().getReference("Users")
-            .child(userAuth.currentUser.uid)
-            .setValue(user).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "userAddedToDataBase:Success")
-                    signUpSuccess.call()
-
-
-                } else {
-                    Log.d(TAG, "userAddedToDataBase:Failed")
-                    signUpFailed.postValue(task.exception?.message)
-                }
-            }
-    }
-
     fun fetchUserData() {
         FirebaseDatabase.getInstance().getReference("Users")
             .child(userAuth.currentUser.uid)

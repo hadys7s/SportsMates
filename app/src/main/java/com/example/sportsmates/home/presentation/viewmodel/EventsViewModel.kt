@@ -20,7 +20,7 @@ class EventsViewModel(private val eventsUseCase: EventsUseCase) : ViewModel() {
     }
 
     private fun getEvents() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             try {
                 _listOfEventDataItems.emit(Resource.Success(data = eventsUseCase.getRelatedEvents()))
             } catch (ex: Exception) {

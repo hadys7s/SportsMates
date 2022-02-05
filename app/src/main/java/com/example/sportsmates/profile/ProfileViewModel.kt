@@ -1,36 +1,33 @@
 package com.example.sportsmates.profile
 
-import android.net.Uri
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.sportsmates.auth.data.repo.UserRepository1
+import androidx.lifecycle.viewModelScope
 import com.example.sportsmates.auth.data.model.User
+import com.example.sportsmates.auth.domain.datainterfaces.UserRepository
+import com.example.sportsmates.networking.Resource
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.launch
 
-class ProfileViewModel(private val userRepository: UserRepository1) : ViewModel() {
+class ProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
 
-    var userData = MutableLiveData<User>()
-    var userImage = MutableLiveData<Uri>()
+    private var _userData = MutableStateFlow<Resource<User>>(Resource.Loading)
+    val userData get() = _userData.asStateFlow()
 
 
-    init {
-        userData = userRepository.userData
-        userImage = userRepository.retriveImage
-        fetchUserData()
-        getUserImage()
+    fun fetchUserData() = viewModelScope.launch {
+        userRepository.getUserInfo()
+            .catch {
+                _userData.emit(Resource.Error(it))
+            }
+            .collect { user ->
+                user?.let { _userData.emit(Resource.Success(it)) }
+            }
     }
 
-    fun fetchUserData() {
-        userRepository.fetchUserData()
-    }
-
-    fun logout() {
+    fun logout() = viewModelScope.launch {
         userRepository.logout()
     }
-
-    fun getUserImage() {
-        userRepository.retrievePhoto()
-    }
-
-
 
 }

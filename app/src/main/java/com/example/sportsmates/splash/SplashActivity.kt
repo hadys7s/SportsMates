@@ -1,6 +1,5 @@
 package com.example.sportsmates.splash
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer

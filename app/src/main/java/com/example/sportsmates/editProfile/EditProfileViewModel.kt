@@ -24,7 +24,7 @@ class EditProfileViewModel(private val userRepository: UserRepository1) : ViewMo
     }
 
     fun fetchUserData() {
-        userRepository.fetchUserData()
+        //userRepository.fetchUserData()
     }
 
     fun getUserImage() {
@@ -32,7 +32,7 @@ class EditProfileViewModel(private val userRepository: UserRepository1) : ViewMo
     }
 
     fun uploadProfileImage(filePath: Uri) {
-        userRepository.uploadPhoto(filePath)
+       // userRepository.uploadPhoto(filePath)
     }
 
     fun updateUserName(name:String){

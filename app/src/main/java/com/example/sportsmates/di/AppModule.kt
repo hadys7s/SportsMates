@@ -1,7 +1,7 @@
 package com.example.sportsmates.di
 
 import com.example.sportsmates.UserPreferences
-import com.example.sportsmates.auth.data.datasources.AuthDataSource
+import com.example.sportsmates.auth.data.datasources.UserInfoDataSource
 import com.example.sportsmates.booking.BookingViewModel
 import com.example.sportsmates.chat.ChatViewModel
 import com.example.sportsmates.coach.CoachViewModel
@@ -31,7 +31,7 @@ import org.koin.dsl.module
 val SignUpModule = module {
     factory { UserRepository1(get(), get()) }
     factory { UserPreferences(androidContext()) }
-    factory {AuthDataSource(get())}
+    factory {UserInfoDataSource(get())}
     single<UserRepository> { UserRepositoryImp(get(),get()) }
     factory { UserUseCase(get()) }
     viewModel { SignUpViewModel(get()) }

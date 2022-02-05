@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.example.sportsmates.R
 import com.example.sportsmates.auth.data.model.User
@@ -17,11 +16,8 @@ import com.example.sportsmates.ext.*
 import com.example.sportsmates.home.presentation.activity.MainActivity
 import com.example.sportsmates.networking.Resource
 import com.google.android.material.chip.Chip
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.android.viewmodel.ext.android.sharedViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class SignUpSportsFragment : Fragment() {
@@ -45,7 +41,7 @@ class SignUpSportsFragment : Fragment() {
             myBtn.setOnClickListener {
                 if (validateSelectOnlyThreeSports()) {
                     // view model signUp
-                    viewModel.initInput(signUpUserInfo(),SignUpSteps.STEP_THREE)
+                    viewModel.initInput(signUpUserInfo(), SignUpSteps.STEP_THREE)
                     viewModel.signUp()
 
                 }
