@@ -7,24 +7,27 @@ import android.view.ViewGroup
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.example.sportsmates.databinding.SignUpSportFargmentBinding
-import com.example.sportsmates.ext.displayErrorToast
-import com.example.sportsmates.ext.displayWarningToast
-import com.example.sportsmates.ext.openTopActivity
-import com.example.sportsmates.ext.setStepper
-import com.example.sportsmates.home.presentation.activity.MainActivity
+import androidx.lifecycle.lifecycleScope
+import com.example.sportsmates.R
 import com.example.sportsmates.auth.data.model.User
+import com.example.sportsmates.auth.presentation.signUp.viewmodel.SignUpSteps
 import com.example.sportsmates.auth.presentation.signUp.viewmodel.SignUpViewModel
+import com.example.sportsmates.databinding.SignUpSportFargmentBinding
+import com.example.sportsmates.ext.*
+import com.example.sportsmates.home.presentation.activity.MainActivity
+import com.example.sportsmates.networking.Resource
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.flow.collectLatest
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class SignUpSportsFragment : Fragment() {
     private var _binding: SignUpSportFargmentBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: SignUpViewModel by viewModel()
+    private val viewModel: SignUpViewModel by sharedViewModel()
 
 
     override fun onCreateView(
@@ -37,11 +40,15 @@ class SignUpSportsFragment : Fragment() {
     }
 
     private fun doneButton() {
-        binding.doneButton.setOnClickListener {
-            if (validateSelectOnlyThreeSports()) {
-                // view model signUp
-                viewModel.onDoneButtonClicked(signUpUserInfo())
+        with(binding.doneButton){
+            btnText.text = getString(R.string.done_button)
+            myBtn.setOnClickListener {
+                if (validateSelectOnlyThreeSports()) {
+                    // view model signUp
+                    viewModel.initInput(signUpUserInfo(),SignUpSteps.STEP_THREE)
+                    viewModel.signUp()
 
+                }
             }
         }
     }
@@ -49,23 +56,30 @@ class SignUpSportsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setStepper(1, 1, -1, binding.stepper)
-         doneButton()
+        doneButton()
         attachEventObservers()
 
     }
 
-    fun attachEventObservers() {
-        viewModel.signUpSuccess.observe(this,  {
-            // redirect login
-            openTopActivity(activity, MainActivity())
-
-        })
-
-        viewModel.signUpFailed.observe(this, Observer { errorMessage ->
-            displayErrorToast("Error ",errorMessage)
-
-        })
-
+    private fun attachEventObservers() {
+        // redirect login
+        lifecycleScope.launchWhenStarted {
+            viewModel.signUpState.collectLatest {
+                when (it) {
+                    is Resource.Loading -> {
+                        binding.doneButton.myBtn.showLoading()
+                    }
+                    is Resource.Error -> {
+                        binding.doneButton.myBtn.hideLoading()
+                        displayErrorToast("Error ", it.exception.message!!)
+                    }
+                    is Resource.Success -> {
+                        binding.doneButton.myBtn.hideLoading()
+                        openTopActivity(activity, MainActivity())
+                    }
+                }
+            }
+        }
     }
 
     private fun validateSelectOnlyThreeSports(): Boolean {
@@ -91,10 +105,10 @@ class SignUpSportsFragment : Fragment() {
             .toMutableList()
     }
 
-    private fun signUpUserInfo(): User? {
-        val user: User? = arguments?.getParcelable(USER_DATA)
-        user?.sportsList = getSelectedSports()
-        user?.id=Firebase.auth.currentUser.uid
+    private fun signUpUserInfo(): User{
+        val user = User()
+        user.sportsList = getSelectedSports()
+      //  user.id = Firebase.auth.currentUser.uid
         return user
     }
 
@@ -108,12 +122,8 @@ class SignUpSportsFragment : Fragment() {
 
         private const val USER_DATA = "userData"
 
-        fun newInstance(user: User?) =
-            SignUpSportsFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(USER_DATA, user)
-                }
-            }
+        fun newInstance() =
+            SignUpSportsFragment()
 
     }
 }

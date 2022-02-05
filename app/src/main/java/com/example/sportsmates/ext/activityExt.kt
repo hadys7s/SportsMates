@@ -21,10 +21,14 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.sportsmates.R
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import www.sanju.motiontoast.MotionToast
 
 
@@ -165,8 +169,11 @@ fun Activity.withTransitionAnimation(
         .toBundle()
 }
 
-fun <T> AppCompatActivity.stateCollector(flow: Flow<T>, collect: suspend (T) -> Unit) {
-    this.lifecycleScope.launchWhenStarted {
-        flow.collect(collect)
+fun <T> AppCompatActivity.stateCollector(flow: Flow<T>, collect:FlowCollector<T>){
+    this.lifecycleScope.launch {
+        repeatOnLifecycle(Lifecycle.State.STARTED){
+            flow.collect(collect)
+        }
     }
 }
+

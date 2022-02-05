@@ -13,12 +13,16 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.baoyachi.stepview.HorizontalStepView
 import com.baoyachi.stepview.bean.StepBean
 import com.example.sportsmates.R
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.launch
 import www.sanju.motiontoast.MotionToast
 
 fun Fragment.replaceFragment(
@@ -44,7 +48,18 @@ fun Fragment.pushFragment(
         ?.commit()
 
 }
+fun Fragment.addFragment(
+    fragment: Fragment,
+    tag: String? = null,
+    @IdRes containerViewId: Int
+) {
+    val ft = activity?.supportFragmentManager
+        ?.beginTransaction()
+        ?.add(containerViewId, fragment, tag)
+        ?.addToBackStack(fragment.javaClass.name)
+        ?.commit()
 
+}
 
 fun Fragment.handleStoragePermission(
     onSelectImageCallback: (() -> Unit), PERMISSION_CODE: Int
@@ -65,11 +80,17 @@ fun Fragment.handleStoragePermission(
         }
     }
 }
- fun <T> Fragment.stateCollector(flow: Flow<T>, collect: suspend (T) -> Unit) {
-    this.lifecycleScope.launchWhenStarted {
-        flow.collect(collect)
+
+
+
+
+ fun <T> Fragment.stateCollector(flow: Flow<T>, collector:FlowCollector<T>) {
+    this.lifecycleScope.launch {
+        repeatOnLifecycle(Lifecycle.State.STARTED){
+            flow.collect(collector)
+        }
     }
-}
+ }
 
 fun Fragment.selectImage(PICK_IMAGE_REQUEST: Int) {
     val intent = Intent()

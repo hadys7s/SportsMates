@@ -231,18 +231,15 @@
         </com.google.android.material.chip.ChipGroup>
     </LinearLayout>
 
-    <com.google.android.material.button.MaterialButton
+    <include
         android:id="@+id/done_button"
+        layout="@layout/progress_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="48dp"
-        android:backgroundTint="@color/main_green"
         android:padding="16dp"
-        android:text="Done"
-        android:textStyle="bold"
-        app:cornerRadius="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

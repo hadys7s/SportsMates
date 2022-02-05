@@ -17,12 +17,14 @@ import com.example.sportsmates.R
 import com.example.sportsmates.databinding.SignUpEmailPasswordFragmentBinding
 import com.example.sportsmates.ext.*
 import com.example.sportsmates.auth.data.model.User
+import com.example.sportsmates.auth.presentation.signUp.viewmodel.SignUpSteps
 import com.example.sportsmates.auth.presentation.signUp.viewmodel.SignUpViewModel
 import com.google.android.material.textfield.TextInputLayout
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SignUpEmailFragment : Fragment() {
-    private val viewModel: SignUpViewModel by viewModel()
+    private val viewModel: SignUpViewModel by sharedViewModel()
     private lateinit var filePath: Uri
     private var validateImage: Boolean = false
     private lateinit var dialog: AlertDialog
@@ -43,9 +45,8 @@ class SignUpEmailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setStepper(-1, -1, -1, binding.stepView)
         onUploadedButtonSelected()
-        attachEventObservers()
-        attachEventObservers()
         attachOnclickListeners()
+        setInfoFromInput()
     }
 
     private fun attachOnclickListeners() {
@@ -54,31 +55,13 @@ class SignUpEmailFragment : Fragment() {
                 if (!validateImage) {
                     displayWarningToast("Warning ", "Select a Photo !")
                 } else {
-                    viewModel.onNextEmailButtonCLicked(forwardUserInfo(), filePath)
-                    showLoading()
+                    viewModel.initInput(user = forwardUserInfo(),SignUpSteps.STEP_ONE)
+                    navigateToNextScreen()
                 }
             }
 
         }
     }
-
-    private fun attachEventObservers() {
-        viewModel.signUpAuthSuccess.observe(this, Observer {
-            hideLoading()
-            navigateToNextScreen()
-
-        })
-        viewModel.signUpAuthFailed.observe(this, Observer { errMsg ->
-            hideLoading()
-            displayErrorToast("Error ", errMsg)
-        })
-        viewModel.uploadImageFailed.observe(this, Observer { errMsg ->
-            hideLoading()
-            displayErrorToast("Error ", errMsg)
-        })
-
-    }
-
 
     private fun validateUserInfoFiledisEmpty(textInputLayout: TextInputLayout): Boolean {
         val name = textInputLayout.editText?.text.toString()
@@ -117,17 +100,29 @@ class SignUpEmailFragment : Fragment() {
 
     private fun navigateToNextScreen() {
         pushFragment(
-            SignUpUserInfoFragment.newInstance(forwardUserInfo()),
+            SignUpUserInfoFragment.newInstance(),
             containerViewId = R.id.container
         )
     }
-
+    private fun setInfoFromInput(){
+       val info = viewModel.getInfo()
+        binding.edName.editText?.setText(info.name)
+        binding.edEmail.editText?.setText(info.email)
+        binding.edPassword.editText?.setText(info.password)
+        binding.edConfirmPassword.editText?.setText(info.password)
+        if (info.userImage != null)
+        Glide.with(requireActivity())
+            .load(info.userImage)
+            .circleCrop()
+            .into(binding.uploadedPic)
+    }
 
     private fun forwardUserInfo(): User {
         val user = User()
         user.name = binding.edName.editText?.text.toString()
         user.email = binding.edEmail.editText?.text.toString()
         user.password = binding.edConfirmPassword.editText?.text.toString()
+        user.userImage = filePath
         return user
     }
 

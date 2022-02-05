@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.sportsmates.R
 import com.example.sportsmates.auth.presentation.signUp.fragments.SignUpEmailFragment
 import com.example.sportsmates.databinding.SignInFragmentBinding
@@ -12,6 +13,9 @@ import com.example.sportsmates.ext.*
 import com.example.sportsmates.home.presentation.activity.MainActivity
 import com.example.sportsmates.networking.Resource
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.collectLatest
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SignInFragment : Fragment() {
@@ -37,7 +41,7 @@ class SignInFragment : Fragment() {
 
 
     private fun listenToLoginState() {
-        stateCollector(viewModel.loginState) {
+        stateCollector(viewModel.loginState){
             when (it) {
                 is Resource.Loading -> {
                     binding.loginButton.myBtn.showLoading()

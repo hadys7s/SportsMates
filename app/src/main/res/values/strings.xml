@@ -9,6 +9,7 @@
     <string name="profile_sports_title">My Sports</string>
     <string name="edit_profile_button">Edit Profile</string>
     <string name="sign_out_button">Sign out</string>
+    <string name="done_button">Done</string>
     <string name="tab_layout_news">News</string>
     <string name="tab_layout_event">Events</string>
     <string name="tv_Message">Message</string>
