@@ -44,7 +44,7 @@ class SignInFragment : Fragment() {
                 }
                 is Resource.Error -> {
                     binding.loginButton.myBtn.hideLoading()
-                    displayErrorToast("Failed", it.exception.message!!)
+                    displayErrorToast("Failed", it.throwable.message!!)
                 }
                 is Resource.Success -> {
                     binding.loginButton.myBtn.hideLoading()

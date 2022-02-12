@@ -5,10 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.sportsmates.UserPreferences
 import com.example.sportsmates.databinding.NewsFragmentBinding
 import com.example.sportsmates.ext.*
 import com.example.sportsmates.home.domain.entities.NewsItem
@@ -17,7 +15,6 @@ import com.example.sportsmates.home.presentation.adapter.SmallNewsAdapter
 import com.example.sportsmates.home.presentation.adapter.TallNewsAdapter
 import com.example.sportsmates.home.presentation.viewmodel.NewsViewModel
 import com.example.sportsmates.networking.Resource
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class NewsFragment : Fragment() {
@@ -55,8 +52,8 @@ class NewsFragment : Fragment() {
                     setTrendingNews(news.data)
                 }
                 is Resource.Error -> {
-                    displayErrorToast(message = news.exception.message.toString(), title = "Error")
-                    Log.v("News", news.exception.message.toString())
+                    displayErrorToast(message = news.throwable.message.toString(), title = "Error")
+                    Log.v("News", news.throwable.message.toString())
                 }
                 is Resource.Loading -> {}
             }
@@ -69,8 +66,8 @@ class NewsFragment : Fragment() {
                     setForYouNews(news.data)
                 }
                 is Resource.Error -> {
-                    displayErrorToast(message = news.exception.message.toString(), title = "Error")
-                    Log.v("News", news.exception.message.toString())
+                    displayErrorToast(message = news.throwable.message.toString(), title = "Error")
+                    Log.v("News", news.throwable.message.toString())
                 }
                 is Resource.Loading -> {}
             }

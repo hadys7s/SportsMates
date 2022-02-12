@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.sportsmates.home.data.datamodels.EventDataItem
 import com.example.sportsmates.home.domain.usecases.EventsUseCase
 import com.example.sportsmates.networking.Resource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -23,8 +22,8 @@ class EventsViewModel(private val eventsUseCase: EventsUseCase) : ViewModel() {
         viewModelScope.launch {
             try {
                 _listOfEventDataItems.emit(Resource.Success(data = eventsUseCase.getRelatedEvents()))
-            } catch (ex: Exception) {
-                _listOfEventDataItems.emit(Resource.Error(exception = ex))
+            } catch (throwable: Throwable) {
+                _listOfEventDataItems.emit(Resource.Error(throwable = throwable))
             }
         }
     }

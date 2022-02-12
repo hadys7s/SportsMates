@@ -9,11 +9,11 @@ import kotlinx.coroutines.tasks.await
 
 class EventsRepositoryImpl : EventsRepository {
 
-    override suspend fun getRelatedEvents(): List<EventDataItem?> {
+    override suspend fun getAllEvents(): List<EventDataItem?> {
         val listOfEvents: MutableList<EventDataItem?> = mutableListOf()
         FirebaseDatabase.getInstance().getReference("Event").get().addOnSuccessListener { data ->
             val events = data.children
-            events.map {
+            events.forEach {
                 listOfEvents.add(it.getValue(EventDataItem::class.java))
             }
         }.await()

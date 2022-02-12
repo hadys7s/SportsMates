@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.sportsmates.R
 import com.example.sportsmates.chat.ChatActivity
 import com.example.sportsmates.chatbot.ChatBotActivity
-import com.example.sportsmates.coach.CoachFragment
+import com.example.sportsmates.coach.presentation.CoachFragment
 import com.example.sportsmates.databinding.ActivityMainBinding
 import com.example.sportsmates.discover.ContactsFragment
 import com.example.sportsmates.ext.replaceFragment

@@ -46,7 +46,7 @@ class PlaceFragment : Fragment() {
                     setPlaces(state.data)
                 }
                 is Resource.Error -> {
-                    displayErrorToast("Error",state.exception.message.toString())
+                    displayErrorToast("Error",state.throwable.message.toString())
                 }
                 Resource.Loading -> {
 

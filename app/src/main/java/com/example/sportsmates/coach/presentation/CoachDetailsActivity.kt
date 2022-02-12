@@ -1,4 +1,4 @@
-package com.example.sportsmates.coach
+package com.example.sportsmates.coach.presentation
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,8 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import com.example.sportsmates.booking.BookingActivity
+import com.example.sportsmates.coach.SliderAdapterExample
 import com.example.sportsmates.databinding.ActivityCoashDetailsBinding
+import com.example.sportsmates.ext.displayErrorToast
 import com.example.sportsmates.ext.setFullScreenWithTransparentStatusBar
+import com.example.sportsmates.ext.stateCollector
+import com.example.sportsmates.networking.Resource
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -34,7 +38,7 @@ class CoachDetailsActivity : AppCompatActivity() {
     }
 
     private fun observeCoachImages(coachId: String?) {
-        viewModel.retrievePhotoDetails(coachId)
+        viewModel.getCoachesImagesList(coachId)
     }
 
     private fun setupSlider() {
@@ -60,9 +64,21 @@ class CoachDetailsActivity : AppCompatActivity() {
     }
 
     private fun observeCoachImages() {
-        viewModel.listOfSCoachesImagesEvent.observe(this, Observer { imageList ->
-            sliderAdapter.renewItems(imageList)
-        })
+        stateCollector(viewModel.listOfSCoachesImagesState)
+        {
+            when (it) {
+                is Resource.Success -> {
+                    sliderAdapter.renewItems(it.data)
+
+                }
+                is Resource.Error ->{
+                    displayErrorToast(message = it.throwable.message.toString())
+                }
+                is Resource.Loading -> {
+
+                }
+            }
+        }
     }
 
     private fun attachCLickListeners() {
@@ -74,14 +90,14 @@ class CoachDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun startBookingActivity(){
+    private fun startBookingActivity() {
         val coach: CoachUiModel? = intent.getParcelableExtra((COACH_ITEM))
-        BookingActivity.start(this,couchItem = coach)
+        BookingActivity.start(this, couchItem = coach)
     }
 
     companion object {
         private const val COACH_ITEM = "coachItem"
-        fun start(activity: FragmentActivity?, coachItem: CoachUiModel) {
+        fun start(activity: FragmentActivity?, coachItem: CoachUiModel?) {
             val intent = Intent(activity, CoachDetailsActivity::class.java)
             intent.putExtra(COACH_ITEM, coachItem)
             activity?.startActivity(intent)

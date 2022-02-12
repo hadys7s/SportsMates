@@ -19,15 +19,18 @@ class PlacesRepositoryImpl : PlacesRepository {
         return listReference
     }
 
-    override suspend fun getPlaceMainImage(placeId: String?): String {
+    override suspend fun getPlaceMainImage(placeId: String?): Uri? {
         var uri: Uri? = null
-        FirebaseStorage.getInstance().reference.child("/place/$placeId/main.jpg").downloadUrl.addOnSuccessListener {
-            uri = it
-        }.await()
-        return uri.toString()
+        try {
+            FirebaseStorage.getInstance().reference.child("/event/$placeId/main.jpg").downloadUrl.addOnSuccessListener {
+                uri = it
+            }.await()
+        } catch (throwable: Throwable) {
+        }
+        return uri
     }
 
-    override suspend fun getPlaces(): List<Place?> {
+    override suspend fun getAllPlaces(): List<Place?> {
         val listOfSPlaces: MutableList<Place?> = mutableListOf()
         FirebaseDatabase.getInstance().getReference("Place").get().addOnSuccessListener { data ->
             val children = data.children

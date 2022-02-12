@@ -34,7 +34,7 @@ class SignUpEmailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = SignUpEmailPasswordFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }

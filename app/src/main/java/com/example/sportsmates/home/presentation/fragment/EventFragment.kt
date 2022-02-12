@@ -46,7 +46,7 @@ class EventFragment : Fragment() {
                 }
                 is Resource.Error -> {
                     stopShimmer(binding.shimmerViewContainer)
-                    displayWarningToast("Warning", state.exception.message.toString())
+                    displayWarningToast("Warning", state.throwable.message.toString())
                 }
                 Resource.Loading -> {
                 }

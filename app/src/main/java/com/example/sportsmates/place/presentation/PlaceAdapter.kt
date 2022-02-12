@@ -3,6 +3,7 @@ package com.example.sportsmates.place.presentation
 import android.content.Context
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sportsmates.R
 import com.example.sportsmates.coach.GlideApp
 import com.example.sportsmates.databinding.CoachListItemBinding
 import com.example.sportsmates.ext.inflater
@@ -22,6 +23,7 @@ class PlaceAdapter(private val placeList: List<Place?>, private val context: Con
             binding.pricePerHour.text = placeItem.pricePerHour + "/hour"
             GlideApp.with(context)
                 .load(placeItem.mainImage)
+                .placeholder(R.drawable.app_icon)
                 .into(binding.partnerImage)
             itemView.setOnClickListener { onItemClick?.invoke(placeItem) }
         }

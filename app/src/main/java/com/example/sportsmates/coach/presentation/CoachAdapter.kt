@@ -7,27 +7,30 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Registry
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule
+import com.example.sportsmates.R
+import com.example.sportsmates.coach.data.Coach
 import com.example.sportsmates.databinding.CoachListItemBinding
 import com.example.sportsmates.ext.inflater
 import com.firebase.ui.storage.images.FirebaseImageLoader
 import com.google.firebase.storage.StorageReference
 import java.io.InputStream
 
-class CoachAdapter(private val coachesList: List<Coach>, private val context: Context) :
+class CoachAdapter(private val coachesList: List<Coach?>, private val context: Context) :
     RecyclerView.Adapter<CoachAdapter.ViewHolder>() {
-    var onItemClick: ((Coach) -> Unit)? = null
+    var onItemClick: ((Coach?) -> Unit)? = null
 
 
     inner class ViewHolder(private val binding: CoachListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(coachItem: Coach) {
-            binding.partnerName.text = coachItem.name
-            binding.partnerSport.text = coachItem.sportName
-            binding.partnerAddress.text = coachItem.address
-            binding.pricePerHour.text = coachItem.pricePerHour + "/hour"
+        fun bind(coachItem: Coach?) {
+            binding.partnerName.text = coachItem?.name
+            binding.partnerSport.text = coachItem?.sportName
+            binding.partnerAddress.text = coachItem?.address
+            binding.pricePerHour.text = coachItem?.pricePerHour + "/hour"
             GlideApp.with(context)
-                .load(coachItem.imageList?.get(0))
+                .load(coachItem?.mainImage)
+                .placeholder(R.drawable.app_icon)
                 .into(binding.partnerImage)
             itemView.setOnClickListener { onItemClick?.invoke(coachItem) }
         }

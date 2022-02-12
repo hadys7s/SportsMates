@@ -1,46 +1,75 @@
-package com.example.sportsmates.coach
+package com.example.sportsmates.coach.presentation
 
-import android.content.ContentValues.TAG
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sportsmates.auth.data.model.User
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
+import com.example.sportsmates.coach.data.Coach
+import com.example.sportsmates.coach.domain.CoachUseCase
+import com.example.sportsmates.networking.Resource
 import com.google.firebase.storage.StorageReference
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 
-typealias Coaches = List<Coach>
-typealias CoachesImages = MutableList<StorageReference>
+typealias Coaches = List<Coach?>
+typealias CoachesImages = List<StorageReference?>
 
-class CoachViewModel : ViewModel() {
+class CoachViewModel(private val coachUseCase: CoachUseCase) : ViewModel() {
 
-    private var listOfSCoaches: MutableList<Coach>? = mutableListOf()
-
-
-    private val _listOfSCoachesEvent = MutableLiveData<Coaches>()
-    val listOfSCoachesEvent: LiveData<Coaches> get() = _listOfSCoachesEvent
-    private val _listOfCoachesImagesEvent = MutableLiveData<CoachesImages>()
-    val listOfSCoachesImagesEvent: LiveData<CoachesImages> get() = _listOfCoachesImagesEvent
+    private val _listOfSCoachesState = MutableStateFlow<Resource<Coaches>>(Resource.Loading)
+    val listOfSCoachesState get() = _listOfSCoachesState.asStateFlow()
+    private val _listOfCoachesImagesState =
+        MutableStateFlow<Resource<CoachesImages>>(Resource.Loading)
+    val listOfSCoachesImagesState get() = _listOfCoachesImagesState.asStateFlow()
 
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
-            val coaches = getRelatedCoaches(getUserSportsList())
-            coaches?.forEach { coach ->
-                coach.imageList = retrievePhoto(coach.coachId)
+        getCoachesList()
+    }
+
+    private fun getCoachesList() {
+        viewModelScope.launch {
+            try {
+                _listOfSCoachesState.emit(
+                    Resource.Success(
+                        coachUseCase.getRelatedCoaches()
+                    )
+                )
+            } catch (throwable: Throwable) {
+                _listOfSCoachesState.emit(
+                    Resource.Error(
+                        throwable = throwable
+                    )
+                )
             }
-            _listOfSCoachesEvent.postValue(coaches ?: emptyList())
+
+        }
+    }
+
+    fun getCoachesImagesList(coachId: String?) {
+
+        viewModelScope.launch {
+            try {
+                _listOfCoachesImagesState.emit(
+                    Resource.Success(
+                        data = coachUseCase.getCoachListOfImages(
+                            coachId
+                        )
+                    )
+                )
+
+            } catch (throwable: Throwable) {
+                _listOfCoachesImagesState.emit(
+                    Resource.Error(
+                        throwable = throwable
+                    )
+                )
+            }
+
         }
     }
 
 
+/*
     private suspend fun getRelatedCoaches(
         listOfSports: MutableList<String>?
     ): List<Coach>? {
@@ -103,6 +132,6 @@ class CoachViewModel : ViewModel() {
                 }.await()
         }
         return listOfSports
-    }
+    }*/
 
 }
