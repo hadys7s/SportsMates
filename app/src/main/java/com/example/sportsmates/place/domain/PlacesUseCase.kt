@@ -9,14 +9,14 @@ class PlacesUseCase(
     private val placesRepository: PlacesRepository
 ) {
     suspend fun getRelatedPlaces(): List<Place?> {
-        val userLocation = userPreferences.city
+        val userLocation = userPreferences.user?.city
         val places = placesRepository.getPlaces()
         val filteredPlaces =
             places.filter { place ->
                 place?.city == userLocation
-            }
-        filteredPlaces.map { place ->
+            }.map { place ->
             place?.mainImage = placesRepository.getPlaceMainImage(place?.placeId)
+                place
         }
         return filteredPlaces
     }

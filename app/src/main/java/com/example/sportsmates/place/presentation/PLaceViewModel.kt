@@ -24,10 +24,11 @@ class PLaceViewModel(private val placesUseCase: PlacesUseCase) : ViewModel() {
     init {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                _listOfSPlacesEvent.emit(Resource.Success(data = placesUseCase.getRelatedPlaces()))
+                _listOfSPlacesEvent.emit(
+                    Resource.Success(data = placesUseCase.getRelatedPlaces())
+                )
             } catch (ex: Exception) {
                 _listOfSPlacesEvent.emit(Resource.Error(exception = ex))
-
             }
         }
     }

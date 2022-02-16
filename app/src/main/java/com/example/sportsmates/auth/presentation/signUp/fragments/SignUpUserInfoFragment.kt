@@ -1,4 +1,4 @@
-package com.example.sportsmates.signUp.fragments
+package com.example.sportsmates.auth.presentation.signUp.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,18 +9,19 @@ import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import com.example.sportsmates.R
+import com.example.sportsmates.auth.data.model.User
+import com.example.sportsmates.auth.presentation.signUp.viewmodel.SignUpSteps
+import com.example.sportsmates.auth.presentation.signUp.viewmodel.SignUpViewModel
 import com.example.sportsmates.databinding.SignUpUserInfoFragmentBinding
 import com.example.sportsmates.ext.pushFragment
 import com.example.sportsmates.ext.setStepper
-import com.example.sportsmates.signUp.data.model.User
-import com.example.sportsmates.signUp.viewmodel.SignUpViewModel
 import com.google.android.material.textfield.TextInputLayout
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class SignUpUserInfoFragment : Fragment() {
     private var _binding: SignUpUserInfoFragmentBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: SignUpViewModel by viewModel()
+    private val viewModel: SignUpViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +37,7 @@ class SignUpUserInfoFragment : Fragment() {
         setStepper(1, -1, -1, binding.stepView)
         setupMenu("Damietta", "Mansoura", binding.chooseCity.editText)
         setupMenu("Male", "Female", binding.chooseGender.editText)
+        setUserInfoFromInput()
         nextButton()
 
     }
@@ -49,19 +51,27 @@ class SignUpUserInfoFragment : Fragment() {
     private fun nextButton() {
         binding.nextButton2.setOnClickListener {
             if (validation())
-                pushFragment(
-                    SignUpSportsFragment.newInstance(forwardUserInfo()),
-                    containerViewId = R.id.container
-                )
+                viewModel.initInput(forwardUserInfo(), SignUpSteps.STEP_TWO)
+            pushFragment(
+                SignUpSportsFragment.newInstance(),
+                containerViewId = R.id.container
+            )
 
         }
     }
-    private fun forwardUserInfo(): User? {
-        val user: User? = arguments?.getParcelable(USER_DATA)
 
-        user?.city = binding.chooseCity.editText?.text.toString()
-        user?.age = binding.edAge.editText?.text.toString()
-        user?.gender = binding.chooseGender.editText?.text.toString()
+    private fun setUserInfoFromInput() {
+        val info = viewModel.getInfo()
+        binding.chooseCity.editText?.setText(info.city)
+        binding.edAge.editText?.setText(info.age)
+        binding.chooseGender.editText?.setText(info.gender)
+    }
+
+    private fun forwardUserInfo(): User {
+        val user = User()
+        user.city = binding.chooseCity.editText?.text.toString()
+        user.age = binding.edAge.editText?.text.toString()
+        user.gender = binding.chooseGender.editText?.text.toString()
         return user
     }
 
@@ -86,13 +96,8 @@ class SignUpUserInfoFragment : Fragment() {
     companion object {
         private const val USER_DATA = "userData"
 
-        fun newInstance(user: User) =
-            SignUpUserInfoFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(USER_DATA, user)
-
-                }
-            }
+        fun newInstance() =
+            SignUpUserInfoFragment()
 
     }
 }

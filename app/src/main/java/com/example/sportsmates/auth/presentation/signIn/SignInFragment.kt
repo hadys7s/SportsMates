@@ -1,20 +1,16 @@
-package com.example.sportsmates.SignUp
+package com.example.sportsmates.auth.presentation.signIn
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.example.sportsmates.R
+import com.example.sportsmates.auth.presentation.signUp.fragments.SignUpEmailFragment
 import com.example.sportsmates.databinding.SignInFragmentBinding
-import com.example.sportsmates.ext.displayErrorToast
-import com.example.sportsmates.ext.openTopActivity
-import com.example.sportsmates.ext.pushFragment
+import com.example.sportsmates.ext.*
 import com.example.sportsmates.home.presentation.activity.MainActivity
-import com.example.sportsmates.login.SignInViewModel
-import com.example.sportsmates.signUp.fragments.SignUpEmailFragment
+import com.example.sportsmates.networking.Resource
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -22,11 +18,12 @@ class SignInFragment : Fragment() {
     private val viewModel: SignInViewModel by viewModel()
     private var _binding: SignInFragmentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var dialog: AlertDialog
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         attachCLickListeners()
-        attachEventObservers()
+        listenToLoginState()
     }
 
     override fun onCreateView(
@@ -39,30 +36,34 @@ class SignInFragment : Fragment() {
     }
 
 
-    private fun attachEventObservers() {
-        viewModel.loginSuccess.observe(this, Observer { user ->
-            //  redirect home
-            hideLoading()
-            openTopActivity(activity, MainActivity())
-        })
-        viewModel.loginFailed.observe(this, Observer { errorMessage ->
-            hideLoading()
-            displayErrorToast("faild",errorMessage)
-
-        })
+    private fun listenToLoginState() {
+        stateCollector(viewModel.loginState){
+            when (it) {
+                is Resource.Loading -> {
+                    binding.loginButton.myBtn.showLoading()
+                }
+                is Resource.Error -> {
+                    binding.loginButton.myBtn.hideLoading()
+                    displayErrorToast("Failed", it.exception.message!!)
+                }
+                is Resource.Success -> {
+                    binding.loginButton.myBtn.hideLoading()
+                    openTopActivity(activity, MainActivity())
+                }
+            }
+        }
     }
 
     private fun attachCLickListeners() {
         binding.tvSelectableSignup.setOnClickListener {
             pushFragment(SignUpEmailFragment.newInstance(), containerViewId = R.id.container)
         }
-
-        binding.loginButton.setOnClickListener {
-            if (validation()) {
-                showLoading()
-                login()
+        with(binding.loginButton) {
+            btnText.text = getString(R.string.login)
+            myBtn.setOnClickListener {
+                if (validation())
+                    login()
             }
-
         }
     }
 
@@ -92,19 +93,6 @@ class SignInFragment : Fragment() {
         }
     }
 
-    private fun showLoading() {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
-        val inflater: LayoutInflater = requireActivity().layoutInflater
-        builder.setView(inflater.inflate(R.layout.progress_dialog, null))
-        builder.setCancelable(false)
-        dialog = builder.create()
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog.show()
-    }
-
-    private fun hideLoading() {
-        dialog.dismiss()
-    }
 
     override fun onDestroy() {
         super.onDestroy()

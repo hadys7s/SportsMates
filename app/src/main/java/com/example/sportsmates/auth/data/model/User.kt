@@ -1,4 +1,4 @@
-package com.example.sportsmates.signUp.data.model
+package com.example.sportsmates.auth.data.model
 
 import android.net.Uri
 import android.os.Parcelable

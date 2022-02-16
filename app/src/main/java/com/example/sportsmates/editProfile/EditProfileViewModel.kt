@@ -3,11 +3,10 @@ package com.example.sportsmates.editProfile
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.sportsmates.UserPreferences
-import com.example.sportsmates.signUp.data.model.User
-import com.example.sportsmates.signUp.data.repo.UserRepository
+import com.example.sportsmates.auth.data.model.User
+import com.example.sportsmates.auth.data.repo.UserRepository1
 
-class EditProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
+class EditProfileViewModel(private val userRepository: UserRepository1) : ViewModel() {
     var userData = MutableLiveData<User>()
     var userImage = MutableLiveData<Uri>()
     var updateInfoFailuer = MutableLiveData<String>()
@@ -25,7 +24,7 @@ class EditProfileViewModel(private val userRepository: UserRepository) : ViewMod
     }
 
     fun fetchUserData() {
-        userRepository.fetchUserData()
+        //userRepository.fetchUserData()
     }
 
     fun getUserImage() {
@@ -33,7 +32,7 @@ class EditProfileViewModel(private val userRepository: UserRepository) : ViewMod
     }
 
     fun uploadProfileImage(filePath: Uri) {
-        userRepository.uploadPhoto(filePath)
+       // userRepository.uploadPhoto(filePath)
     }
 
     fun updateUserName(name:String){

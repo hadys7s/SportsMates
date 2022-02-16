@@ -13,8 +13,8 @@ import com.example.sportsmates.databinding.DiscoverFragmentBinding
 import com.example.sportsmates.ext.displayWarningToast
 import com.example.sportsmates.ext.withTransitionAnimation
 import com.example.sportsmates.ext.stopShimmer
-import com.example.sportsmates.signUp.data.model.User
-import com.example.sportsmates.signUp.data.model.toMessageUiModel
+import com.example.sportsmates.auth.data.model.User
+import com.example.sportsmates.auth.data.model.toMessageUiModel
 import com.example.sportsmates.utils.TargetActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 

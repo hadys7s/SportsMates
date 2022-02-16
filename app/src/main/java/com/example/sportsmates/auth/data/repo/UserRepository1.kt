@@ -1,11 +1,11 @@
-package com.example.sportsmates.signUp.data.repo
+package com.example.sportsmates.auth.data.repo
 
 import android.content.ContentValues
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.sportsmates.UserPreferences
-import com.example.sportsmates.signUp.data.model.User
+import com.example.sportsmates.auth.data.model.User
 import com.example.sportsmates.utils.SingleLiveEvent
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.EmailAuthProvider
@@ -18,7 +18,7 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
 
 
-class UserRepository(
+class UserRepository1(
     private val userAuth: FirebaseAuth,
     private val userpref: UserPreferences
 ) {
@@ -36,9 +36,6 @@ class UserRepository(
     var updateInfoSuccess = MutableLiveData<String>()
     var updateInfoFailuer = MutableLiveData<String>()
 
-    init {
-        fetchUserData()
-    }
 
     fun login(email: String, password: String) {
         userAuth.signInWithEmailAndPassword(email, password)
@@ -82,25 +79,9 @@ class UserRepository(
     }
 
 
-    fun addUserToDataBase(user: User?) {
-        FirebaseDatabase.getInstance().getReference("Users")
-            .child(userAuth.currentUser.uid)
-            .setValue(user).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "userAddedToDataBase:Success")
-                    signUpSuccess.call()
-
-
-                } else {
-                    Log.d(TAG, "userAddedToDataBase:Failed")
-                    signUpFailed.postValue(task.exception?.message)
-                }
-            }
-    }
-
     fun fetchUserData() {
         FirebaseDatabase.getInstance().getReference("Users")
-            .child(Firebase.auth.currentUser.uid)
+            .child(userAuth.currentUser.uid)
             .get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "getUser:Success")
