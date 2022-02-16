@@ -11,22 +11,25 @@ interface UserRepository {
     suspend fun logout()
     suspend fun getUserInfo(): Flow<User?>
 
-    suspend fun updateUserName(name: String): Flow<Boolean>
-    suspend fun updateUserEmail(email: String): Flow<Boolean>
-    suspend fun updateUserPassword(password: String): Flow<Boolean>
-    suspend fun updateUserCity(city: String): Flow<Boolean>
-    suspend fun updateUserAge(age: String): Flow<Boolean>
-    suspend fun updateUserBio(bio: String): Flow<Boolean>
-    suspend fun updateUserSportsList(sports: List<String>): Flow<Boolean>
-    suspend fun updateUserAuthenticationEmail(
+    suspend fun updateUserName(name: String): Flow<Boolean?>
+    suspend fun updateUserCity(city: String): Flow<Boolean?>
+    suspend fun updateUserAge(age: String): Flow<Boolean?>
+    suspend fun updateUserBio(bio: String): Flow<Boolean?>
+    suspend fun updateUserSportsList(sports: List<String>): Flow<Boolean?>
+    suspend fun updateUserEmail(
         newEmail: String,
         oldEmail: String,
         password: String
-    ): Flow<Boolean>
+    ): Flow<Boolean?>
 
-    suspend fun updateUserAuthenticationPassword(
+    suspend fun updateUserPassword(
         newPassword: String,
         oldPassword: String,
         email: String
-    ): Flow<Boolean>
+    ): Flow<Boolean?>
+
+    suspend fun cashUser(user: User?)
+    suspend fun getCashedUser():User?
+
+    suspend fun deleteUser():Flow<Boolean?>
 }

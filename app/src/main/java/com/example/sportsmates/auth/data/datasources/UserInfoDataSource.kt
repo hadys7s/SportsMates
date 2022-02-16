@@ -2,8 +2,13 @@ package com.example.sportsmates.auth.data.datasources
 
 import android.net.Uri
 import com.example.sportsmates.auth.data.model.User
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -61,47 +66,101 @@ class UserInfoDataSource(
 
     }
 
-    suspend fun updateUserName(name: String): Flow<Boolean> {
-        TODO("Not yet implemented")
+    suspend fun updateUserName(name: String): Flow<Boolean?> = flow {
+        val user =
+            FirebaseDatabase.getInstance().getReference("Users").child(userAuth.currentUser.uid)
+                .get()
+        if (user.isSuccessful) {
+            emit(user.result?.child("name")?.ref?.setValue(name)?.isSuccessful)
+        }
+
     }
 
-    suspend fun updateUserEmail(email: String): Flow<Boolean> {
-        TODO("Not yet implemented")
+    suspend fun updateUserEmail(email: String): Flow<Boolean?> = flow {
+        val user =
+            FirebaseDatabase.getInstance().getReference("Users").child(userAuth.currentUser.uid)
+                .get()
+        if (user.isSuccessful) {
+            emit(user.result?.child("email")?.ref?.setValue(email)?.isSuccessful)
+        }
     }
 
-    suspend fun updateUserPassword(password: String): Flow<Boolean> {
-        TODO("Not yet implemented")
+    suspend fun updateUserPassword(password: String): Flow<Boolean?> = flow {
+        val user =
+            FirebaseDatabase.getInstance().getReference("Users").child(userAuth.currentUser.uid)
+                .get()
+        if (user.isSuccessful) {
+            emit(user.result?.child("password")?.ref?.setValue(password)?.isSuccessful)
+        }
     }
 
-    suspend fun updateUserCity(city: String): Flow<Boolean> {
-        TODO("Not yet implemented")
+    suspend fun updateUserCity(city: String): Flow<Boolean?> = flow {
+        val user =
+            FirebaseDatabase.getInstance().getReference("Users").child(userAuth.currentUser.uid)
+                .get()
+        if (user.isSuccessful) {
+            emit(user.result?.child("city")?.ref?.setValue(city)?.isSuccessful)
+        }
     }
 
-    suspend fun updateUserAge(age: String): Flow<Boolean> {
-        TODO("Not yet implemented")
+    suspend fun updateUserAge(age: String): Flow<Boolean?> = flow {
+        val user =
+            FirebaseDatabase.getInstance().getReference("Users").child(userAuth.currentUser.uid)
+                .get()
+        if (user.isSuccessful) {
+            emit(user.result?.child("age")?.ref?.setValue(age)?.isSuccessful)
+        }
     }
 
-    suspend fun updateUserBio(bio: String): Flow<Boolean> {
-        TODO("Not yet implemented")
+    suspend fun updateUserBio(bio: String): Flow<Boolean?> = flow {
+        val user =
+            FirebaseDatabase.getInstance().getReference("Users").child(userAuth.currentUser.uid)
+                .get()
+        if (user.isSuccessful) {
+            emit(user.result?.child("bio")?.ref?.setValue(bio)?.isSuccessful)
+        }
     }
 
-    suspend fun updateUserSportsList(sports: List<String>): Flow<Boolean> {
-        TODO("Not yet implemented")
+    suspend fun updateUserSportsList(sports: List<String>): Flow<Boolean?> = flow {
+        val user =
+            FirebaseDatabase.getInstance().getReference("Users").child(userAuth.currentUser.uid)
+                .get()
+        if (user.isSuccessful) {
+            emit(user.result?.child("sportsList")?.ref?.setValue(sports)?.isSuccessful)
+        }
     }
 
     suspend fun updateUserAuthenticationEmail(
         newEmail: String,
         oldEmail: String,
         password: String
-    ): Flow<Boolean> {
-        TODO("Not yet implemented")
+    ): Flow<Boolean?> = flow {
+        val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+        val credential: AuthCredential = EmailAuthProvider.getCredential(oldEmail, password)
+        if (user?.reauthenticate(credential)?.isSuccessful == true) {
+            emit(user.updateEmail(newEmail).isSuccessful)
+        }
     }
 
     suspend fun updateUserAuthenticationPassword(
         newPassword: String,
         oldPassword: String,
         email: String
-    ): Flow<Boolean> {
-        TODO("Not yet implemented")
+    ): Flow<Boolean> = flow {
+        val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+        val credential: AuthCredential = EmailAuthProvider.getCredential(email, oldPassword)
+        if (user?.reauthenticate(credential)?.isSuccessful == true) {
+            emit(user.updatePassword(newPassword).isSuccessful)
+        }
+    }
+
+    suspend fun deleteUser(): Flow<Boolean> = flow {
+        emit(Firebase.auth.currentUser.delete().isSuccessful)
+    }
+
+    suspend fun deleteUserImage(): Flow<Boolean?> = flow {
+        val storageReference =
+            FirebaseStorage.getInstance().reference.child("userImages/" + userAuth.currentUser.uid)
+        emit(storageReference.delete().isSuccessful)
     }
 }

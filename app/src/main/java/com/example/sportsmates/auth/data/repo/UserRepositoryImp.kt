@@ -17,20 +17,12 @@ class UserRepositoryImp(
 
     @FlowPreview
     override suspend fun login(email: String, password: String): Flow<Boolean> {
-        return dataSource.login(email, password).flatMapConcat {
-            dataSource.fetchUserData().flatMapConcat { user ->
-                userPref.user = user
-                flowOf(it)
-            }
-        }
+        return dataSource.login(email, password)
     }
 
     @FlowPreview
     override suspend fun signUp(user: User): Flow<Boolean?> {
-        return dataSource.signUp(user,::saveUser).flatMapConcat {
-            userPref.user = user
-            flowOf(it)
-        }
+        return dataSource.signUp(user, ::saveUser)
     }
 
     override suspend fun logout() {
@@ -40,62 +32,75 @@ class UserRepositoryImp(
 
     @FlowPreview
     override suspend fun getUserInfo(): Flow<User?> {
-        return dataSource.fetchUserData().flatMapConcat {
-            val image = dataSource.retrieveUserImage()
-            it?.userImage = image
-            flowOf(it)
+        return if (userPref.user != null) {
+            flowOf(userPref.user)
+        } else {
+            dataSource.fetchUserData().flatMapConcat {
+                val image = dataSource.retrieveUserImage()
+                it?.userImage = image
+                userPref.user = it
+                flowOf(it)
+            }
         }
     }
 
-    override suspend fun updateUserName(name: String): Flow<Boolean> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun updateUserName(name: String): Flow<Boolean?> =
+        dataSource.updateUserName(name)
 
-    override suspend fun updateUserEmail(email: String): Flow<Boolean> {
-        TODO("Not yet implemented")
-    }
 
-    override suspend fun updateUserPassword(password: String): Flow<Boolean> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun updateUserCity(city: String): Flow<Boolean?> =
+        dataSource.updateUserCity(city)
 
-    override suspend fun updateUserCity(city: String): Flow<Boolean> {
-        TODO("Not yet implemented")
-    }
 
-    override suspend fun updateUserAge(age: String): Flow<Boolean> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun updateUserAge(age: String): Flow<Boolean?> =
+        dataSource.updateUserAge(age)
 
-    override suspend fun updateUserBio(bio: String): Flow<Boolean> {
-        TODO("Not yet implemented")
-    }
 
-    override suspend fun updateUserSportsList(sports: List<String>): Flow<Boolean> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun updateUserBio(bio: String): Flow<Boolean?> =
+        dataSource.updateUserBio(bio)
 
-    override suspend fun updateUserAuthenticationEmail(
+
+    override suspend fun updateUserSportsList(sports: List<String>): Flow<Boolean?> =
+        dataSource.updateUserSportsList(sports)
+
+
+    override suspend fun updateUserEmail(
         newEmail: String,
         oldEmail: String,
         password: String
-    ): Flow<Boolean> {
-        TODO("Not yet implemented")
-    }
+    ): Flow<Boolean?> =
+        dataSource.updateUserAuthenticationEmail(newEmail, oldEmail, password).flatMapConcat {
+            dataSource.updateUserEmail(email = newEmail)
+        }
 
-    override suspend fun updateUserAuthenticationPassword(
+    override suspend fun updateUserPassword(
         newPassword: String,
         oldPassword: String,
         email: String
-    ): Flow<Boolean> {
-        TODO("Not yet implemented")
+    ): Flow<Boolean?> =
+        dataSource.updateUserAuthenticationPassword(newPassword, oldPassword, email).flatMapConcat {
+            dataSource.updateUserPassword(newPassword)
+        }
+
+
+    private suspend fun uploadImage(filePath: Uri): Boolean =
+        dataSource.uploadUserImage(filePath)
+
+
+    private suspend fun saveUser(user: User): Boolean? =
+        dataSource.addUserToDataBase(user, ::uploadImage)
+
+
+    override suspend fun cashUser(user: User?) {
+        userPref.user = user
     }
 
-    private suspend fun uploadImage(filePath: Uri):Boolean {
-       return dataSource.uploadUserImage(filePath)
-    }
+    override suspend fun getCashedUser(): User? =
+        userPref.user
 
-    private suspend fun saveUser(user: User):Boolean? {
-         return dataSource.addUserToDataBase(user, ::uploadImage)
+    override suspend fun deleteUser(): Flow<Boolean?> {
+        return dataSource.deleteUser().flatMapConcat {
+            dataSource.deleteUserImage()
+        }
     }
 }
