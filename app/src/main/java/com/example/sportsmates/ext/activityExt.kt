@@ -109,7 +109,7 @@ fun Activity.handleStoragePermission(
     }
 }
 
-fun Activity.displayErrorToast(title: String?, message: String) {
+fun Activity.displayErrorToast(title: String? = "Error", message: String) {
     MotionToast.darkToast(
         this,
         title,

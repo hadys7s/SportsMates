@@ -1,4 +1,4 @@
-package com.example.sportsmates.coach
+package com.example.sportsmates.coach.presentation
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

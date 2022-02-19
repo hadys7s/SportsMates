@@ -153,7 +153,7 @@ fun Fragment.openTopActivity(
     startActivity(targetActivity, bundle)
 }
 
-fun Fragment.displayErrorToast(title: String?, message: String) {
+fun Fragment.displayErrorToast(title: String? = "Error", message: String) {
     MotionToast.darkToast(
         requireActivity(),
         title,

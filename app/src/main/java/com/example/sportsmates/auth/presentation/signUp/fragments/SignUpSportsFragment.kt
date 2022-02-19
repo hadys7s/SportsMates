@@ -67,7 +67,7 @@ class SignUpSportsFragment : Fragment() {
                     }
                     is Resource.Error -> {
                         binding.doneButton.myBtn.hideLoading()
-                        displayErrorToast("Error ", it.exception.message!!)
+                        displayErrorToast("Error ", it.throwable.message!!)
                     }
                     is Resource.Success -> {
                         binding.doneButton.myBtn.hideLoading()

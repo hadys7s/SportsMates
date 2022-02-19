@@ -74,7 +74,7 @@ class ChatBotActivity : AppCompatActivity() {
 
                 }
                 is Resource.Error -> {
-                    setMessage(nutroInfo.exception.message.toString())
+                    setMessage(nutroInfo.throwable.message.toString())
                 }
                 is Resource.Loading -> {
 

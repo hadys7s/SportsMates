@@ -1,14 +1,19 @@
-package com.example.sportsmates.coach
+package com.example.sportsmates.coach.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.sportsmates.coach.CoachAdapter
+import com.example.sportsmates.coach.data.Coach
+import com.example.sportsmates.coach.data.toUiModel
 import com.example.sportsmates.databinding.CoachFragmentBinding
+import com.example.sportsmates.ext.displayErrorToast
+import com.example.sportsmates.ext.stateCollector
 import com.example.sportsmates.ext.stopShimmer
+import com.example.sportsmates.networking.Resource
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -34,10 +39,21 @@ class CoachFragment : Fragment() {
     }
 
     private fun attachObservers() {
-        viewModel.listOfSCoachesEvent.observe(this, Observer {
-            stopShimmer(binding.shimmerViewContainer)
-            setCoaches(it)
-        })
+        stateCollector(viewModel.listOfSCoachesState)
+        {
+            when (it) {
+                is Resource.Success -> {
+                    stopShimmer(binding.shimmerViewContainer)
+                    setCoaches(it.data)
+                }
+                is Resource.Error -> {
+                    displayErrorToast(message = it.throwable.message.toString())
+                }
+                is Resource.Loading -> {
+
+                }
+            }
+        }
     }
 
 
@@ -48,11 +64,11 @@ class CoachFragment : Fragment() {
     }
 
 
-    private fun setCoaches(coachesList: List<Coach>) {
+    private fun setCoaches(coachesList: List<Coach?>) {
         coachAdapter = CoachAdapter(coachesList, requireActivity())
         binding.coachList.adapter = coachAdapter
         coachAdapter.onItemClick = {
-            CoachDetailsActivity.start(activity, it.toUiModel())
+            CoachDetailsActivity.start(activity, it?.toUiModel())
         }
     }
 

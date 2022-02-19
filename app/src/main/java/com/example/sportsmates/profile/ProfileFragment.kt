@@ -57,7 +57,7 @@ class ProfileFragment : Fragment() {
             when (it) {
                 is Resource.Error -> {
                     stopShimmer(binding.shimmerViewContainer)
-                    displayErrorToast("Failed",it.exception.message!!)
+                    displayErrorToast("Failed",it.throwable.message!!)
                 }
                 is Resource.Success -> {
                     stopShimmer(binding.shimmerViewContainer)

@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.lifecycle.Observer
 import com.example.sportsmates.R
-import com.example.sportsmates.coach.CoachUiModel
+import com.example.sportsmates.coach.presentation.CoachUiModel
 import com.example.sportsmates.databinding.ActivityBookingBinding
 import com.example.sportsmates.ext.changeStatusBarColor
 import com.example.sportsmates.ext.displayErrorToast

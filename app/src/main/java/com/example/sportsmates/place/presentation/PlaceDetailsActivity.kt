@@ -73,7 +73,7 @@ class PlaceDetailsActivity : AppCompatActivity() {
 
                 }
                 is Resource.Error -> {
-                    displayErrorToast("Error",state.exception.message.toString())
+                    displayErrorToast("Error",state.throwable.message.toString())
                 }
                 Resource.Loading -> {
 

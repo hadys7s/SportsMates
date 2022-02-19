@@ -37,7 +37,7 @@
             android:name=".place.presentation.PlaceDetailsActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
-            android:name=".coach.CoachDetailsActivity"
+            android:name=".coach.presentation.CoachDetailsActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
             android:name=".editProfile.UpdateUserInfoActivity"

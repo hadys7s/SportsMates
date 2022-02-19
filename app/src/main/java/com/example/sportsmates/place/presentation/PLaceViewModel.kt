@@ -22,13 +22,13 @@ class PLaceViewModel(private val placesUseCase: PlacesUseCase) : ViewModel() {
 
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             try {
                 _listOfSPlacesEvent.emit(
                     Resource.Success(data = placesUseCase.getRelatedPlaces())
                 )
-            } catch (ex: Exception) {
-                _listOfSPlacesEvent.emit(Resource.Error(exception = ex))
+            } catch (throwable: Throwable) {
+                _listOfSPlacesEvent.emit(Resource.Error(throwable = throwable))
             }
         }
     }
@@ -43,8 +43,8 @@ class PLaceViewModel(private val placesUseCase: PlacesUseCase) : ViewModel() {
                 )
             )
 
-        } catch (ex: Exception) {
-            _listOfPlacesImagesEvent.emit(Resource.Error(exception = ex))
+        } catch (throwable: Throwable) {
+            _listOfPlacesImagesEvent.emit(Resource.Error(throwable = throwable))
 
         }
     }

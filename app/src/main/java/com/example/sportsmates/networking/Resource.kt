@@ -13,11 +13,10 @@ import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 
 sealed class Resource<out R> {
     data class Success<out T>(val data: T) : Resource<T>()
-    data class Error(val exception: Throwable) : Resource<Nothing>()
+    data class Error(val throwable: Throwable) : Resource<Nothing>()
     object Loading : Resource<Nothing>()
 }
 

@@ -2,7 +2,6 @@ package com.example.sportsmates.place.data
 
 import android.net.Uri
 import com.example.sportsmates.place.presentation.PlaceUiModel
-import com.google.firebase.storage.StorageReference
 
 data class Place(
     val name: String? = "",
@@ -15,7 +14,7 @@ data class Place(
     val pricePerHour: String? = "",
     val address: String? = "",
     val placeType: String? = "",
-    var mainImage: String? = ""
+    var mainImage: Uri? = null
 )
 
 fun Place.toUiModel(): PlaceUiModel {
