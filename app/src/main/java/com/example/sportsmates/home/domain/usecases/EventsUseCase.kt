@@ -1,16 +1,17 @@
 package com.example.sportsmates.home.domain.usecases
 
 import com.example.sportsmates.UserPreferences
+import com.example.sportsmates.auth.domain.datainterfaces.UserRepository
 import com.example.sportsmates.home.data.datamodels.EventDataItem
 import com.example.sportsmates.home.domain.datainterfaces.EventsRepository
 
 class EventsUseCase(
     private val eventsRepository: EventsRepository,
-    val userPreferences: UserPreferences
+    val userRepository: UserRepository
 ) {
     suspend fun getRelatedEvents(): List<EventDataItem?> {
         val events = eventsRepository.getAllEvents()
-        val sports = userPreferences.user?.sportsList ?: emptyList()
+        val sports = userRepository.getCashedUser()?.sportsList ?: emptyList()
         val filteredEvents = events.filter { eventDataItem ->
             sports.contains(eventDataItem?.sport)
         }

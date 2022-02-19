@@ -132,7 +132,7 @@ class UserInfoDataSource(
 
     suspend fun updateUserAuthenticationEmail(
         newEmail: String,
-        oldEmail: String,
+        oldEmail: String?,
         password: String
     ): Flow<Boolean?> = flow {
         val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
@@ -145,7 +145,7 @@ class UserInfoDataSource(
     suspend fun updateUserAuthenticationPassword(
         newPassword: String,
         oldPassword: String,
-        email: String
+        email: String?
     ): Flow<Boolean> = flow {
         val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
         val credential: AuthCredential = EmailAuthProvider.getCredential(email, oldPassword)

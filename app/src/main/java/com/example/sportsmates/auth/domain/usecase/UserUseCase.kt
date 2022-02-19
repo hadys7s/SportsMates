@@ -1,12 +1,10 @@
 package com.example.sportsmates.auth.domain.usecase
 
+import android.net.Uri
 import com.example.sportsmates.auth.data.model.User
 import com.example.sportsmates.auth.domain.datainterfaces.UserRepository
 import com.example.sportsmates.auth.domain.helpers.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flatMapConcat
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.*
 
 class UserUseCase(private val userRepository: UserRepository) {
 
@@ -69,10 +67,9 @@ class UserUseCase(private val userRepository: UserRepository) {
 
     suspend fun updateUserEmail(
         newEmail: String,
-        oldEmail: String,
         password: String
     ): Flow<Boolean?> {
-        return userRepository.updateUserEmail(newEmail, oldEmail, password).flatMapConcat {
+        return userRepository.updateUserEmail(newEmail, password).flatMapConcat {
             val user = userRepository.getCashedUser()
             user?.email = newEmail
             userRepository.cashUser(user)
@@ -85,9 +82,8 @@ class UserUseCase(private val userRepository: UserRepository) {
     suspend fun updateUserPassword(
         newPassword: String,
         oldPassword: String,
-        email: String
     ): Flow<Boolean?> {
-        return userRepository.updateUserPassword(newPassword, oldPassword, email).flatMapConcat {
+        return userRepository.updateUserPassword(newPassword, oldPassword).flatMapConcat {
             val user = userRepository.getCashedUser()
             user?.email = newPassword
             userRepository.cashUser(user)
@@ -100,9 +96,11 @@ class UserUseCase(private val userRepository: UserRepository) {
     suspend fun deleteUser(): Flow<Boolean?> =
         userRepository.deleteUser()
 
-
     suspend fun getUserInfo(): Flow<User?> =
         userRepository.getUserInfo()
 
+    suspend fun uploadUserImage(filePath: Uri) {
+        userRepository.uploadImage(filePath)
+    }
 
 }

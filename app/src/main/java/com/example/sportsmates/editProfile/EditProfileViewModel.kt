@@ -3,10 +3,13 @@ package com.example.sportsmates.editProfile
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.sportsmates.auth.data.model.User
-import com.example.sportsmates.auth.data.repo.UserRepository1
+import com.example.sportsmates.auth.domain.usecase.UserUseCase
+import kotlinx.coroutines.flow.last
+import kotlinx.coroutines.launch
 
-class EditProfileViewModel(private val userRepository: UserRepository1) : ViewModel() {
+class EditProfileViewModel(private val userUseCase: UserUseCase) : ViewModel() {
     var userData = MutableLiveData<User>()
     var userImage = MutableLiveData<Uri>()
     var updateInfoFailuer = MutableLiveData<String>()
@@ -14,44 +17,53 @@ class EditProfileViewModel(private val userRepository: UserRepository1) : ViewMo
     var uploadImageFailed = MutableLiveData<String>()
     var uploadImageSuccess = MutableLiveData<String>()
 
-    init {
-        userData = userRepository.userData
-        userImage = userRepository.retriveImage
-        uploadImageFailed = userRepository.uploadImageFailed
-        uploadImageSuccess = userRepository.uploadImageSucess
-        updateInfoSuccess = userRepository.updateInfoSuccess
-        updateInfoFailuer = userRepository.updateInfoFailuer
-    }
-
     fun fetchUserData() {
-        //userRepository.fetchUserData()
-    }
-
-    fun getUserImage() {
-        userRepository.retrievePhoto()
+        viewModelScope.launch {
+            userData.value = userUseCase.getUserInfo().last()
+        }
     }
 
     fun uploadProfileImage(filePath: Uri) {
-       // userRepository.uploadPhoto(filePath)
+        viewModelScope.launch {
+            userUseCase.uploadUserImage(filePath)
+        }
     }
 
-    fun updateUserName(name:String){
-        userRepository.updateUserName(name)
+    fun updateUserName(name: String) {
+        viewModelScope.launch {
+            userUseCase.updateUserName(name)
+        }
     }
-    fun updateUserEmail(newEmail:String,oldPassword: String){
-        userRepository.updateUserAuthenticationEmail(newEmail, oldPassword)
+
+    fun updateUserEmail(newEmail: String, oldPassword: String) {
+        viewModelScope.launch {
+            userUseCase.updateUserEmail(newEmail, oldPassword)
+        }
     }
-    fun updateUserCity(city:String){
-        userRepository.updateUserCity(city)
+
+    fun updateUserCity(city: String) {
+        viewModelScope.launch {
+            userUseCase.updateUserCity(city)
+        }
     }
-    fun updateUserPassword(newPassword:String,oldPassword: String){
-        userRepository.updateUserAuthenticationPassword(newPassword, oldPassword)
+
+    fun updateUserPassword(newPassword: String, oldPassword: String) {
+        viewModelScope.launch {
+            userUseCase.updateUserPassword(newPassword, oldPassword)
+        }
     }
-    fun updateUserSportsList(sports:List<String>){
-        userRepository.updateUserSportsList(sports)
+
+    fun updateUserSportsList(sports: List<String>) {
+        viewModelScope.launch {
+            userUseCase.updateUserSportsList(sports)
+        }
     }
-    fun updateUserBio(bio:String){
-        userRepository.updateUserBio(bio)
+
+    fun updateUserBio(bio: String) {
+        viewModelScope.launch {
+            userUseCase.updateUserBio(bio)
+
+        }
     }
 
 }

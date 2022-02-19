@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/eiffel/AndroidStudioProjects/NewsFeed/sportsmates/app/src/main/res/layout/activity_news_details.xml" value="0.10740740740740741" />
+        <entry key="app/src/main/res/layout/activity_update_user_info.xml" value="0.3081081081081081" />
         <entry key="app/src/main/res/layout/progress_btn.xml" value="0.3081081081081081" />
         <entry key="app/src/main/res/layout/sign_in_fragment.xml" value="0.3081081081081081" />
         <entry key="app/src/main/res/layout/sign_up_sport_fargment.xml" value="0.3076576576576577" />

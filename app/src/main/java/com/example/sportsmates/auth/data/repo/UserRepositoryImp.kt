@@ -9,6 +9,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.last
 
 class UserRepositoryImp(
     private val dataSource: UserInfoDataSource,
@@ -66,24 +67,28 @@ class UserRepositoryImp(
 
     override suspend fun updateUserEmail(
         newEmail: String,
-        oldEmail: String,
         password: String
     ): Flow<Boolean?> =
-        dataSource.updateUserAuthenticationEmail(newEmail, oldEmail, password).flatMapConcat {
+        dataSource.updateUserAuthenticationEmail(
+            newEmail, getUserInfo().last()?.email, password
+        ).flatMapConcat {
             dataSource.updateUserEmail(email = newEmail)
         }
 
     override suspend fun updateUserPassword(
         newPassword: String,
         oldPassword: String,
-        email: String
     ): Flow<Boolean?> =
-        dataSource.updateUserAuthenticationPassword(newPassword, oldPassword, email).flatMapConcat {
+        dataSource.updateUserAuthenticationPassword(
+            newPassword,
+            oldPassword,
+            getUserInfo().last()?.email
+        ).flatMapConcat {
             dataSource.updateUserPassword(newPassword)
         }
 
 
-    private suspend fun uploadImage(filePath: Uri): Boolean =
+    override suspend fun uploadImage(filePath: Uri): Boolean =
         dataSource.uploadUserImage(filePath)
 
 
@@ -95,7 +100,7 @@ class UserRepositoryImp(
         userPref.user = user
     }
 
-    override suspend fun getCashedUser(): User? =
+    override fun getCashedUser(): User? =
         userPref.user
 
     override suspend fun deleteUser(): Flow<Boolean?> {

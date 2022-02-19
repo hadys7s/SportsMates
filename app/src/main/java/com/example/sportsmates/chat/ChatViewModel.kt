@@ -3,13 +3,15 @@ package com.example.sportsmates.chat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.sportsmates.UserPreferences
+import com.example.sportsmates.auth.domain.datainterfaces.UserRepository
 import com.example.sportsmates.chat.model.Chat
 import com.example.sportsmates.chat.model.MessageModel
 import com.example.sportsmates.ext.getCurrentTime
 import com.example.sportsmates.ext.getCurrentUserID
 import com.google.firebase.database.*
+import kotlinx.coroutines.flow.last
 
-class ChatViewModel(private val userPreferences: UserPreferences) : ViewModel() {
+class ChatViewModel(private val userRepository: UserRepository) : ViewModel() {
     var retriveChatSuceess = MutableLiveData<ArrayList<Chat>>()
     var retriveChatErorr = MutableLiveData<String?>()
     var listOfChat = MutableLiveData<List<MessageModel?>?>()
@@ -83,8 +85,8 @@ class ChatViewModel(private val userPreferences: UserPreferences) : ViewModel() 
         receiverValues["message"] = messageModel.message!!
         receiverValues["time"] = getCurrentTime()
         receiverValues["userId"] = getCurrentUserID()
-        receiverValues["userName"] = userPreferences.name!!
-        receiverValues["userImage"] = userPreferences.image!!
+        receiverValues["userName"] = userRepository.getCashedUser()?.name.toString()
+        receiverValues["userImage"] =userRepository.getCashedUser()?.userImage.toString()
 
         FirebaseDatabase.getInstance().getReference("UserChatList")
             .child(messageModel.userId!!).child(getCurrentUserID())

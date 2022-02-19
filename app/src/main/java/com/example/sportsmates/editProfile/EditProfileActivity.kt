@@ -12,10 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.sportsmates.R
-import com.example.sportsmates.databinding.ActivityEditProfile2Binding
-import com.example.sportsmates.ext.*
 import com.example.sportsmates.auth.data.model.User
 import com.example.sportsmates.auth.presentation.signUp.fragments.SignUpEmailFragment
+import com.example.sportsmates.databinding.ActivityEditProfile2Binding
+import com.example.sportsmates.ext.*
 import com.example.sportsmates.utils.InfoType
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -33,7 +33,6 @@ class EditProfileActivity : AppCompatActivity() {
         setContentView(view)
         changeStatusBarColor(R.color.main_green)
         attachObservers()
-        loadImage()
         attachClickListeners()
         onUploadedButtonSelected()
 
@@ -46,16 +45,10 @@ class EditProfileActivity : AppCompatActivity() {
     private fun fetchArguments() {
         viewModel.fetchUserData()
     }
-    private fun loadImage(){
-        viewModel.getUserImage()
-    }
     private fun attachObservers() {
         viewModel.userData.observe(this, Observer {
             bindUserData(it)
             user=it
-        })
-        viewModel.userImage.observe(this, Observer {
-            setImage(it)
         })
         viewModel.uploadImageSuccess.observe(this, Observer {msg->
             displaySuccessToast(getString(R.string.success_toast_title),msg)
@@ -67,18 +60,16 @@ class EditProfileActivity : AppCompatActivity() {
         })
     }
 
-    private fun setImage(uri: Uri) {
-        Glide.with(this)
-            .load(uri)
-            .circleCrop()
-            .into(binding.uploadedPic)
-    }
     private fun bindUserData(userData: User?) {
         binding.nameTextField.setText(userData?.name, TextView.BufferType.EDITABLE)
         binding.mailTextField.setText(userData?.email, TextView.BufferType.EDITABLE)
         binding.cityTextField.setText(userData?.city, TextView.BufferType.EDITABLE)
         binding.passwordTextField.setText(userData?.password, TextView.BufferType.EDITABLE)
         binding.bioTextField.setText(userData?.about, TextView.BufferType.EDITABLE)
+        Glide.with(this)
+            .load(userData?.userImage)
+            .circleCrop()
+            .into(binding.uploadedPic)
         val sports = userData?.sportsList?.joinToString(
             " , "
         )
@@ -139,7 +130,7 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun bindProfilePicture() {
-        val inputStream = this?.contentResolver?.openInputStream(filePath)
+        val inputStream = this.contentResolver?.openInputStream(filePath)
         val selectedImage = BitmapFactory.decodeStream(inputStream)
         Glide.with(this)
             .load(selectedImage)

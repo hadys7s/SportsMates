@@ -3,7 +3,7 @@ package com.example.sportsmates.booking
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sportsmates.UserPreferences
+import com.example.sportsmates.auth.domain.datainterfaces.UserRepository
 import com.example.sportsmates.utils.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,7 +14,7 @@ import javax.mail.Transport
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeMessage
 
-class BookingViewModel(private val userPreferences: UserPreferences) : ViewModel() {
+class BookingViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     val sendingMessageFauiler = MutableLiveData<String>()
     val sendingMessageSuccess = MutableLiveData<String>()
@@ -42,7 +42,7 @@ class BookingViewModel(private val userPreferences: UserPreferences) : ViewModel
                 message.setFrom(InternetAddress(Constants.APP_EMAIL))
                 message.setRecipients(
                     javax.mail.Message.RecipientType.TO,
-                    InternetAddress.parse(userPreferences.email)
+                    InternetAddress.parse(userRepository.getCashedUser()?.name)
                 )
                 message.subject = "Booking completed successfully "
                 message.setText(
@@ -85,7 +85,7 @@ class BookingViewModel(private val userPreferences: UserPreferences) : ViewModel
 
                 message.subject = "You Have A Client ..  "
                 message.setText(
-                    "hello," + System.lineSeparator() + "  ${userPreferences.name}  is Booking With You In  $date  In Time $time" + System.lineSeparator() + "Contact With Him For More Details " + userPreferences.email
+                    "hello," + System.lineSeparator() + "  ${userRepository.getCashedUser()?.name}  is Booking With You In  $date  In Time $time" + System.lineSeparator() + "Contact With Him For More Details " + userRepository.getCashedUser()?.email
                 )
                 Transport.send(message)
                 sendingMessageSuccess.postValue("Booking is Done Successfully You will Receive A Message Shortly ")
@@ -123,7 +123,7 @@ class BookingViewModel(private val userPreferences: UserPreferences) : ViewModel
 
                 message.subject = "You Have A Client ..  "
                 message.setText(
-                    "hello," + System.lineSeparator() + "  ${userPreferences.name}  is Book In time $time In Day $date " + System.lineSeparator() + "Contact With Him For More Details " + userPreferences.email
+                    "hello," + System.lineSeparator() + "  ${userRepository.getCashedUser()?.name}  is Book In time $time In Day $date " + System.lineSeparator() + "Contact With Him For More Details " + userRepository.getCashedUser()?.email
                 )
                 Transport.send(message)
                 sendingMessageSuccess.postValue("Booking is Done Successfully You will Receive A Message Shortly ")

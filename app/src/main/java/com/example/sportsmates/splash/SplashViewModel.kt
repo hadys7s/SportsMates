@@ -1,7 +1,8 @@
 package com.example.sportsmates.splash
 
 import androidx.lifecycle.ViewModel
-import com.example.sportsmates.auth.data.repo.UserRepository1
+import androidx.lifecycle.viewModelScope
+import com.example.sportsmates.auth.domain.datainterfaces.UserRepository
 import com.example.sportsmates.utils.SingleLiveEvent
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -9,8 +10,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.launch
 
-class SplashViewModel(private val userRepository: UserRepository1) : ViewModel() {
+class SplashViewModel(private val userRepository: UserRepository) : ViewModel() {
     val authenticationNavigationEvent = SingleLiveEvent<Any>()
     val homeNavigationEvent = SingleLiveEvent<Any>()
 
@@ -26,8 +28,9 @@ class SplashViewModel(private val userRepository: UserRepository1) : ViewModel()
                             homeNavigationEvent.call()
                         } else {
                             authenticationNavigationEvent.call()
-                            userRepository.deleteUser()
-                            userRepository.deleteProfileImage()
+                            viewModelScope.launch {
+                                userRepository.deleteUser()
+                            }
 
                         }
                     }
@@ -36,7 +39,7 @@ class SplashViewModel(private val userRepository: UserRepository1) : ViewModel()
 
                     }
                 }
-                )         // [END check_current_user]
+                )
         } else {
             authenticationNavigationEvent.call()
 

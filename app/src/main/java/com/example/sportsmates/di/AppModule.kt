@@ -2,7 +2,6 @@ package com.example.sportsmates.di
 
 import com.example.sportsmates.UserPreferences
 import com.example.sportsmates.auth.data.datasources.UserInfoDataSource
-import com.example.sportsmates.auth.data.repo.UserRepository1
 import com.example.sportsmates.auth.data.repo.UserRepositoryImp
 import com.example.sportsmates.auth.domain.datainterfaces.UserRepository
 import com.example.sportsmates.auth.domain.usecase.UserUseCase
@@ -32,7 +31,6 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val SignUpModule = module {
-    factory { UserRepository1(get(), get()) }
     factory { UserPreferences(androidContext()) }
     factory { UserInfoDataSource(get()) }
     single<UserRepository> { UserRepositoryImp(get(), get()) }

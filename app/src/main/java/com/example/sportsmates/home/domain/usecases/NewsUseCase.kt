@@ -2,15 +2,16 @@ package com.example.sportsmates.home.domain.usecases
 
 import com.example.sportsmates.home.domain.datainterfaces.NewsRepository
 import com.example.sportsmates.home.domain.entities.NewsItem
-import com.example.sportsmates.auth.data.repo.UserRepository1
+import com.example.sportsmates.auth.domain.datainterfaces.UserRepository
+import kotlinx.coroutines.flow.last
 
 class NewsUseCase(
     private val newsRepository: NewsRepository,
-    private val userRepository: UserRepository1
+    private val userRepository: UserRepository
 ) {
     suspend fun getRecommendedNewsBasedOnUserSports(
     ): List<NewsItem> {
-        val sportsList = userRepository.getUserSportsList()
+        val sportsList = userRepository.getUserInfo().last()?.sportsList
         return when (sportsList?.size) {
             3 -> newsRepository.getNews(
                 sportsList[0],
