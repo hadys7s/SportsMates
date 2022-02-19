@@ -22,7 +22,7 @@ class PlacesRepositoryImpl : PlacesRepository {
     override suspend fun getPlaceMainImage(placeId: String?): Uri? {
         var uri: Uri? = null
         try {
-            FirebaseStorage.getInstance().reference.child("/event/$placeId/main.jpg").downloadUrl.addOnSuccessListener {
+            FirebaseStorage.getInstance().reference.child("/place/$placeId/main.jpg").downloadUrl.addOnSuccessListener {
                 uri = it
             }.await()
         } catch (throwable: Throwable) {

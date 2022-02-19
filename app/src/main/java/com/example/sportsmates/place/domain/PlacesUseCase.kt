@@ -3,6 +3,9 @@ package com.example.sportsmates.place.domain
 import com.example.sportsmates.UserPreferences
 import com.example.sportsmates.place.data.Place
 import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 
 class PlacesUseCase(
     private val userPreferences: UserPreferences,
@@ -15,10 +18,14 @@ class PlacesUseCase(
             places.filter { place ->
                 place?.city == userLocation
             }.map { place ->
-                place?.mainImage = placesRepository.getPlaceMainImage(place?.placeId)
-                place
+                coroutineScope {
+                    async {
+                        place?.mainImage = placesRepository.getPlaceMainImage(place?.placeId)
+                        place
+                    }
+                }
             }
-        return filteredPlaces
+        return filteredPlaces.awaitAll()
     }
 
     suspend fun getPlaceListOfImages(placeId: String?): List<StorageReference?> =
