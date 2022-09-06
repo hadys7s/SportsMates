@@ -7,7 +7,8 @@ import com.example.sportsmates.auth.domain.datainterfaces.UserRepository
 import com.example.sportsmates.auth.domain.usecase.UserUseCase
 import com.example.sportsmates.auth.presentation.signIn.SignInViewModel
 import com.example.sportsmates.auth.presentation.signUp.viewmodel.SignUpViewModel
-import com.example.sportsmates.booking.BookingViewModel
+import com.example.sportsmates.booking.domain.MailService
+import com.example.sportsmates.booking.presentation.BookingViewModel
 import com.example.sportsmates.chat.ChatViewModel
 import com.example.sportsmates.coach.data.CoachesRepositoryImpl
 import com.example.sportsmates.coach.domain.CoachUseCase
@@ -33,6 +34,7 @@ import org.koin.dsl.module
 val SignUpModule = module {
     factory { UserPreferences(androidContext()) }
     factory { UserInfoDataSource(get()) }
+    factory { MailService() }
     single<UserRepository> { UserRepositoryImp(get(), get()) }
     single<CoachesRepository> { CoachesRepositoryImpl() }
     factory { UserUseCase(get()) }
@@ -51,6 +53,6 @@ val SignUpModule = module {
     single { EventsUseCase(get(), get()) }
     viewModel { EventsViewModel(get()) }
     viewModel { ChatViewModel(get()) }
-    viewModel { BookingViewModel(get()) }
+    viewModel { BookingViewModel(get(),get()) }
     single { FirebaseAuth.getInstance() }
 }

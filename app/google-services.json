@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "134207987675",
+    "firebase_url": "https://sports-mates-default-rtdb.firebaseio.com",
     "project_id": "sports-mates",
     "storage_bucket": "sports-mates.appspot.com"
   },
