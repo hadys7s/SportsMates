@@ -1,4 +1,4 @@
-package com.example.sportsmates.booking
+package com.example.sportsmates.booking.presentation
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.lifecycle.Observer
 import com.example.sportsmates.R
+import com.example.sportsmates.booking.data.BookingModel
 import com.example.sportsmates.coach.presentation.CoachUiModel
 import com.example.sportsmates.databinding.ActivityBookingBinding
 import com.example.sportsmates.ext.changeStatusBarColor
@@ -75,7 +76,6 @@ class BookingActivity : AppCompatActivity() {
             getSelectedTime().size > 1 -> {
                 displayWarningToast("Warning", "Please Select Only 1 Time")
                 false
-
             }
             getSelectedTime().isEmpty() -> {
                 displayWarningToast("Warning", "Please Select Time ")
@@ -86,7 +86,7 @@ class BookingActivity : AppCompatActivity() {
 
     }
 
-    private fun getSelectedTime(): MutableList<String>{
+    private fun getSelectedTime(): MutableList<String> {
         return binding.timeGroup.children
             .filter { ((it as Chip).isChecked) }
             .map { (it as Chip).text.toString() }
@@ -129,15 +129,39 @@ class BookingActivity : AppCompatActivity() {
     private fun sendEmailWithArguments() {
         val couch: CoachUiModel? = intent.getParcelableExtra((COUCH_ITEM))
         val place: PlaceUiModel? = intent.getParcelableExtra((PLACE_ITEM))
+        val date = binding.edDate2.text.toString()
         val time = getSelectedTime().joinToString("")
         when {
             place != null -> {
-                viewModel.sendEmailToUser(place.name, time, binding.edDate2.text.toString())
-                viewModel.sendEmailToPlace(place.email, time, binding.edDate2.text.toString())
+                viewModel.sendEmailToUser(
+                    BookingModel(
+                        mailSubject = "Booking",
+                        mailBody = "hello," + System.lineSeparator() +
+                                "Booking completed successfully, you successfuly book with   ${place.name}   in  $date at $time " + System.lineSeparator() + "${place.name} Will contact you soon",
+                    )
+                )
+                viewModel.sendEmailToServiceProvider(
+                    BookingModel(
+                        mailSubject = "You Have A Client ..  ",
+                        mailBody = "hello," + System.lineSeparator() + "  ${viewModel.getCashedUser()?.name}  is Booking With You In  $date  In Time $time" + System.lineSeparator() + "Contact With Him For More Details " + viewModel.getCashedUser()?.email,
+                    )
+                )
             }
             couch != null -> {
-                viewModel.sendEmailToUser(couch.name, time, binding.edDate2.text.toString())
-                viewModel.sendEmailToCouch(couch.email, time, binding.edDate2.text.toString())
+                viewModel.sendEmailToUser(
+                    BookingModel(
+                        mailSubject = "Booking",
+                        mailBody = "hello," + System.lineSeparator() +
+                                "Booking completed successfully, you successfuly book with   ${couch.name}   in  $date at $time " + System.lineSeparator() + "${couch.name} Will contact you soon",
+
+                        )
+                )
+                viewModel.sendEmailToServiceProvider(
+                    BookingModel(
+                        mailSubject = "You Have A Client ..  ",
+                        mailBody = "hello," + System.lineSeparator() + "  ${viewModel.getCashedUser()?.name}  is Booking With You In  $date  In Time $time" + System.lineSeparator() + "Contact With Him For More Details " + viewModel.getCashedUser()?.email
+                    )
+                )
             }
             else -> {
 

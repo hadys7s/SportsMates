@@ -61,7 +61,6 @@ class ChatBotActivity : AppCompatActivity() {
 
     fun setupQuery() {
         adapter.addQuery(binding.edMessage.text.toString())
-        adapter.notifyDataSetChanged()
         binding.messageList.smoothScrollToPosition(adapter.itemCount - 1)
         sendQuery(binding.edMessage.text.toString())
     }
